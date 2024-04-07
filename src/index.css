@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+	margin: 0;
+	font-family: 'Monteserrat', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	-ms-overflow-style: none;
+}
+
+.imageContainer {
+	background: url("assets/images/truck-white-orange.jpg") no-repeat;
+	background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    height: 100vh;
+	width: 100%;
+  }
