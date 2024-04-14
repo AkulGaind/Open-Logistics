@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import StyledCard from "./common/styled";
+import { StyledCard } from "./common/styled";
 
 const CardSection = () => {
   return (

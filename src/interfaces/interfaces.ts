@@ -8,6 +8,11 @@ export interface StyledCardProps {
     buttonText: string;
 }
 
+export interface LabelControllerProps {
+    label: string;
+    placeholder: string;
+}
+
 export interface ILogin {
     email: string;
     password: string;

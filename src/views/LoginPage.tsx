@@ -94,7 +94,7 @@ const LoginPage = () => {
             />
           </Stack>
           <Stack spacing={1.5} mb={2}>
-            <label htmlFor="">Role</label>
+            <label htmlFor="role">Role</label>
             <Select
               id="role"
               value={role}
