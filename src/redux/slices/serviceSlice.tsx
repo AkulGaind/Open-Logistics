@@ -37,7 +37,7 @@ export const appApi = createApi({
       query: ({ username, email, phone, password, company, role }) => {
         console.log(username, email, phone, password, company, role);
         const reqData = {
-          name: username,
+          username: username,
           email: email,
           phone: phone,
           password: password,
