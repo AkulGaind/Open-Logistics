@@ -3,7 +3,7 @@ import { AppState, ILogin } from "../../interfaces/interfaces";
 
 const initialState: AppState = {
     loggedIn: false,
-    role: "Admin",
+    appRole: "",
 };
 
 const appStateSlice = createSlice({
@@ -14,8 +14,8 @@ const appStateSlice = createSlice({
         setLoggedIn: (state, action: PayloadAction<boolean>) => {
             state.loggedIn = action.payload;
         },
-        setRole: (state, action: PayloadAction<ILogin['role']>) => {
-            state.role = action.payload;
+        setAppRole: (state, action: PayloadAction<ILogin['role']>) => {
+            state.appRole = action.payload;
         },
     },
 });
@@ -23,7 +23,7 @@ const appStateSlice = createSlice({
 export const {
     reset,
     setLoggedIn,
-    setRole,
+    setAppRole,
 } = appStateSlice.actions;
 
 export default appStateSlice;
