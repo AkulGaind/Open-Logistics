@@ -34,10 +34,10 @@ export const appApi = createApi({
       },
     }),
     signUpUser: builder.mutation<string, ISignUp>({
-      query: ({ name, email, phone, password, company, role }) => {
-        console.log(name, email, phone, password, company, role);
+      query: ({ username, email, phone, password, company, role }) => {
+        console.log(username, email, phone, password, company, role);
         const reqData = {
-          name: name,
+          name: username,
           email: email,
           phone: phone,
           password: password,

@@ -53,8 +53,8 @@ const SignupPage = () => {
                 id="name"
                 required
                 placeholder="Name"
-                helperText={errors.name?.message}
-                {...register("name", { required: true })}
+                helperText={errors.username?.message}
+                {...register("username", { required: true })}
               />
               <label htmlFor="phone">Phone</label>
               <TextField

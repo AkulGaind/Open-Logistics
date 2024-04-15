@@ -20,7 +20,7 @@ export interface ILogin {
 }
 
 export interface ISignUp extends ILogin {
-    name: string;
-    phone: number;
+    username: string;
+    phone: string;
     company: string;
 }
