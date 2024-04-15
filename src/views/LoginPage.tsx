@@ -39,7 +39,7 @@ const LoginPage = () => {
   const formSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     // dispatch(setRole(data.role));
     await loginUser(data).unwrap(); 
-    console.log(data);
+    console.log("data",data);
   };
 
   return (
