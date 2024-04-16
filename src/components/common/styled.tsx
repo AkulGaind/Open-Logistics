@@ -23,7 +23,7 @@ const StyledCard = ({ title, buttonText }: StyledCardProps) => {
       sx={{
         minWidth: 275,
         minHeight: 350,
-        backgroundColor: "#fd7014cc",
+        backgroundColor: "#ffcd29",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

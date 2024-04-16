@@ -1,11 +1,10 @@
 import { Typography } from "@mui/material";
 import Typewriter from "typewriter-effect";
-import backgroundImage from "../assets/images/truck-white-orange.jpg";
+import backgroundImage from "../assets/images/truck.png";
 import CardSection from "../components/CardSection";
 import myColors from "../themes/colors";
 
 const HomePage = () => {
-  const typeOutString = `Bridge the gap between shippers and carriers with seamless connectivity.`;
 
   return (
     <>
@@ -15,24 +14,31 @@ const HomePage = () => {
           backgroundImage: `url(${backgroundImage})`,
           height: "100vh",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           position: "relative",
+          objectFit: "contain",
+          bottom: 10,
         }}
       >
-        <div style={{ position: "absolute", top: 100, left: 150 }}>
+        <div style={{ position: "absolute", top: 120, left: 50 }}>
           <Typography
             sx={{
-              color: myColors.textBlue,
-              maxWidth: "500px",
+              color: myColors.textBlack,
+              maxWidth: "580px",
             }}
             variant="h2"
-            fontSize={"36px"}
-            fontWeight={400}
+            fontSize={"45px"}
+            fontWeight={600}
           >
             <Typewriter
               onInit={(typewriter: any) => {
-                typewriter.changeDelay(50).typeString(typeOutString).start();
+                typewriter
+                .changeDelay(50)
+                .typeString("Bridge the gap between shippers and carriers with connectivity")
+                .pauseFor(1200)
+                .changeDeleteSpeed(30)
+                .deleteChars(12)
+                .typeString("seamless connectivity")
+                .start();
               }}
             />
           </Typography>

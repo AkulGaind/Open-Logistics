@@ -2,13 +2,10 @@ import myColors from "./colors";
 
 const palette = {
   primary: {
-    main: myColors.orange.main,
+    main: myColors.yellow.main,
   },
   backgroundGrey: {
     main: myColors.backgroundGrey,
-  },
-  lightOrange: {
-    main: myColors.orange.light,
   },
   textBlack: {
     main: myColors.textBlack,
