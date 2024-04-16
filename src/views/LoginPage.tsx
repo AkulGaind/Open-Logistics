@@ -67,7 +67,7 @@ const LoginPage = () => {
       alignItems={"center"}
     >
       <img
-        src={"src/assets/images/logo.png"}
+        src={"src/assets/images/login.png"}
         style={{
           height: "40%",
           width: "40%",
