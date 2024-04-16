@@ -15,17 +15,38 @@ import {
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useSignUpUserMutation } from "../redux/slices/serviceSlice";
+import { yupResolver } from "@hookform/resolvers/yup";
+import signUpSchema from "../validationSchemas/signUpSchema";
+import { setAppRole } from "../redux/slices/appStateSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [role, setRole] = useState<string>("");
+  const navigate = useNavigate();
   const [signUpUser] = useSignUpUserMutation();
+  const dispatch = useDispatch();
+  const defaultValues: ISignUp = {
+    username: "",
+    email: "",
+    password: "",
+    phone: "",
+    company: "",
+    role: "",
+  };
+  const method = useForm<ISignUp>({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: defaultValues,
+    resolver: yupResolver(signUpSchema),
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
     getFieldState: {},
-  } = useForm<ISignUp>();
+  } = method;
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -36,9 +57,9 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
-    // dispatch(setRole(data.role));
+    dispatch(setAppRole(data.role));
     await signUpUser(data).unwrap();
-    console.log(data);
+    navigate("/dashboard");
   };
 
   return (
