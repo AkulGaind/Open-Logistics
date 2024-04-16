@@ -1,7 +1,7 @@
 import { AppBar, Toolbar } from "@mui/material";
 const Navbar = () => {
   return (
-    <AppBar position="sticky" color="inherit" elevation={0}>
+    <AppBar position="sticky" color="inherit">
       <Toolbar>
         <a href="/" style={{ height: 80 }}>
             <img
