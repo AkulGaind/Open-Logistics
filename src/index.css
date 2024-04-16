@@ -15,5 +15,5 @@ body {
   background: url("assets/images/truck.png") no-repeat;
   background-size: contain;
   background-position: right;
-  background-attachment: scroll;
+background-attachment: scroll;
 }

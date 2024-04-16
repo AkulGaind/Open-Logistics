@@ -19,14 +19,14 @@ const HomePage = () => {
           bottom: 10,
         }}
       >
-        <div style={{ position: "absolute", top: 120, left: 130 }}>
+        <div style={{ position: "absolute", top: 120, left: 50 }}>
           <Typography
             sx={{
               color: myColors.textBlack,
-              maxWidth: "520px",
+              maxWidth: "580px",
             }}
             variant="h2"
-            fontSize={"40px"}
+            fontSize={"45px"}
             fontWeight={600}
           >
             <Typewriter
