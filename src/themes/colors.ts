@@ -1,11 +1,6 @@
 const myColors = {
-    voilet: {
-        main: '#9747FF', 
-        light: '#E4CCFF',
-    },
-    orange: {
-        main: '#FD7014',
-        light: '#FF9843'
+    yellow: {
+        main: '#FFCD29',
     },
     backgroundGrey: '#F5F5F5',
     transparent: '#00FFFFFF',
