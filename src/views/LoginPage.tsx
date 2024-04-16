@@ -1,35 +1,31 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Button,
   Grid,
   IconButton,
   InputAdornment,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   Stack,
   TextField,
 } from "@mui/material";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { ILogin } from "../interfaces/interfaces";
-import { useLoginUserMutation } from "../redux/slices/serviceSlice";
 import { useDispatch } from "react-redux";
-import { yupResolver } from "@hookform/resolvers/yup";
-import loginSchema from "../validationSchemas/loginSchema";
-import { setAppRole } from "../redux/slices/appStateSlice";
 import { useNavigate } from "react-router-dom";
+import { ILogin } from "../interfaces/interfaces";
+import { setAppRole } from "../redux/slices/appStateSlice";
+import { useLoginUserMutation } from "../redux/slices/serviceSlice";
+import loginSchema from "../validationSchemas/loginSchema";
+import { APIResult } from "../utility/constants";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [role, setRole] = useState<string>("");
   const navigate = useNavigate();
   const [loginUser] = useLoginUserMutation();
   const dispatch = useDispatch();
   const defaultValues: ILogin = {
     email: "",
     password: "",
-    role: "",
   };
   const method = useForm<ILogin>({
     mode: "onChange",
@@ -48,14 +44,12 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as string);
-  };
-
   const formSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
-    // await loginUser(data).unwrap();
-    dispatch(setAppRole(data.role));
-    navigate("/dashboard");
+    const { message, role } = await loginUser(data).unwrap();
+    if (message === APIResult.loginSuccess) {
+      dispatch(setAppRole(role));
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -109,19 +103,6 @@ const LoginPage = () => {
                   ),
                 }}
               />
-            </Stack>
-            <Stack spacing={1.5} mb={2}>
-              <label htmlFor="role">Role</label>
-              <Select
-                id="role"
-                value={role}
-                {...register("role")}
-                onChange={handleChange}
-              >
-                <MenuItem value={"Admin"}>Admin</MenuItem>
-                <MenuItem value={"Shipper"}>Shipper</MenuItem>
-                <MenuItem value={"Carrier"}>Carrier</MenuItem>
-              </Select>
             </Stack>
             <div style={{ width: "150px" }}>
               <Button variant="contained" fullWidth type="submit">
