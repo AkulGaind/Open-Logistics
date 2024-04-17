@@ -17,6 +17,9 @@ import { setAppRole } from "../redux/slices/appStateSlice";
 import { useLoginUserMutation } from "../redux/slices/serviceSlice";
 import loginSchema from "../validationSchemas/loginSchema";
 import { APIResult } from "../utility/constants";
+import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
+import LocalPostOfficeTwoToneIcon from '@mui/icons-material/LocalPostOfficeTwoTone';
+
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -54,11 +57,11 @@ const LoginPage = () => {
 
   return (
     <Grid
-      container
-      gridTemplateColumns={"45% 45%"}
-      p={"10% 7%"}
-      gap={"10%"}
-      alignItems={"center"}
+    container
+    gridTemplateColumns={"45% 45%"}
+    p={"3%"} 
+    gap={"3%"}
+    alignItems={"center"}
     >
       <img
         src={"src/assets/images/login.png"}
@@ -72,24 +75,36 @@ const LoginPage = () => {
         <FormProvider {...method}>
           <form onSubmit={handleSubmit(formSubmit)}>
             <Stack spacing={1.5} mb={2}>
-              <label htmlFor="email">Email</label>
               <TextField
-                id="email"
-                required
+                id="email"  
+                variant="outlined"
+                label="Email"
                 placeholder="john.doe@email.com"
                 helperText={errors.email?.message}
                 {...register("email", { required: true })}
+                InputProps={{
+                  startAdornment:(
+                    <InputAdornment position="start">
+                    <LocalPostOfficeTwoToneIcon  fontSize="small"/>
+                  </InputAdornment>
+                  ),
+                }}
               />
             </Stack>
             <Stack spacing={1.5} mb={2}>
-              <label htmlFor="password">Password</label>
               <TextField
                 id="password"
                 helperText={errors.password?.message}
                 {...register("password", { required: true })}
                 type={showPassword ? "text" : "password"}
                 placeholder="************"
+                label="Password"
                 InputProps={{
+                  startAdornment:(
+                    <InputAdornment position="start">
+                    <LockTwoToneIcon  fontSize="small"/>
+                  </InputAdornment>
+                  ),
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
@@ -106,7 +121,7 @@ const LoginPage = () => {
             </Stack>
             <div style={{ width: "150px" }}>
               <Button variant="contained" fullWidth type="submit">
-                Login
+                Continue
               </Button>
             </div>
           </form>

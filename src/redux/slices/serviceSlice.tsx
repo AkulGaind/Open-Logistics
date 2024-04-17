@@ -20,7 +20,6 @@ export const appApi = createApi({
           email: email,
           password: password,
         };
-
         return {
           url: `/login`,
           method: "POST",
