@@ -2,15 +2,16 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ISignUp } from "../interfaces/interfaces";
 import {
   Button,
+  FormControl,
   Grid,
   IconButton,
   InputAdornment,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
-  TextField,
-  Typography,
+  TextField
 } from "@mui/material";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -20,6 +21,12 @@ import signUpSchema from "../validationSchemas/signUpSchema";
 import { setAppRole } from "../redux/slices/appStateSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import LocalPostOfficeTwoToneIcon from '@mui/icons-material/LocalPostOfficeTwoTone';
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
+import PhoneTwoToneIcon from '@mui/icons-material/PhoneTwoTone';
+import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone';
+import Diversity3TwoToneIcon from '@mui/icons-material/Diversity3TwoTone';
+import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -63,57 +70,97 @@ const SignupPage = () => {
   };
 
   return (
-    <Stack alignItems={"center"} mt={4} spacing={8}>
-      <Typography variant="h2">Sign-Up</Typography>
+    <Stack alignItems={"center"} spacing={8}>
+      <img 
+        src={"src/assets/images/signup.png"}
+        style={{
+          marginTop:"10px",
+          height: "100px",
+          width: "100px",
+          objectFit: "contain",
+        }}></img>
       <form onSubmit={handleSubmit(formSubmit)}>
         <Stack spacing={4} alignItems={"center"}>
           <Grid container gridTemplateColumns={"50% 50%"} gap={10}>
-            <Stack spacing={2}>
-              <label htmlFor="name">Name</label>
+            <Stack spacing={4}>
+             
               <TextField
                 id="name"
-                required
                 placeholder="Name"
+                label="Name"
                 helperText={errors.username?.message}
                 {...register("username", { required: true })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircleTwoToneIcon  fontSize="small"/>
+                    </InputAdornment>
+                  ),
+                }}
               />
-              <label htmlFor="phone">Phone</label>
+             
               <TextField
                 id="phone"
-                required
                 placeholder="9876543210"
+                label="Phone"
                 helperText={errors.phone?.message}
                 {...register("phone", { required: true })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PhoneTwoToneIcon  fontSize="small"/>
+                    </InputAdornment>
+                  ),
+                }}
               />
-              <label htmlFor="company">Company</label>
+              
               <TextField
                 id="company"
-                required
-                placeholder="Infosys"
+                placeholder="XYZ International"
+                label="Company"
                 helperText={errors.company?.message}
                 {...register("company", { required: true })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <BusinessTwoToneIcon  fontSize="small"/>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Stack>
-            <Stack spacing={2}>
-              <label htmlFor="email">Email</label>
+            <Stack spacing={4}>
+           
               <TextField
                 id="email"
-                required
                 placeholder="john.doe@email.com"
+                label="Email"
                 helperText={errors.email?.message}
                 {...register("email", { required: true })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LocalPostOfficeTwoToneIcon fontSize="small"/>
+                    </InputAdornment>
+                  ),
+                }}
               />
 
-              <label htmlFor="password">Password</label>
               <TextField
                 id="password"
                 helperText={errors.password?.message}
                 {...register("password", { required: true })}
                 type={showPassword ? "text" : "password"}
                 placeholder="************"
+                label="Password"
                 InputProps={{
+                  startAdornment:(
+                    <InputAdornment position="start">
+                      <LockTwoToneIcon fontSize="small"/>
+                    </InputAdornment>
+                  ),
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="end" >
                       <IconButton
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
@@ -125,22 +172,29 @@ const SignupPage = () => {
                   ),
                 }}
               />
-
-              <label htmlFor="role">Role</label>
+              <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Role</InputLabel>
               <Select
                 id="role"
-                value={role}
+                label="Role"
+                labelId="demo-simple-select-label"
                 {...register("role")}
                 onChange={handleChange}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Diversity3TwoToneIcon />
+                  </InputAdornment>
+                }
               >
                 <MenuItem value={"Admin"}>Admin</MenuItem>
                 <MenuItem value={"Shipper"}>Shipper</MenuItem>
                 <MenuItem value={"Carrier"}>Carrier</MenuItem>
               </Select>
+              </FormControl>
             </Stack>
           </Grid>
           <div style={{ width: "150px" }}>
-            <Button variant="contained" fullWidth type="submit">
+            <Button variant="contained"  fullWidth type="submit">
               Submit
             </Button>
           </div>
