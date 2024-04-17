@@ -20,6 +20,7 @@ import signUpSchema from "../validationSchemas/signUpSchema";
 import { setAppRole } from "../redux/slices/appStateSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { APIResult } from "../utility/constants";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -57,9 +58,11 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
-    dispatch(setAppRole(data.role));
-    await signUpUser(data).unwrap();
-    navigate("/dashboard");
+    const { message } = await signUpUser(data).unwrap();
+    if (message === APIResult.signUpSuccess) {
+      dispatch(setAppRole(data.role));
+      navigate("/dashboard");
+    }
   };
 
   return (

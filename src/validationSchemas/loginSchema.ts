@@ -9,7 +9,6 @@ const loginSchema = object()
       .required("*This is required field")
       .min(8, "*Password must be at least 8 characters")
       .max(32, "*Password can not be more than 32 characters"),
-    role: string().required("*This field is required"),
   })
   .required();
 

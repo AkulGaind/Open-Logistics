@@ -1,6 +1,6 @@
 export interface AppState {
     loggedIn: boolean;
-    appRole: ILogin['role'];
+    appRole: "Admin" | "Shipper" | "Carrier" | string;
 }
 
 export interface StyledCardProps {
@@ -16,11 +16,18 @@ export interface LabelControllerProps {
 export interface ILogin {
     email: string;
     password: string;
-    role: "Admin" | "Shipper" | "Carrier" | string;
 }
 
 export interface ISignUp extends ILogin {
     username: string;
     phone: string;
     company: string;
+    role: "Admin" | "Shipper" | "Carrier" | string;
+}
+
+export interface IResponse {
+    message: string,
+    token: string,
+    userId: string;
+    role?: string;
 }
