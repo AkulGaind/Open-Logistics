@@ -14,7 +14,7 @@ const components = {
           color: "white", // Text color for outlined primary button
           borderColor: "white", // Border color for outlined primary button
           "&:hover": {
-            color: "#fd7014cc",
+            color: "#FFCD29",
           },
         },
       },
