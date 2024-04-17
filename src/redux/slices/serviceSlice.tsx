@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ILogin, IResponse, ISignUp } from "../../interfaces/interfaces";
+import { IContactDetails, ILogin, IResponse, ISignUp } from "../../interfaces/interfaces";
 
 const backendUrl = "http://localhost:3000/api/auth";
 if (!backendUrl) {
@@ -52,10 +52,29 @@ export const appApi = createApi({
         };
       },
     }),
+    contactUs: builder.mutation<Pick<IResponse, 'message'>, IContactDetails>({
+      query: ({ name, email, message }) => {
+        const reqData = {
+          name: name,
+          email: email,
+          message: message,
+        };
+
+        return {
+          url: `/contact`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: reqData,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useLoginUserMutation,
   useSignUpUserMutation,
+  useContactUsMutation,
 } = appApi;
