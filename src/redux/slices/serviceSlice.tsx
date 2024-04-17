@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ILogin, ISignUp } from "../../interfaces/interfaces";
-import { log } from "console";
+import { ILogin, IResponse, ISignUp } from "../../interfaces/interfaces";
 
 const backendUrl = "http://localhost:3000/api/auth";
 if (!backendUrl) {
@@ -15,15 +14,12 @@ export const appApi = createApi({
   reducerPath: "appApi",
   baseQuery: fetchBaseQuery({ baseUrl: backendUrl, fetchFn: customFetchFn }),
   endpoints: (builder) => ({
-    loginUser: builder.mutation<string, ILogin>({
-      query: ({ email, password, role }) => {
-        console.log(email, password, role);
+    loginUser: builder.mutation<IResponse, ILogin>({
+      query: ({ email, password }) => {
         const reqData = {
           email: email,
           password: password,
-          role: role,
         };
-        console.log("data",reqData);
         return {
           url: `/login`,
           method: "POST",
@@ -34,15 +30,14 @@ export const appApi = createApi({
         };
       },
     }),
-    signUpUser: builder.mutation<string, ISignUp>({
+    signUpUser: builder.mutation<IResponse, ISignUp>({
       query: ({ username, email, phone, password, company, role }) => {
-        console.log(username, email, phone, password, company, role);
         const reqData = {
           username: username,
           email: email,
           phone: phone,
           password: password,
-          company: company,
+          companyName: company,
           role: role,
         };
 

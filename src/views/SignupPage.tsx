@@ -21,6 +21,7 @@ import signUpSchema from "../validationSchemas/signUpSchema";
 import { setAppRole } from "../redux/slices/appStateSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { APIResult } from "../utility/constants";
 import LocalPostOfficeTwoToneIcon from '@mui/icons-material/LocalPostOfficeTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import PhoneTwoToneIcon from '@mui/icons-material/PhoneTwoTone';
@@ -64,9 +65,11 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
-    dispatch(setAppRole(data.role));
-    await signUpUser(data).unwrap();
-    navigate("/dashboard");
+    const { message } = await signUpUser(data).unwrap();
+    if (message === APIResult.signUpSuccess) {
+      dispatch(setAppRole(data.role));
+      navigate("/dashboard");
+    }
   };
 
   return (
