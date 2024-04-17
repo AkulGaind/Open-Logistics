@@ -73,7 +73,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Stack alignItems={"center"} spacing={8}>
+    <Stack alignItems={"center"} spacing={8} p={10}>
       <img 
         src={"src/assets/images/signup.png"}
         style={{
@@ -180,6 +180,7 @@ const SignupPage = () => {
               <Select
                 id="role"
                 label="Role"
+                value={role}
                 labelId="demo-simple-select-label"
                 {...register("role")}
                 onChange={handleChange}
