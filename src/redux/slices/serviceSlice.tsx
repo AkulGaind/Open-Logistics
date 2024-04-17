@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ILogin, ISignUp } from "../../interfaces/interfaces";
+import { log } from "console";
 
 const backendUrl = "http://localhost:3000/api/auth";
 if (!backendUrl) {
@@ -22,7 +23,7 @@ export const appApi = createApi({
           password: password,
           role: role,
         };
-
+        console.log("data",reqData);
         return {
           url: `/login`,
           method: "POST",
