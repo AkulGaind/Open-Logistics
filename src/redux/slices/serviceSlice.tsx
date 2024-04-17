@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IContactDetails, ILogin, IResponse, ISignUp } from "../../interfaces/interfaces";
 
-const backendUrl = "http://localhost:3000/api/auth";
+const backendUrl = "http://localhost:3000/api/";
 if (!backendUrl) {
   throw new Error("You need to provide REACT_APP_BACKEND_URL env variable");
 }
@@ -21,7 +21,7 @@ export const appApi = createApi({
           password: password,
         };
         return {
-          url: `/login`,
+          url: `auth/login`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const appApi = createApi({
         };
 
         return {
-          url: `/register`,
+          url: `auth/register`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const appApi = createApi({
         };
 
         return {
-          url: `/contact`,
+          url: `form/contact`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
