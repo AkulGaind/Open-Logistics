@@ -38,7 +38,7 @@ export const appApi = createApi({
           phone: phone,
           password: password,
           companyName: company,
-          role: role,
+          roles: role,
         };
 
         return {
@@ -51,10 +51,10 @@ export const appApi = createApi({
         };
       },
     }),
-    contactUs: builder.mutation<Pick<IResponse, 'message'>, IContactDetails>({
+    contactUs: builder.mutation<Pick<IResponse, 'msg'>, IContactDetails>({
       query: ({ name, email, message }) => {
         const reqData = {
-          name: name,
+          username: name,
           email: email,
           message: message,
         };

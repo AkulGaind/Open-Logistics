@@ -26,7 +26,7 @@ export interface ISignUp extends ILogin {
 }
 
 export interface IResponse {
-  message: string;
+  msg: string;
   token: string;
   userId: string;
   role?: string;
