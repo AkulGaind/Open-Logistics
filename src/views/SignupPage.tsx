@@ -65,8 +65,8 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
-    const { message } = await signUpUser(data).unwrap();
-    if (message === APIResult.signUpSuccess) {
+    const { msg } = await signUpUser(data).unwrap();
+    if (msg === APIResult.signUpSuccess) {
       dispatch(setAppRole(data.role));
       navigate("/dashboard");
     }
