@@ -37,3 +37,13 @@ export interface IContactDetails {
   email: string;
   message: string;
 }
+
+export interface ILoadPosting {
+  origin: string;
+  destination: string;
+  shipmentType: string;
+  shipmentWeight: string;
+  pickUpDate: Date;
+  deliveryDate: Date;
+  addDetails: string;
+}

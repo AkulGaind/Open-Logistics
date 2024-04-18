@@ -11,7 +11,7 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  TextField
+  TextField,
 } from "@mui/material";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -22,12 +22,12 @@ import { setAppRole } from "../redux/slices/appStateSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APIResult } from "../utility/constants";
-import LocalPostOfficeTwoToneIcon from '@mui/icons-material/LocalPostOfficeTwoTone';
-import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import PhoneTwoToneIcon from '@mui/icons-material/PhoneTwoTone';
-import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone';
-import Diversity3TwoToneIcon from '@mui/icons-material/Diversity3TwoTone';
-import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
+import LocalPostOfficeTwoToneIcon from "@mui/icons-material/LocalPostOfficeTwoTone";
+import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import PhoneTwoToneIcon from "@mui/icons-material/PhoneTwoTone";
+import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
+import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
+import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -53,7 +53,6 @@ const SignupPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getFieldState: {},
   } = method;
 
   const handleClickShowPassword = () => {
@@ -74,19 +73,19 @@ const SignupPage = () => {
 
   return (
     <Stack alignItems={"center"} spacing={8} p={10}>
-      <img 
+      <img
         src={"src/assets/images/signup.png"}
         style={{
-          marginTop:"10px",
+          marginTop: "10px",
           height: "100px",
           width: "100px",
           objectFit: "contain",
-        }}></img>
+        }}
+      ></img>
       <form onSubmit={handleSubmit(formSubmit)}>
         <Stack spacing={4} alignItems={"center"}>
           <Grid container gridTemplateColumns={"50% 50%"} gap={10}>
             <Stack spacing={4}>
-             
               <TextField
                 id="name"
                 placeholder="Name"
@@ -96,12 +95,11 @@ const SignupPage = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <AccountCircleTwoToneIcon  fontSize="small"/>
+                      <AccountCircleTwoToneIcon fontSize="small" />
                     </InputAdornment>
                   ),
                 }}
               />
-             
               <TextField
                 id="phone"
                 placeholder="9876543210"
@@ -111,12 +109,11 @@ const SignupPage = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <PhoneTwoToneIcon  fontSize="small"/>
+                      <PhoneTwoToneIcon fontSize="small" />
                     </InputAdornment>
                   ),
                 }}
               />
-              
               <TextField
                 id="company"
                 placeholder="XYZ International"
@@ -126,14 +123,13 @@ const SignupPage = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <BusinessTwoToneIcon  fontSize="small"/>
+                      <BusinessTwoToneIcon fontSize="small" />
                     </InputAdornment>
                   ),
                 }}
               />
             </Stack>
             <Stack spacing={4}>
-           
               <TextField
                 id="email"
                 placeholder="john.doe@email.com"
@@ -143,12 +139,11 @@ const SignupPage = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LocalPostOfficeTwoToneIcon fontSize="small"/>
+                      <LocalPostOfficeTwoToneIcon fontSize="small" />
                     </InputAdornment>
                   ),
                 }}
               />
-
               <TextField
                 id="password"
                 helperText={errors.password?.message}
@@ -157,13 +152,13 @@ const SignupPage = () => {
                 placeholder="************"
                 label="Password"
                 InputProps={{
-                  startAdornment:(
+                  startAdornment: (
                     <InputAdornment position="start">
-                      <LockTwoToneIcon fontSize="small"/>
+                      <LockTwoToneIcon fontSize="small" />
                     </InputAdornment>
                   ),
                   endAdornment: (
-                    <InputAdornment position="end" >
+                    <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
@@ -176,29 +171,29 @@ const SignupPage = () => {
                 }}
               />
               <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Role</InputLabel>
-              <Select
-                id="role"
-                label="Role"
-                value={role}
-                labelId="demo-simple-select-label"
-                {...register("role")}
-                onChange={handleChange}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Diversity3TwoToneIcon />
-                  </InputAdornment>
-                }
-              >
-                <MenuItem value={"Admin"}>Admin</MenuItem>
-                <MenuItem value={"Shipper"}>Shipper</MenuItem>
-                <MenuItem value={"Carrier"}>Carrier</MenuItem>
-              </Select>
+                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                <Select
+                  id="role"
+                  label="Role"
+                  value={role}
+                  labelId="demo-simple-select-label"
+                  {...register("role")}
+                  onChange={handleChange}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Diversity3TwoToneIcon />
+                    </InputAdornment>
+                  }
+                >
+                  <MenuItem value={"Admin"}>Admin</MenuItem>
+                  <MenuItem value={"Shipper"}>Shipper</MenuItem>
+                  <MenuItem value={"Carrier"}>Carrier</MenuItem>
+                </Select>
               </FormControl>
             </Stack>
           </Grid>
           <div style={{ width: "150px" }}>
-            <Button variant="contained"  fullWidth type="submit">
+            <Button variant="contained" fullWidth type="submit">
               Submit
             </Button>
           </div>

@@ -35,7 +35,6 @@ const HomePage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getFieldState: {},
   } = method;
 
   const formSubmit: SubmitHandler<IContactDetails> = async (
