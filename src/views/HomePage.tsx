@@ -47,17 +47,18 @@ const HomePage = () => {
         className="imageContainer"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          height: "100vh",
+          height: "80vh",
           display: "flex",
           position: "relative",
-          objectFit: "contain", //
+          objectFit: "contain", 
         }}
       >
-        <div style={{ position: "absolute", top: 120, left: 50 }}>
+        <div >
           <Typography
             sx={{
               color: myColors.textBlack,
               maxWidth: "580px",
+              paddingTop: "50px",
             }}
             variant="h2"
             fontSize={"45px"}
@@ -122,8 +123,8 @@ const HomePage = () => {
           <img
             src={"src/assets/images/about.png"}
             style={{
-              height: "20%",
-              width: "20%",
+              height: "35%",
+              width: "35%",
             }}
           ></img>
         </Stack>
@@ -153,7 +154,6 @@ const HomePage = () => {
             <FormProvider {...method}>
               <form onSubmit={handleSubmit(formSubmit)}>
                 <Stack spacing={1.5} mb={2}>
-                  <label htmlFor="name">Name</label>
                   <TextField
                     InputProps={{
                       style: {
@@ -161,14 +161,14 @@ const HomePage = () => {
                       },
                     }}
                     id="name"
-                    required
+                    variant="outlined"
+                    label="Name"
                     placeholder="john doe"
                     helperText={errors.name?.message}
                     {...register("name", { required: true })}
                   />
                 </Stack>
                 <Stack spacing={1.5} mb={2}>
-                  <label htmlFor="email">Email</label>
                   <TextField
                     InputProps={{
                       style: {
@@ -176,14 +176,14 @@ const HomePage = () => {
                       },
                     }}
                     id="email"
-                    required
+                    variant="outlined"
+                    label="Email"
                     placeholder="john.doe@email.com"
                     helperText={errors.email?.message}
                     {...register("email", { required: true })}
                   />
                 </Stack>
                 <Stack spacing={1.5} mb={2}>
-                  <label htmlFor="message">Message</label>
                   <TextField
                     InputProps={{
                       style: {
@@ -191,7 +191,8 @@ const HomePage = () => {
                       },
                     }}
                     id="message"
-                    required
+                    variant="outlined"
+                    label="Message"
                     placeholder="description"
                     helperText={errors.message?.message}
                     {...register("message", { required: true })}

@@ -4,7 +4,7 @@ const required = "*This field is required";
 
 const contactDetailsSchema = object()
   .shape({
-    name: string().required(required),
+    username: string().required(required),
     email: string()
       .required(required)
       .email("*Please enter valid email address"),
