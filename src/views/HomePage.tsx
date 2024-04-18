@@ -1,9 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Stack, TextField, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+  Grid,
+  Container,
+} from "@mui/material";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Typewriter from "typewriter-effect";
-import backgroundImage from "../assets/images/truck.png";
+import Typewriter, { TypewriterClass } from "typewriter-effect";
 import { IContactDetails } from "../interfaces/interfaces";
 import { useContactUsMutation } from "../redux/slices/serviceSlice";
 import myColors from "../themes/colors";
@@ -35,51 +42,51 @@ const HomePage = () => {
     data: IContactDetails
   ) => {
     console.log(data);
-    const { message } = await contactUs(data).unwrap();
-    if (message === APIResult.contactUsSuccess) {
+    const { msg } = await contactUs(data).unwrap();
+    if (msg === APIResult.contactUsSuccess) {
       navigate("/dashboard");
     }
   };
 
   return (
-    <Box padding={10}>
-      <div
-        className="imageContainer"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          height: "100vh",
-          display: "flex",
-          position: "relative",
-          objectFit: "contain", //
-        }}
+    <Container>
+      <Stack
+        direction={"row"}
+        alignItems="center"
+        justifyContent={"space-between"}
       >
-        <div style={{ position: "absolute", top: 120, left: 50 }}>
-          <Typography
-            sx={{
-              color: myColors.textBlack,
-              maxWidth: "580px",
+        <Typography
+          sx={{
+            color: myColors.textBlack,
+            maxWidth: "580px",
+          }}
+          variant="h2"
+          fontSize={"45px"}
+          fontWeight={600}
+        >
+          <Typewriter
+            onInit={(typewriter: TypewriterClass) => {
+              typewriter
+                .changeDelay(50)
+                .typeString(
+                  "Bridge the gap between shippers and carriers with connectivity"
+                )
+                .pauseFor(1200)
+                .changeDeleteSpeed(30)
+                .deleteChars(12)
+                .typeString("seamless connectivity")
+                .start();
             }}
-            variant="h2"
-            fontSize={"45px"}
-            fontWeight={600}
-          >
-            <Typewriter
-              onInit={(typewriter: any) => {
-                typewriter
-                  .changeDelay(50)
-                  .typeString(
-                    "Bridge the gap between shippers and carriers with connectivity"
-                  )
-                  .pauseFor(1200)
-                  .changeDeleteSpeed(30)
-                  .deleteChars(12)
-                  .typeString("seamless connectivity")
-                  .start();
-              }}
-            />
-          </Typography>
-        </div>
-      </div>
+          />
+        </Typography>
+        <img
+          src={"src/assets/images/truck.png"}
+          style={{
+            height: "60%",
+            width: "60%",
+          }}
+        />
+      </Stack>
       <Box paddingBottom={10}>
         <Typography
           sx={{
@@ -122,13 +129,13 @@ const HomePage = () => {
           <img
             src={"src/assets/images/about.png"}
             style={{
-              height: "20%",
-              width: "20%",
+              height: "30%",
+              width: "30%",
             }}
           ></img>
         </Stack>
       </Box>
-      <Box>
+      <Box paddingBottom={10}>
         <Typography
           sx={{
             color: myColors.yellow.main,
@@ -207,7 +214,7 @@ const HomePage = () => {
           </Stack>
         </Grid>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
