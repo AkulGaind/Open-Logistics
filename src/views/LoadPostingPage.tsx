@@ -102,7 +102,7 @@ const LoadPostingPage = () => {
                   {...register("shipmentType", { required: true })}
                 />
                 <DateTimeController
-                  value={dayjs(new Date())}
+                  value={dayjs(defaultValues.pickUpDate)}
                   name="pickUpDate"
                   label="Preferred Pickup Date/Time"
                 />
@@ -148,7 +148,7 @@ const LoadPostingPage = () => {
                   {...register("shipmentWeight", { required: true })}
                 />
                 <DateTimeController
-                  value={dayjs(new Date())}
+                  value={dayjs(defaultValues.deliveryDate)}
                   name="deliveryDate"
                   label="Preferred Delivery Date/Time"
                 />

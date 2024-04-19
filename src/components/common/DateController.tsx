@@ -27,18 +27,25 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({
       control={control}
       defaultValue={dayjs(defaultValue)}
       name={name}
-      render={({ field: { ref, ...fields } }) => (
+      render={({ field: { ref, ...fields }, fieldState: { error } }) => (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             {...fields}
             inputRef={ref}
             label={fields.name}
             format="DD/MM/YYYY HH:mm"
-            value={dayjs(new Date(fields.value))}
+            value={fields.value}
             onChange={(date) => {
-              fields.onChange(date ? new Date(date.valueOf()) : null);
+              fields.onChange(date ?? null);
             }}
-            slotProps={{ textField: { variant: "standard" } }}
+            slotProps={{
+              textField: {
+                id: fields.name,
+                variant: "standard",
+                required: true,
+                helperText: error?.message,
+              },
+            }}
             {...props}
           />
         </LocalizationProvider>
