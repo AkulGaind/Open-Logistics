@@ -33,7 +33,7 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({
             {...fields}
             inputRef={ref}
             label={fields.name}
-            format="DD/MM/YYYY HH:mm"
+            format="DD/MM/YYYY hh:mm A"
             value={fields.value}
             onChange={(date) => {
               fields.onChange(date ?? null);
