@@ -33,7 +33,7 @@ export interface IResponse {
 }
 
 export interface IContactDetails {
-  name: string;
+  username: string;
   email: string;
   message: string;
 }
