@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IContactDetails, ILogin, IResponse, ISignUp } from "../../interfaces/interfaces";
+import {
+  IContactDetails,
+  ILoadPosting,
+  ILogin,
+  IResponse,
+  ISignUp,
+} from "../../interfaces/interfaces";
 
 const backendUrl = "http://localhost:3000/api/";
 if (!backendUrl) {
@@ -51,7 +57,7 @@ export const appApi = createApi({
         };
       },
     }),
-    contactUs: builder.mutation<Pick<IResponse, 'msg'>, IContactDetails>({
+    contactUs: builder.mutation<Pick<IResponse, "msg">, IContactDetails>({
       query: ({ name, email, message }) => {
         const reqData = {
           username: name,
@@ -69,6 +75,36 @@ export const appApi = createApi({
         };
       },
     }),
+    loadPosting: builder.mutation<Pick<IResponse, "msg">, ILoadPosting>({
+      query: ({
+        origin,
+        destination,
+        shipmentType,
+        shipmentWeight,
+        pickUpDate,
+        deliveryDate,
+        addDetails,
+      }) => {
+        const reqData = {
+          origin: origin,
+          destination: destination,
+          shipmentType: shipmentType,
+          shipmentWeight: shipmentWeight,
+          pickUpDate: pickUpDate,
+          deliveryDate: deliveryDate,
+          addDetails: addDetails,
+        };
+
+        return {
+          url: `form/loadPosting`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: reqData,
+        };
+      },
+    }),
   }),
 });
 
@@ -76,4 +112,5 @@ export const {
   useLoginUserMutation,
   useSignUpUserMutation,
   useContactUsMutation,
+  useLoadPostingMutation,
 } = appApi;
