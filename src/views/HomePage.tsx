@@ -1,5 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Stack, TextField, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Stack,
+  TextField,
+  Typography
+} from "@mui/material";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Typewriter from "typewriter-effect";
@@ -28,15 +35,14 @@ const HomePage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getFieldState: {},
   } = method;
 
   const formSubmit: SubmitHandler<IContactDetails> = async (
     data: IContactDetails
   ) => {
     console.log(data);
-    const { message } = await contactUs(data).unwrap();
-    if (message === APIResult.contactUsSuccess) {
+    const { msg } = await contactUs(data).unwrap();
+    if (msg === APIResult.contactUsSuccess) {
       navigate("/dashboard");
     }
   };
@@ -129,7 +135,7 @@ const HomePage = () => {
           ></img>
         </Stack>
       </Box>
-      <Box>
+      <Box paddingBottom={10}>
         <Typography
           sx={{
             color: myColors.yellow.main,

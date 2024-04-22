@@ -8,7 +8,7 @@ const Footer = () => {
           <img
             src={"src/assets/images/logo.png"}
             alt="Logo"
-            width="300px"
+            width="200px"
           ></img>
         </Box>
         <Stack direction={"row"} spacing={5}>
