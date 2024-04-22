@@ -14,7 +14,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [contactUs] = useContactUsMutation();
   const defaultValues: IContactDetails = {
-    name: "",
+    username: "",
     email: "",
     message: "",
   };
@@ -164,8 +164,8 @@ const HomePage = () => {
                     variant="outlined"
                     label="Name"
                     placeholder="john doe"
-                    helperText={errors.name?.message}
-                    {...register("name", { required: true })}
+                    helperText={errors.username?.message}
+                    {...register("username", { required: true })}
                   />
                 </Stack>
                 <Stack spacing={1.5} mb={2}>
