@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-
+const currentYear = new Date().getFullYear();
 const Footer = () => {
   return (
     <Box style={{ backgroundColor: "#B3B3B3" }} p={"2% 3% 3%"}>
@@ -43,25 +43,32 @@ const Footer = () => {
       />
       <Stack direction={"row"} justifyContent={"space-between"} paddingTop={2}>
         <Typography variant="h6" alignContent={"center"}>
-          &copy; 2024 OPEN LOGISTICS &trade;
+          &copy; {currentYear} OPEN LOGISTICS &trade;
         </Typography>
         <Stack direction={"row"} spacing={2}>
           <img
             src={"src/assets/images/facebook.png"}
             alt="Logo"
-            width={48}
+            width={36}
+            height={36}
           ></img>
           <img
             src={"src/assets/images/instagram.png"}
             alt="Logo"
-            width={48}
+            width={36}
+            height={36}
           ></img>
           <img
-            src={"src/assets/images/twitterx.png"}
+            src={"src/assets/images/x.png"}
             alt="Logo"
-            width={48}
+            width={36}
+            height={36}
           ></img>
-          <img src={"src/assets/images/github.png"} alt="Logo" width={48}></img>
+          <img src={"src/assets/images/github.png"} 
+          alt="Logo"   
+          width={36}
+          height={36}
+          >          </img>
         </Stack>
       </Stack>
     </Box>

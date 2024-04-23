@@ -169,7 +169,7 @@ const HomePage = () => {
                     id="name"
                     variant="outlined"
                     label="Name"
-                    placeholder="john doe"
+                    placeholder="John Doe"
                     helperText={errors.username?.message}
                     {...register("username", { required: true })}
                   />
