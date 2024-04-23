@@ -2,15 +2,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
   Button,
+  Grid,
   Stack,
   TextField,
-  Typography,
-  Grid,
-  Container,
+  Typography
 } from "@mui/material";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Typewriter, { TypewriterClass } from "typewriter-effect";
+import Typewriter from "typewriter-effect";
+import backgroundImage from "../assets/images/truck.png";
 import { IContactDetails } from "../interfaces/interfaces";
 import { useContactUsMutation } from "../redux/slices/serviceSlice";
 import myColors from "../themes/colors";
@@ -21,7 +21,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [contactUs] = useContactUsMutation();
   const defaultValues: IContactDetails = {
-    name: "",
+    username: "",
     email: "",
     message: "",
   };
@@ -48,44 +48,45 @@ const HomePage = () => {
   };
 
   return (
-    <Container>
-      <Stack
-        direction={"row"}
-        alignItems="center"
-        justifyContent={"space-between"}
+    <Box padding={10}>
+      <div
+        className="imageContainer"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          height: "80vh",
+          display: "flex",
+          position: "relative",
+          objectFit: "contain", 
+        }}
       >
-        <Typography
-          sx={{
-            color: myColors.textBlack,
-            maxWidth: "580px",
-          }}
-          variant="h2"
-          fontSize={"45px"}
-          fontWeight={600}
-        >
-          <Typewriter
-            onInit={(typewriter: TypewriterClass) => {
-              typewriter
-                .changeDelay(50)
-                .typeString(
-                  "Bridge the gap between shippers and carriers with connectivity"
-                )
-                .pauseFor(1200)
-                .changeDeleteSpeed(30)
-                .deleteChars(12)
-                .typeString("seamless connectivity")
-                .start();
+        <div >
+          <Typography
+            sx={{
+              color: myColors.textBlack,
+              maxWidth: "580px",
+              paddingTop: "50px",
             }}
-          />
-        </Typography>
-        <img
-          src={"src/assets/images/truck.png"}
-          style={{
-            height: "60%",
-            width: "60%",
-          }}
-        />
-      </Stack>
+            variant="h2"
+            fontSize={"45px"}
+            fontWeight={600}
+          >
+            <Typewriter
+              onInit={(typewriter: any) => {
+                typewriter
+                  .changeDelay(50)
+                  .typeString(
+                    "Bridge the gap between shippers and carriers with connectivity"
+                  )
+                  .pauseFor(1200)
+                  .changeDeleteSpeed(30)
+                  .deleteChars(12)
+                  .typeString("seamless connectivity")
+                  .start();
+              }}
+            />
+          </Typography>
+        </div>
+      </div>
       <Box paddingBottom={10}>
         <Typography
           sx={{
@@ -128,8 +129,8 @@ const HomePage = () => {
           <img
             src={"src/assets/images/about.png"}
             style={{
-              height: "30%",
-              width: "30%",
+              height: "35%",
+              width: "35%",
             }}
           ></img>
         </Stack>
@@ -159,7 +160,6 @@ const HomePage = () => {
             <FormProvider {...method}>
               <form onSubmit={handleSubmit(formSubmit)}>
                 <Stack spacing={1.5} mb={2}>
-                  <label htmlFor="name">Name</label>
                   <TextField
                     InputProps={{
                       style: {
@@ -167,14 +167,14 @@ const HomePage = () => {
                       },
                     }}
                     id="name"
-                    required
+                    variant="outlined"
+                    label="Name"
                     placeholder="john doe"
-                    helperText={errors.name?.message}
-                    {...register("name", { required: true })}
+                    helperText={errors.username?.message}
+                    {...register("username", { required: true })}
                   />
                 </Stack>
                 <Stack spacing={1.5} mb={2}>
-                  <label htmlFor="email">Email</label>
                   <TextField
                     InputProps={{
                       style: {
@@ -182,14 +182,14 @@ const HomePage = () => {
                       },
                     }}
                     id="email"
-                    required
+                    variant="outlined"
+                    label="Email"
                     placeholder="john.doe@email.com"
                     helperText={errors.email?.message}
                     {...register("email", { required: true })}
                   />
                 </Stack>
                 <Stack spacing={1.5} mb={2}>
-                  <label htmlFor="message">Message</label>
                   <TextField
                     InputProps={{
                       style: {
@@ -197,7 +197,8 @@ const HomePage = () => {
                       },
                     }}
                     id="message"
-                    required
+                    variant="outlined"
+                    label="Message"
                     placeholder="description"
                     helperText={errors.message?.message}
                     {...register("message", { required: true })}
@@ -213,7 +214,7 @@ const HomePage = () => {
           </Stack>
         </Grid>
       </Box>
-    </Container>
+    </Box>
   );
 };
 
