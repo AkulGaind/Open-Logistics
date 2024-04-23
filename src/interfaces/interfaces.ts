@@ -43,6 +43,7 @@ export interface ILoadPosting {
   destination: string;
   shipmentType: string;
   shipmentWeight: string;
+  shipmentUnits: string;
   pickUpDate: Date;
   deliveryDate: Date;
   addDetails: string;

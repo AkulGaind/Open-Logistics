@@ -7,6 +7,7 @@ const loadPostingSchema = object().shape({
   destination: string().required(required),
   shipmentType: string().required(required),
   shipmentWeight: string().required(required),
+  shipmentUnits: string().required(required),
   pickUpDate: date().required(required),
   deliveryDate: date()
     .when("pickUpDate", (pickUpDate, schema) => {

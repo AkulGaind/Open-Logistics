@@ -2,7 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Button,
   Container,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -13,19 +17,28 @@ import { useNavigate } from "react-router-dom";
 import { ILoadPosting } from "../interfaces/interfaces";
 import { useLoadPostingMutation } from "../redux/slices/serviceSlice";
 import myColors from "../themes/colors";
-import { APIResult } from "../utility/constants";
+import {
+  APIResult,
+  shipment_type,
+  shipment_weight_units,
+} from "../utility/constants";
 import loadPostingSchema from "../validationSchemas/loadPostingSchema";
 import DateTimeController from "../components/common/DateController";
+import { useState } from "react";
 
 const LoadPostingPage = () => {
   const navigate = useNavigate();
   const [loadPosting] = useLoadPostingMutation();
+  const [selectedShipmentType, setSelectedShipmentType] = useState("");
+  const [selectedShipmentWeightUnits, setSelectedShipmentWeightUnits] =
+    useState("");
 
   const defaultValues: ILoadPosting = {
     origin: "",
     destination: "",
     shipmentType: "",
     shipmentWeight: "",
+    shipmentUnits: "",
     pickUpDate: new Date(),
     deliveryDate: new Date(),
     addDetails: "",
@@ -88,31 +101,44 @@ const LoadPostingPage = () => {
                   helperText={errors.origin?.message}
                   {...register("origin", { required: true })}
                 />
-                <TextField
-                  label="Shipment Type"
-                  variant="standard"
-                  InputProps={{
-                    style: {
-                      borderRadius: "10px",
-                    },
-                  }}
-                  id="shipmentType"
-                  required
-                  helperText={errors.shipmentType?.message}
-                  {...register("shipmentType", { required: true })}
-                />
+                <FormControl variant="standard">
+                  <InputLabel id="shipmentType" required>
+                    Shipment Type
+                  </InputLabel>
+                  <Select
+                    labelId="shipmentType"
+                    label="Shipment Type"
+                    variant="standard"
+                    id="shipmentType"
+                    value={selectedShipmentType}
+                    onChange={(e) => setSelectedShipmentType(e.target.value)}
+                    style={{ borderRadius: "10px" }}
+                  >
+                    {shipment_type.map((c) => (
+                      <MenuItem key={c.key} value={c.key}>
+                        {c.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
                 <DateTimeController
                   value={dayjs(defaultValues.pickUpDate)}
                   name="pickUpDate"
                   label="Preferred Pickup Date/Time"
                 />
                 <TextField
+                  multiline
+                  rows={5}
                   label="Additional Details"
                   variant="standard"
                   InputProps={{
                     style: {
                       borderRadius: "10px",
+                      backgroundColor: myColors.backgroundGrey,
                     },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
                   id="addDetails"
                   required
@@ -134,19 +160,50 @@ const LoadPostingPage = () => {
                   helperText={errors.destination?.message}
                   {...register("destination", { required: true })}
                 />
-                <TextField
-                  label="Shipment Weight or Volume"
-                  variant="standard"
-                  InputProps={{
-                    style: {
-                      borderRadius: "10px",
-                    },
-                  }}
-                  id="shipmentWeight"
-                  required
-                  helperText={errors.shipmentWeight?.message}
-                  {...register("shipmentWeight", { required: true })}
-                />
+                <Stack
+                  direction={"row"}
+                  spacing={6}
+                  justifyContent={"space-between"}
+                >
+                  <TextField
+                    fullWidth
+                    label="Shipment Weight or Volume"
+                    variant="standard"
+                    id="shipmentWeight"
+                    InputProps={{
+                      style: {
+                        borderRadius: "10px",
+                      },
+                    }}
+                    required
+                    helperText={errors.shipmentWeight?.message}
+                    {...register("shipmentWeight", { required: true })}
+                  />
+                  <FormControl variant="standard" fullWidth>
+                    <InputLabel id="shipmentWeight" required>
+                      Shipment Units
+                    </InputLabel>
+                    <Select
+                      labelId="shipmentUnits"
+                      label="Shipment Units"
+                      variant="standard"
+                      id="shipmentUnits"
+                      value={selectedShipmentWeightUnits}
+                      onChange={(e) =>
+                        setSelectedShipmentWeightUnits(e.target.value)
+                      }
+                      style={{
+                        borderRadius: "10px",
+                      }}
+                    >
+                      {shipment_weight_units.map((c) => (
+                        <MenuItem key={c.key} value={c.key}>
+                          {c.value}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Stack>
                 <DateTimeController
                   value={dayjs(defaultValues.deliveryDate)}
                   name="deliveryDate"
