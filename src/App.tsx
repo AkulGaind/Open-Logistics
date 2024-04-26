@@ -7,11 +7,17 @@ import SignupPage from "./views/SignupPage";
 import Dashboard from "./views/Dashboard";
 import Footer from "./components/layout/footer";
 import LoadPostingPage from "./views/LoadPostingPage";
+import Lottie from "lottie-react";
+import truckAnimation from "./components/ui/truckAnimation.json";
 
 function App() {
   return (
     <>
       <Navbar />
+       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Lottie animationData={truckAnimation} style={{ width: '50%', height: '50%' }} />
+       </div>
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
