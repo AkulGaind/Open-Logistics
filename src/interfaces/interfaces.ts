@@ -48,3 +48,7 @@ export interface ILoadPosting {
   deliveryDate: Date;
   addDetails: string;
 }
+
+export interface IBidPortal {
+  bidAmount: string;
+}

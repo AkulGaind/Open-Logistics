@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
+  IBidPortal,
   IContactDetails,
   ILoadPosting,
   ILogin,
@@ -107,6 +108,22 @@ export const appApi = createApi({
         };
       },
     }),
+    bidPortal: builder.mutation<Pick<IResponse, "msg">, IBidPortal>({
+      query: ({ bidAmount }) => {
+        const reqData = {
+          bidAmount: bidAmount,
+        };
+
+        return {
+          url: `form/bidPortal`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: reqData,
+        };
+      },
+    }),
   }),
 });
 
@@ -115,4 +132,5 @@ export const {
   useSignUpUserMutation,
   useContactUsMutation,
   useLoadPostingMutation,
+  useBidPortalMutation,
 } = appApi;
