@@ -8,6 +8,7 @@ import Dashboard from "./views/Dashboard";
 import Footer from "./components/layout/footer";
 import LoadPostingPage from "./views/LoadPostingPage";
 import BidPortalPage from "./views/BidPortalPage";
+import ShipperDashboard from "./views/ShipperDashboard";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/loadposting" element={<LoadPostingPage />} />
           <Route path="/bidportal" element={<BidPortalPage />} />
+          <Route path="/shipperdash" element={<ShipperDashboard />} />
         </Routes>
       </BrowserRouter>
       <Footer />
