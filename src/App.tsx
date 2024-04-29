@@ -7,6 +7,7 @@ import SignupPage from "./views/SignupPage";
 import Dashboard from "./views/Dashboard";
 import Footer from "./components/layout/footer";
 import LoadPostingPage from "./views/LoadPostingPage";
+import BidPortalPage from "./views/BidPortalPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/loadposting" element={<LoadPostingPage />} />
+          <Route path="/bidportal" element={<BidPortalPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />
