@@ -9,6 +9,7 @@ import Footer from "./components/layout/footer";
 import LoadPostingPage from "./views/LoadPostingPage";
 import Lottie from "lottie-react";
 import truckAnimation from "./components/ui/truckAnimation.json";
+import BidPortalPage from "./views/BidPortalPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/loadposting" element={<LoadPostingPage />} />
+          <Route path="/bidportal" element={<BidPortalPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />
