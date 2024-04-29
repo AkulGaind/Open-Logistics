@@ -72,11 +72,11 @@ const SignupPage = () => {
   };
 
   return (
-    <Stack alignItems={"center"} spacing={8} p={10}>
+    <Stack alignItems={"center"} spacing={5} p={10}>
       <img
         src={"src/assets/images/signup.png"}
         style={{
-          marginTop: "10px",
+          marginTop: "-50px",
           height: "100px",
           width: "100px",
           objectFit: "contain",
