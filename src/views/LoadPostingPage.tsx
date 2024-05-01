@@ -141,7 +141,7 @@ const LoadPostingPage = () => {
                     shrink: true,
                   }}
                   id="addDetails"
-                  required
+
                   helperText={errors.addDetails?.message}
                   {...register("addDetails", { required: true })}
                 />

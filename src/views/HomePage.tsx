@@ -48,7 +48,7 @@ const HomePage = () => {
   };
 
   return (
-    <Box padding={10}>
+    <Box pt={5} pl={10} pr={10} pb={10}>
       <div
         className="imageContainer"
         style={{
@@ -150,6 +150,7 @@ const HomePage = () => {
         <Grid container gridTemplateColumns={"1fr 1fr"} alignItems={"center"}>
           <img
             src={"src/assets/images/contactUs.png"}
+            alt="contactUs"
             style={{
               height: "40%",
               width: "40%",
@@ -169,7 +170,7 @@ const HomePage = () => {
                     id="name"
                     variant="outlined"
                     label="Name"
-                    placeholder="john doe"
+                    placeholder="John Doe"
                     helperText={errors.username?.message}
                     {...register("username", { required: true })}
                   />
