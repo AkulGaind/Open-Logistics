@@ -48,61 +48,49 @@ export const shipper_columns: readonly IShipperDashboardColumn[] = [
   {
     id: "shipperName",
     label: "Shipper Name",
-    width: "25%",
   },
   {
     id: "email",
     label: "Email",
-    width: "8%",
   },
   {
     id: "phone",
     label: "Phone",
-    width: "10%",
   },
   {
     id: "address",
     label: "Address",
-    width: "10%",
   },
   {
     id: "origin",
     label: "Shipment Origin",
-    width: "10%",
   },
   {
     id: "destination",
     label: "Shipment Destination",
-    width: "10%",
   },
   {
     id: "shipmentType",
     label: "Shipment Type",
-    width: "10%",
   },
   {
     id: "shipmentWeight",
     label: "Shipment Weight or Volume",
-    width: "10%",
   },
   {
     id: "shipmentUnits",
     label: "Shipment Units",
-    width: "10%",
   },
   {
     id: "pickUpDate",
     label: "Pickup Date/Time",
-    width: "10%",
   },
   {
     id: "deliveryDate",
     label: "Delivery Date/Time",
-    width: "10%",
   },
   {
     id: "bidAmount",
     label: "Bid Amount",
-    width: "10%",
   },
 ];

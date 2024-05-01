@@ -17,7 +17,7 @@ import ShipperDashboardRow from "../components/shipperDashboard/ShipperDashboard
 import { useState } from "react";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
-const ShipperDashboard = () => {
+const CarrierDashboard = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -103,4 +103,4 @@ const ShipperDashboard = () => {
   );
 };
 
-export default ShipperDashboard;
+export default CarrierDashboard;

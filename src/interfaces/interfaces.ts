@@ -77,5 +77,4 @@ export interface IShipperDashboardColumn {
     | "deliveryDate"
     | "bidAmount";
   label: string;
-  width?: number | string;
 }
