@@ -78,3 +78,29 @@ export interface IShipperDashboardColumn {
     | "bidAmount";
   label: string;
 }
+
+export interface ICarrierDashboard
+  extends IBidPortal,
+    Omit<ILoadPosting, "addDetails"> {
+  carrierName: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
+export interface ICarrierDashboardColumn {
+  id:
+    | "carrierName"
+    | "email"
+    | "phone"
+    | "address"
+    | "origin"
+    | "destination"
+    | "shipmentType"
+    | "shipmentWeight"
+    | "shipmentUnits"
+    | "pickUpDate"
+    | "deliveryDate"
+    | "bidAmount";
+  label: string;
+}

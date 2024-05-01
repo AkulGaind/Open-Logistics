@@ -11,11 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import myColors from "../themes/colors";
-import { IShipperDashboardColumn } from "../interfaces/interfaces";
-import { shipper_columns } from "../utility/constants";
-import ShipperDashboardRow from "../components/shipperDashboard/ShipperDashboardRow";
+import { ICarrierDashboardColumn } from "../interfaces/interfaces";
+import { carrier_columns } from "../utility/constants";
 import { useState } from "react";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
+import CarrierDashboardRow from "../components/carrierDashboard/CarrierDashboardRow";
 
 const CarrierDashboard = () => {
   const [page, setPage] = useState(0);
@@ -33,7 +33,7 @@ const CarrierDashboard = () => {
   };
 
   const rowData = {
-    shipperName: "John Doe",
+    carrierName: "John Doe",
     email: "john.doe@email.com",
     phone: "9999999999",
     address: "Mars",
@@ -48,7 +48,7 @@ const CarrierDashboard = () => {
   };
 
   const rows = Array.from({ length: 20 }, (_, index) => (
-    <ShipperDashboardRow key={index} {...rowData} />
+    <CarrierDashboardRow key={index} {...rowData} />
   ));
 
   return (
@@ -63,7 +63,7 @@ const CarrierDashboard = () => {
         fontWeight={600}
         paddingBottom={10}
       >
-        Shipper Dashboard
+        Carrier Dashboard
       </Typography>
       <TableContainer
         sx={{
@@ -74,7 +74,7 @@ const CarrierDashboard = () => {
         <Table>
           <TableHead sx={{ backgroundColor: myColors.yellow.main }}>
             <TableRow>
-              {shipper_columns.map((column: IShipperDashboardColumn) => (
+              {carrier_columns.map((column: ICarrierDashboardColumn) => (
                 <TableCell key={column.id} sx={{ minWidth: 150 }}>
                   {column.label}
                 </TableCell>
