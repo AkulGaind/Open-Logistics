@@ -13,8 +13,8 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ILogin } from "../interfaces/interfaces";
-import { setAppRole } from "../redux/slices/appStateSlice";
-import { useLoginUserMutation } from "../redux/slices/serviceSlice";
+import { setAppRole, setUserId } from "../redux/slices/appStateSlice";
+import { useLoginUserMutation, useShipperDetailsMutation } from "../redux/slices/serviceSlice";
 import loginSchema from "../validationSchemas/loginSchema";
 import { APIResult } from "../utility/constants";
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
@@ -25,6 +25,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
   const [loginUser] = useLoginUserMutation();
+  const [getShipperDetails] = useShipperDetailsMutation();
   const dispatch = useDispatch();
   const defaultValues: ILogin = {
     email: "",
@@ -48,9 +49,12 @@ const LoginPage = () => {
   };
 
   const formSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
-    const { message, role } = await loginUser(data).unwrap();
-    if (message === APIResult.loginSuccess) {
-      dispatch(setAppRole(role));
+    const { msg, role, userId } = await loginUser(data).unwrap();
+    if (msg === APIResult.loginSuccess) {
+      dispatch(setAppRole(role!));
+      dispatch(setUserId(userId));
+      const data1 = await getShipperDetails({userId}).unwrap();
+      console.log(data1);
       navigate("/dashboard");
     }
   };
@@ -65,6 +69,7 @@ const LoginPage = () => {
     >
       <img
         src={"src/assets/images/login.png"}
+        alt="Login Image"
         style={{
           height: "40%",
           width: "40%",
