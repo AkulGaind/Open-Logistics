@@ -1,11 +1,4 @@
-import {
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
 import myColors from "../themes/colors";
 import { IBidPortal } from "../interfaces/interfaces";
 import bidPortalSchema from "../validationSchemas/bidPortalSchema";
@@ -43,7 +36,7 @@ const BidPortalPage = () => {
   };
 
   return (
-    <Container style={{ padding: "5%" }}>
+    <Box padding={10}>
       <FormProvider {...method}>
         <form onSubmit={handleSubmit(formSubmit)}>
           <Typography
@@ -262,7 +255,7 @@ const BidPortalPage = () => {
           </Stack>
         </form>
       </FormProvider>
-    </Container>
+    </Box>
   );
 };
 
