@@ -59,9 +59,9 @@ export const appApi = createApi({
       },
     }),
     contactUs: builder.mutation<Pick<IResponse, "msg">, IContactDetails>({
-      query: ({ name, email, message }) => {
+      query: ({ username, email, message }) => {
         const reqData = {
-          username: name,
+          username: username,
           email: email,
           message: message,
         };
@@ -124,6 +124,22 @@ export const appApi = createApi({
         };
       },
     }),
+    shipperDetails: builder.mutation<any, {userId: string}>({
+      query: ({ userId }) => {
+        const reqData = {
+          userId: userId,
+        };
+
+        return {
+          url: `auth/shipper`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: reqData,
+        };
+      },
+    }),
   }),
 });
 
@@ -133,4 +149,5 @@ export const {
   useContactUsMutation,
   useLoadPostingMutation,
   useBidPortalMutation,
+  useShipperDetailsMutation,
 } = appApi;

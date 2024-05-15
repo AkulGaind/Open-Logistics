@@ -1,6 +1,7 @@
 export interface AppState {
   loggedIn: boolean;
   appRole: "Admin" | "Shipper" | "Carrier" | string;
+  userId: string;
 }
 
 export interface StyledCardProps {

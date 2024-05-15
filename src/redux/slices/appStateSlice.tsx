@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppState, ILogin } from "../../interfaces/interfaces";
+import { AppState, ISignUp } from "../../interfaces/interfaces";
 
 const initialState: AppState = {
     loggedIn: false,
     appRole: "",
+    userId: "",
 };
 
 const appStateSlice = createSlice({
@@ -14,8 +15,11 @@ const appStateSlice = createSlice({
         setLoggedIn: (state, action: PayloadAction<boolean>) => {
             state.loggedIn = action.payload;
         },
-        setAppRole: (state, action: PayloadAction<ILogin['role']>) => {
+        setAppRole: (state, action: PayloadAction<ISignUp['role']>) => {
             state.appRole = action.payload;
+        },
+        setUserId: (state, action: PayloadAction<string>) => {
+            state.userId = action.payload;
         },
     },
 });
@@ -24,6 +28,7 @@ export const {
     reset,
     setLoggedIn,
     setAppRole,
+    setUserId,
 } = appStateSlice.actions;
 
 export default appStateSlice;

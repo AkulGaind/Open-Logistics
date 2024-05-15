@@ -15,10 +15,10 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useSignUpUserMutation } from "../redux/slices/serviceSlice";
+import { useShipperDetailsMutation, useSignUpUserMutation } from "../redux/slices/serviceSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import signUpSchema from "../validationSchemas/signUpSchema";
-import { setAppRole } from "../redux/slices/appStateSlice";
+import { setAppRole, setUserId } from "../redux/slices/appStateSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APIResult } from "../utility/constants";
@@ -34,6 +34,7 @@ const SignupPage = () => {
   const [role, setRole] = useState<string>("");
   const navigate = useNavigate();
   const [signUpUser] = useSignUpUserMutation();
+  const [getShipperDetails] = useShipperDetailsMutation();
   const dispatch = useDispatch();
   const defaultValues: ISignUp = {
     username: "",
@@ -64,9 +65,12 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
-    const { msg } = await signUpUser(data).unwrap();
+    const { msg, userId } = await signUpUser(data).unwrap();
     if (msg === APIResult.signUpSuccess) {
       dispatch(setAppRole(data.role));
+      dispatch(setUserId(userId));
+      const data1 = await getShipperDetails({userId}).unwrap();
+      console.log(data1);
       navigate("/dashboard");
     }
   };
@@ -74,6 +78,7 @@ const SignupPage = () => {
   return (
     <Stack alignItems={"center"} spacing={5} p={10}>
       <img
+        alt="Signup Image"
         src={"src/assets/images/signup.png"}
         style={{
           marginTop: "-50px",
