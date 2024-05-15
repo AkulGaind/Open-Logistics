@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
+  Box,
   Button,
-  Container,
   FormControl,
   Grid,
   InputLabel,
@@ -66,7 +66,7 @@ const LoadPostingPage = () => {
   };
 
   return (
-    <Container style={{ padding: "5%" }}>
+    <Box padding={10}>
       <Typography
         sx={{
           color: myColors.textBlack,
@@ -219,7 +219,7 @@ const LoadPostingPage = () => {
           </Stack>
         </form>
       </FormProvider>
-    </Container>
+    </Box>
   );
 };
 
