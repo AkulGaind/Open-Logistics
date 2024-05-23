@@ -44,7 +44,6 @@ export interface ILoadPosting {
   destination: string;
   shipmentType: string;
   shipmentWeight: string;
-  shipmentUnits: string;
   pickUpDate: Date;
   deliveryDate: Date;
   addDetails: string;
@@ -73,7 +72,6 @@ export interface IShipperDashboardColumn {
     | "destination"
     | "shipmentType"
     | "shipmentWeight"
-    | "shipmentUnits"
     | "pickUpDate"
     | "deliveryDate"
     | "bidAmount";
@@ -99,7 +97,6 @@ export interface ICarrierDashboardColumn {
     | "destination"
     | "shipmentType"
     | "shipmentWeight"
-    | "shipmentUnits"
     | "pickUpDate"
     | "deliveryDate"
     | "bidAmount";

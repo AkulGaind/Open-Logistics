@@ -16,8 +16,7 @@ import CarrierDashboard from "./views/CarrierDashboard";
 function App() {
   return (
     <>
-      <Navbar />
-      <div
+      {/* <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -29,9 +28,10 @@ function App() {
           animationData={truckAnimation}
           style={{ width: "50%", height: "50%" }}
         />
-      </div>
+      </div> */}
 
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />

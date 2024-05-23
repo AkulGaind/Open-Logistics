@@ -36,7 +36,7 @@ const BidPortalPage = () => {
   };
 
   return (
-    <Box padding={10}>
+    <Box padding={8}>
       <FormProvider {...method}>
         <form onSubmit={handleSubmit(formSubmit)}>
           <Typography

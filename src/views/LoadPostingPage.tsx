@@ -17,11 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { ILoadPosting } from "../interfaces/interfaces";
 import { useLoadPostingMutation } from "../redux/slices/serviceSlice";
 import myColors from "../themes/colors";
-import {
-  APIResult,
-  shipment_type,
-  shipment_weight_units,
-} from "../utility/constants";
+import { APIResult, shipment_type } from "../utility/constants";
 import loadPostingSchema from "../validationSchemas/loadPostingSchema";
 import DateTimeController from "../components/common/DateController";
 import { useState } from "react";
@@ -30,15 +26,12 @@ const LoadPostingPage = () => {
   const navigate = useNavigate();
   const [loadPosting] = useLoadPostingMutation();
   const [selectedShipmentType, setSelectedShipmentType] = useState("");
-  const [selectedShipmentWeightUnits, setSelectedShipmentWeightUnits] =
-    useState("");
 
   const defaultValues: ILoadPosting = {
     origin: "",
     destination: "",
     shipmentType: "",
     shipmentWeight: "",
-    shipmentUnits: "",
     pickUpDate: new Date(),
     deliveryDate: new Date(),
     addDetails: "",
@@ -66,7 +59,7 @@ const LoadPostingPage = () => {
   };
 
   return (
-    <Box padding={10}>
+    <Box padding={8}>
       <Typography
         sx={{
           color: myColors.textBlack,
@@ -141,7 +134,6 @@ const LoadPostingPage = () => {
                     shrink: true,
                   }}
                   id="addDetails"
-
                   helperText={errors.addDetails?.message}
                   {...register("addDetails", { required: true })}
                 />
@@ -179,30 +171,6 @@ const LoadPostingPage = () => {
                     helperText={errors.shipmentWeight?.message}
                     {...register("shipmentWeight", { required: true })}
                   />
-                  <FormControl variant="standard" fullWidth>
-                    <InputLabel id="shipmentWeight" required>
-                      Shipment Units
-                    </InputLabel>
-                    <Select
-                      labelId="shipmentUnits"
-                      label="Shipment Units"
-                      variant="standard"
-                      id="shipmentUnits"
-                      value={selectedShipmentWeightUnits}
-                      onChange={(e) =>
-                        setSelectedShipmentWeightUnits(e.target.value)
-                      }
-                      style={{
-                        borderRadius: "10px",
-                      }}
-                    >
-                      {shipment_weight_units.map((c) => (
-                        <MenuItem key={c.key} value={c.key}>
-                          {c.value}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
                 </Stack>
                 <DateTimeController
                   value={dayjs(defaultValues.deliveryDate)}

@@ -81,10 +81,6 @@ export const shipper_columns: readonly IShipperDashboardColumn[] = [
     label: "Shipment Weight or Volume",
   },
   {
-    id: "shipmentUnits",
-    label: "Shipment Units",
-  },
-  {
     id: "pickUpDate",
     label: "Pickup Date/Time",
   },
@@ -130,10 +126,6 @@ export const carrier_columns: readonly ICarrierDashboardColumn[] = [
   {
     id: "shipmentWeight",
     label: "Shipment Weight or Volume",
-  },
-  {
-    id: "shipmentUnits",
-    label: "Shipment Units",
   },
   {
     id: "pickUpDate",
