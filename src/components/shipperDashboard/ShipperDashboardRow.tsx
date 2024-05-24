@@ -4,7 +4,7 @@ import { StyledTableCell, StyledTableRow } from "../common/styled";
 const ShipperDashboardRow = (s: IShipperDashboard) => {
   return (
     <StyledTableRow>
-      <StyledTableCell>{s.shipperName}</StyledTableCell>
+      <StyledTableCell>{s.carrierName}</StyledTableCell>
       <StyledTableCell>{s.email}</StyledTableCell>
       <StyledTableCell>{s.phone}</StyledTableCell>
       <StyledTableCell>{s.address}</StyledTableCell>

@@ -49,7 +49,7 @@ export const shipment_weight_units: readonly {
 
 export const shipper_columns: readonly IShipperDashboardColumn[] = [
   {
-    id: "shipperName",
+    id: "carrierName",
     label: "Shipper Name",
   },
   {
@@ -96,7 +96,7 @@ export const shipper_columns: readonly IShipperDashboardColumn[] = [
 
 export const carrier_columns: readonly ICarrierDashboardColumn[] = [
   {
-    id: "carrierName",
+    id: "shipperName",
     label: "Carrier Name",
   },
   {

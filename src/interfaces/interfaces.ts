@@ -2,6 +2,7 @@ export interface AppState {
   loggedIn: boolean;
   appRole: "Admin" | "Shipper" | "Carrier" | string;
   userId: string;
+  loading: boolean;
 }
 
 export interface StyledCardProps {
@@ -56,7 +57,7 @@ export interface IBidPortal {
 export interface IShipperDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
-  shipperName: string;
+  carrierName: string;
   email: string;
   phone: string;
   address: string;
@@ -64,7 +65,7 @@ export interface IShipperDashboard
 
 export interface IShipperDashboardColumn {
   id:
-    | "shipperName"
+    | "carrierName"
     | "email"
     | "phone"
     | "address"
@@ -81,7 +82,7 @@ export interface IShipperDashboardColumn {
 export interface ICarrierDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
-  carrierName: string;
+  shipperName: string;
   email: string;
   phone: string;
   address: string;
@@ -89,7 +90,7 @@ export interface ICarrierDashboard
 
 export interface ICarrierDashboardColumn {
   id:
-    | "carrierName"
+    | "shipperName"
     | "email"
     | "phone"
     | "address"

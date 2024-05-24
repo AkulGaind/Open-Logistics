@@ -33,7 +33,7 @@ const CarrierDashboard = () => {
   };
 
   const rowData = {
-    carrierName: "John Doe",
+    shipperName: "John Doe",
     email: "john.doe@email.com",
     phone: "9999999999",
     address: "Mars",

@@ -238,6 +238,7 @@ const BidPortalPage = () => {
                   required
                   helperText={errors.bidAmount?.message}
                   {...register("bidAmount", { required: true })}
+                  sx={{ height: 50 }}
                 />
                 <div
                   style={{

@@ -14,12 +14,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ILogin } from "../interfaces/interfaces";
 import { setAppRole, setUserId } from "../redux/slices/appStateSlice";
-import { useLoginUserMutation, useShipperDetailsMutation } from "../redux/slices/serviceSlice";
+import {
+  useLoginUserMutation,
+  useShipperDetailsMutation,
+} from "../redux/slices/serviceSlice";
 import loginSchema from "../validationSchemas/loginSchema";
 import { APIResult } from "../utility/constants";
-import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
-import LocalPostOfficeTwoToneIcon from '@mui/icons-material/LocalPostOfficeTwoTone';
-
+import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
+import LocalPostOfficeTwoToneIcon from "@mui/icons-material/LocalPostOfficeTwoTone";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -53,7 +55,7 @@ const LoginPage = () => {
     if (msg === APIResult.loginSuccess) {
       dispatch(setAppRole(role!));
       dispatch(setUserId(userId));
-      const data1 = await getShipperDetails({userId}).unwrap();
+      const data1 = await getShipperDetails({ userId }).unwrap();
       console.log(data1);
       navigate("/dashboard");
     }
@@ -61,11 +63,11 @@ const LoginPage = () => {
 
   return (
     <Grid
-    container
-    gridTemplateColumns={"45% 45%"}
-    p={"3%"} 
-    gap={"3%"}
-    alignItems={"center"}
+      container
+      gridTemplateColumns={"45% 45%"}
+      p={"3%"}
+      gap={"3%"}
+      alignItems={"center"}
     >
       <img
         src={"src/assets/images/login.png"}
@@ -79,24 +81,23 @@ const LoginPage = () => {
       <Stack spacing={3} minWidth={"50%"}>
         <FormProvider {...method}>
           <form onSubmit={handleSubmit(formSubmit)}>
-            <Stack spacing={1.5} mb={2}>
+            <Stack spacing={6}>
               <TextField
-                id="email"  
+                id="email"
                 variant="outlined"
                 label="Email"
                 placeholder="john.doe@email.com"
                 helperText={errors.email?.message}
                 {...register("email", { required: true })}
                 InputProps={{
-                  startAdornment:(
+                  startAdornment: (
                     <InputAdornment position="start">
-                    <LocalPostOfficeTwoToneIcon  fontSize="small"/>
-                  </InputAdornment>
+                      <LocalPostOfficeTwoToneIcon fontSize="small" />
+                    </InputAdornment>
                   ),
                 }}
+                sx={{ height: 50 }}
               />
-            </Stack>
-            <Stack spacing={1.5} mb={2}>
               <TextField
                 id="password"
                 helperText={errors.password?.message}
@@ -105,10 +106,10 @@ const LoginPage = () => {
                 placeholder="************"
                 label="Password"
                 InputProps={{
-                  startAdornment:(
+                  startAdornment: (
                     <InputAdornment position="start">
-                    <LockTwoToneIcon  fontSize="small"/>
-                  </InputAdornment>
+                      <LockTwoToneIcon fontSize="small" />
+                    </InputAdornment>
                   ),
                   endAdornment: (
                     <InputAdornment position="end">
@@ -122,9 +123,10 @@ const LoginPage = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ height: 50 }}
               />
             </Stack>
-            <div style={{ width: "150px" }}>
+            <div style={{ width: "150px", marginTop: "35px" }}>
               <Button variant="contained" fullWidth type="submit">
                 Continue
               </Button>

@@ -7,43 +7,36 @@ import SignupPage from "./views/SignupPage";
 import Dashboard from "./views/Dashboard";
 import Footer from "./components/layout/footer";
 import LoadPostingPage from "./views/LoadPostingPage";
-import Lottie from "lottie-react";
-import truckAnimation from "./components/ui/truckAnimation.json";
 import BidPortalPage from "./views/BidPortalPage";
 import ShipperDashboard from "./views/ShipperDashboard";
 import CarrierDashboard from "./views/CarrierDashboard";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store/store";
+import PageLoader from "./components/common/PageLoader";
 
 function App() {
+  const loading = useSelector((state: RootState) => state.appState.loading);
+
   return (
     <>
-      {/* <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Lottie
-          animationData={truckAnimation}
-          style={{ width: "50%", height: "50%" }}
-        />
-      </div> */}
-
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/loadposting" element={<LoadPostingPage />} />
-          <Route path="/bidportal" element={<BidPortalPage />} />
-          <Route path="/shipperdash" element={<ShipperDashboard />} />
-          <Route path="/carrierdash" element={<CarrierDashboard />} />
-        </Routes>
+        {loading ? (
+          <PageLoader />
+        ) : (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/loadposting" element={<LoadPostingPage />} />
+            <Route path="/bidportal" element={<BidPortalPage />} />
+            <Route path="/shipperdash" element={<ShipperDashboard />} />
+            <Route path="/carrierdash" element={<CarrierDashboard />} />
+          </Routes>
+        )}
       </BrowserRouter>
-      <Footer />
+      {!loading && <Footer />}
     </>
   );
 }

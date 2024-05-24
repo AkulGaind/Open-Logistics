@@ -93,6 +93,7 @@ const LoadPostingPage = () => {
                   required
                   helperText={errors.origin?.message}
                   {...register("origin", { required: true })}
+                  sx={{ height: 50 }}
                 />
                 <FormControl variant="standard">
                   <InputLabel id="shipmentType" required>
@@ -151,6 +152,7 @@ const LoadPostingPage = () => {
                   required
                   helperText={errors.destination?.message}
                   {...register("destination", { required: true })}
+                  sx={{ height: 50 }}
                 />
                 <Stack
                   direction={"row"}
@@ -170,6 +172,7 @@ const LoadPostingPage = () => {
                     required
                     helperText={errors.shipmentWeight?.message}
                     {...register("shipmentWeight", { required: true })}
+                    sx={{ height: 50 }}
                   />
                 </Stack>
                 <DateTimeController
