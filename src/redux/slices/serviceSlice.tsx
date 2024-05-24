@@ -82,7 +82,6 @@ export const appApi = createApi({
         destination,
         shipmentType,
         shipmentWeight,
-        shipmentUnits,
         pickUpDate,
         deliveryDate,
         addDetails,
@@ -92,7 +91,6 @@ export const appApi = createApi({
           destination: destination,
           shipmentType: shipmentType,
           shipmentWeight: shipmentWeight,
-          shipmentUnits: shipmentUnits,
           pickUpDate: pickUpDate,
           deliveryDate: deliveryDate,
           addDetails: addDetails,
@@ -124,7 +122,7 @@ export const appApi = createApi({
         };
       },
     }),
-    shipperDetails: builder.mutation<any, {userId: string}>({
+    shipperDetails: builder.mutation<any, { userId: string }>({
       query: ({ userId }) => {
         const reqData = {
           userId: userId,

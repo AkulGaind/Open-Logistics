@@ -3,15 +3,19 @@ import {
   Card,
   CardContent,
   Stack,
+  TableCell,
+  TableRow,
   TextField,
-  Typography
+  Typography,
+  styled,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
   LabelControllerProps,
-  StyledCardProps
+  StyledCardProps,
 } from "../../interfaces/interfaces";
+import myColors from "../../themes/colors";
 
 const StyledCard = ({ title, buttonText }: StyledCardProps) => {
   const navigate = useNavigate();
@@ -72,5 +76,19 @@ const labelController = ({ label, placeholder }: LabelControllerProps) => {
   );
 };
 
-export { labelController, StyledCard };
+const StyledTableRow = styled(TableRow)(() => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: myColors.backgroundGrey,
+  },
+  cursor: "pointer",
+}));
 
+const StyledTableCell = styled(TableCell)(() => ({
+  maxWidth: 150,
+  wordWrap: "inherit",
+  whiteSpace: "wrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+}));
+
+export { labelController, StyledCard, StyledTableRow, StyledTableCell };

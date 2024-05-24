@@ -10,16 +10,16 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import myColors from "../themes/colors";
-import { ICarrierDashboardColumn } from "../interfaces/interfaces";
-import { carrier_columns } from "../utility/constants";
-import { useState } from "react";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
+import { useState } from "react";
 import CarrierDashboardRow from "../components/carrierDashboard/CarrierDashboardRow";
+import { ICarrierDashboardColumn } from "../interfaces/interfaces";
+import myColors from "../themes/colors";
+import { carrier_columns } from "../utility/constants";
 
 const CarrierDashboard = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -33,7 +33,7 @@ const CarrierDashboard = () => {
   };
 
   const rowData = {
-    carrierName: "John Doe",
+    shipperName: "John Doe",
     email: "john.doe@email.com",
     phone: "9999999999",
     address: "Mars",
@@ -41,7 +41,6 @@ const CarrierDashboard = () => {
     destination: "Hell",
     shipmentType: "LTL",
     shipmentWeight: "44",
-    shipmentUnits: "Tonnes",
     pickUpDate: new Date(),
     deliveryDate: new Date(),
     bidAmount: "10 Crore",
@@ -52,7 +51,7 @@ const CarrierDashboard = () => {
   ));
 
   return (
-    <Box padding={10}>
+    <Box padding={8}>
       <Typography
         sx={{
           color: myColors.textBlack,
@@ -75,10 +74,9 @@ const CarrierDashboard = () => {
           <TableHead sx={{ backgroundColor: myColors.yellow.main }}>
             <TableRow>
               {carrier_columns.map((column: ICarrierDashboardColumn) => (
-                <TableCell key={column.id} sx={{ minWidth: 150 }}>
-                  {column.label}
-                </TableCell>
+                <TableCell key={column.id}>{column.label}</TableCell>
               ))}
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

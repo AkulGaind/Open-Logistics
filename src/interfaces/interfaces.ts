@@ -2,6 +2,7 @@ export interface AppState {
   loggedIn: boolean;
   appRole: "Admin" | "Shipper" | "Carrier" | string;
   userId: string;
+  loading: boolean;
 }
 
 export interface StyledCardProps {
@@ -44,7 +45,6 @@ export interface ILoadPosting {
   destination: string;
   shipmentType: string;
   shipmentWeight: string;
-  shipmentUnits: string;
   pickUpDate: Date;
   deliveryDate: Date;
   addDetails: string;
@@ -57,39 +57,13 @@ export interface IBidPortal {
 export interface IShipperDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
-  shipperName: string;
-  email: string;
-  phone: string;
-  address: string;
-}
-
-export interface IShipperDashboardColumn {
-  id:
-    | "shipperName"
-    | "email"
-    | "phone"
-    | "address"
-    | "origin"
-    | "destination"
-    | "shipmentType"
-    | "shipmentWeight"
-    | "shipmentUnits"
-    | "pickUpDate"
-    | "deliveryDate"
-    | "bidAmount";
-  label: string;
-}
-
-export interface ICarrierDashboard
-  extends IBidPortal,
-    Omit<ILoadPosting, "addDetails"> {
   carrierName: string;
   email: string;
   phone: string;
   address: string;
 }
 
-export interface ICarrierDashboardColumn {
+export interface IShipperDashboardColumn {
   id:
     | "carrierName"
     | "email"
@@ -99,7 +73,31 @@ export interface ICarrierDashboardColumn {
     | "destination"
     | "shipmentType"
     | "shipmentWeight"
-    | "shipmentUnits"
+    | "pickUpDate"
+    | "deliveryDate"
+    | "bidAmount";
+  label: string;
+}
+
+export interface ICarrierDashboard
+  extends IBidPortal,
+    Omit<ILoadPosting, "addDetails"> {
+  shipperName: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
+export interface ICarrierDashboardColumn {
+  id:
+    | "shipperName"
+    | "email"
+    | "phone"
+    | "address"
+    | "origin"
+    | "destination"
+    | "shipmentType"
+    | "shipmentWeight"
     | "pickUpDate"
     | "deliveryDate"
     | "bidAmount";

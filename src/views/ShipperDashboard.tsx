@@ -19,7 +19,7 @@ import TablePaginationActions from "@mui/material/TablePagination/TablePaginatio
 
 const ShipperDashboard = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -33,7 +33,7 @@ const ShipperDashboard = () => {
   };
 
   const rowData = {
-    shipperName: "John Doe",
+    carrierName: "John Doe",
     email: "john.doe@email.com",
     phone: "9999999999",
     address: "Mars",
@@ -41,7 +41,6 @@ const ShipperDashboard = () => {
     destination: "Hell",
     shipmentType: "LTL",
     shipmentWeight: "44",
-    shipmentUnits: "Tonnes",
     pickUpDate: new Date(),
     deliveryDate: new Date(),
     bidAmount: "10 Crore",
@@ -52,7 +51,7 @@ const ShipperDashboard = () => {
   ));
 
   return (
-    <Box padding={10}>
+    <Box padding={8}>
       <Typography
         sx={{
           color: myColors.textBlack,
@@ -75,9 +74,7 @@ const ShipperDashboard = () => {
           <TableHead sx={{ backgroundColor: myColors.yellow.main }}>
             <TableRow>
               {shipper_columns.map((column: IShipperDashboardColumn) => (
-                <TableCell key={column.id} sx={{ minWidth: 150 }}>
-                  {column.label}
-                </TableCell>
+                <TableCell key={column.id}>{column.label}</TableCell>
               ))}
             </TableRow>
           </TableHead>
