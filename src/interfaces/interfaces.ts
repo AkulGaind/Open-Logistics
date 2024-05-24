@@ -2,6 +2,7 @@ export interface AppState {
   loggedIn: boolean;
   appRole: "Admin" | "Shipper" | "Carrier" | string;
   userId: string;
+  loading: boolean;
 }
 
 export interface StyledCardProps {
@@ -55,7 +56,8 @@ export interface IBidPortal {
 export interface IShipperDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
-  shipperName: string;
+  invoice: string;
+  carrierName: string;
   email: string;
   phone: string;
   address: string;
@@ -63,7 +65,8 @@ export interface IShipperDashboard
 
 export interface IShipperDashboardColumn {
   id:
-    | "shipperName"
+    | "invoice"
+    | "carrierName"
     | "email"
     | "phone"
     | "address"
@@ -71,7 +74,6 @@ export interface IShipperDashboardColumn {
     | "destination"
     | "shipmentType"
     | "shipmentWeight"
-    | "shipmentUnits"
     | "pickUpDate"
     | "deliveryDate"
     | "bidAmount";
@@ -81,7 +83,8 @@ export interface IShipperDashboardColumn {
 export interface ICarrierDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
-  carrierName: string;
+  invoice: string;
+  shipperName: string;
   email: string;
   phone: string;
   address: string;
@@ -89,7 +92,8 @@ export interface ICarrierDashboard
 
 export interface ICarrierDashboardColumn {
   id:
-    | "carrierName"
+    | "invoice"
+    | "shipperName"
     | "email"
     | "phone"
     | "address"
@@ -97,7 +101,6 @@ export interface ICarrierDashboardColumn {
     | "destination"
     | "shipmentType"
     | "shipmentWeight"
-    | "shipmentUnits"
     | "pickUpDate"
     | "deliveryDate"
     | "bidAmount";

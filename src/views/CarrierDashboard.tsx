@@ -1,5 +1,6 @@
 import {
   Box,
+  InputAdornment,
   Table,
   TableBody,
   TableCell,
@@ -8,6 +9,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from "@mui/material";
 import myColors from "../themes/colors";
@@ -16,13 +18,16 @@ import { carrier_columns } from "../utility/constants";
 import { useEffect, useState } from "react";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import CarrierDashboardRow from "../components/carrierDashboard/CarrierDashboardRow";
+import { Search } from "@mui/icons-material";
+import { ScrollbarStyles } from "../components/common/styled";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import { useLazyShipperDetailsQuery } from "../redux/slices/serviceSlice";
 
 const CarrierDashboard = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
   const [fetchShipperDetails] = useLazyShipperDetailsQuery();
   const { userId } = useSelector((state: RootState) => state.appState);
 
@@ -45,8 +50,14 @@ const CarrierDashboard = () => {
     setPage(0);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+    setPage(0);
+  };
+
   const rowData = {
-    carrierName: "John Doe",
+    invoice: "123",
+    shipperName: "John Doe",
     email: "john.doe@email.com",
     phone: "9999999999",
     address: "Mars",
@@ -54,18 +65,26 @@ const CarrierDashboard = () => {
     destination: "Hell",
     shipmentType: "LTL",
     shipmentWeight: "44",
-    shipmentUnits: "Tonnes",
     pickUpDate: new Date(),
     deliveryDate: new Date(),
     bidAmount: "10 Crore",
   };
 
-  const rows = Array.from({ length: 20 }, (_, index) => (
-    <CarrierDashboardRow key={index} {...rowData} />
-  ));
+  const rows = Array.from({ length: 20 }, (_, index) => ({
+    id: index,
+    ...rowData,
+  }));
+
+  const filteredRows = rows.filter((row) =>
+    Object.values(row).some(
+      (value) =>
+        typeof value === "string" &&
+        value.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   return (
-    <Box padding={10}>
+    <Box padding={8}>
       <Typography
         sx={{
           color: myColors.textBlack,
@@ -78,30 +97,56 @@ const CarrierDashboard = () => {
       >
         Carrier Dashboard
       </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <TextField
+          label="Search"
+          variant="outlined"
+          fullWidth
+          value={searchQuery}
+          onChange={handleSearchChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search fontSize="small" />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ width: "auto" }}
+        />
+      </Box>
       <TableContainer
         sx={{
           border: "1px solid",
           borderColor: myColors.backgroundGreyV2,
+          ...ScrollbarStyles,
         }}
       >
         <Table>
           <TableHead sx={{ backgroundColor: myColors.yellow.main }}>
             <TableRow>
               {carrier_columns.map((column: ICarrierDashboardColumn) => (
-                <TableCell key={column.id} sx={{ minWidth: 150 }}>
-                  {column.label}
-                </TableCell>
+                <TableCell key={column.id}>{column.label}</TableCell>
               ))}
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            {filteredRows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <CarrierDashboardRow key={row.id} {...row} />
+              ))}{" "}
           </TableBody>
           <TableFooter>
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[]}
-                count={rows.length}
+                count={filteredRows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

@@ -96,7 +96,7 @@ const LoginPage = () => {
       <Stack spacing={3} minWidth={"50%"}>
         <FormProvider {...method}>
           <form onSubmit={handleSubmit(formSubmit)}>
-            <Stack spacing={1.5} mb={2}>
+            <Stack spacing={6}>
               <TextField
                 id="email"
                 variant="outlined"
@@ -111,9 +111,8 @@ const LoginPage = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ height: 50 }}
               />
-            </Stack>
-            <Stack spacing={1.5} mb={2}>
               <TextField
                 id="password"
                 helperText={errors.password?.message}
@@ -139,9 +138,10 @@ const LoginPage = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ height: 50 }}
               />
             </Stack>
-            <div style={{ width: "150px" }}>
+            <div style={{ width: "150px", marginTop: "35px" }}>
               <Button variant="contained" fullWidth type="submit">
                 Continue
               </Button>

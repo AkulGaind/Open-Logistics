@@ -1,15 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  Box,
-  Button,
-  Grid,
-  Stack,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Typewriter from "typewriter-effect";
+import Typewriter, { TypewriterClass } from "typewriter-effect";
 import backgroundImage from "../assets/images/truck.png";
 import { IContactDetails } from "../interfaces/interfaces";
 import { useContactUsMutation } from "../redux/slices/serviceSlice";
@@ -56,10 +49,10 @@ const HomePage = () => {
           height: "80vh",
           display: "flex",
           position: "relative",
-          objectFit: "contain", 
+          objectFit: "contain",
         }}
       >
-        <div >
+        <div>
           <Typography
             sx={{
               color: myColors.textBlack,
@@ -71,7 +64,7 @@ const HomePage = () => {
             fontWeight={600}
           >
             <Typewriter
-              onInit={(typewriter: any) => {
+              onInit={(typewriter: TypewriterClass) => {
                 typewriter
                   .changeDelay(50)
                   .typeString(

@@ -36,7 +36,7 @@ const BidPortalPage = () => {
   };
 
   return (
-    <Box padding={10}>
+    <Box padding={8}>
       <FormProvider {...method}>
         <form onSubmit={handleSubmit(formSubmit)}>
           <Typography
@@ -238,6 +238,7 @@ const BidPortalPage = () => {
                   required
                   helperText={errors.bidAmount?.message}
                   {...register("bidAmount", { required: true })}
+                  sx={{ height: 50 }}
                 />
                 <div
                   style={{

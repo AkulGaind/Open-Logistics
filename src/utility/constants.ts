@@ -49,56 +49,9 @@ export const shipment_weight_units: readonly {
 
 export const shipper_columns: readonly IShipperDashboardColumn[] = [
   {
-    id: "shipperName",
-    label: "Shipper Name",
+    id: "invoice",
+    label: "Invoice No.",
   },
-  {
-    id: "email",
-    label: "Email",
-  },
-  {
-    id: "phone",
-    label: "Phone",
-  },
-  {
-    id: "address",
-    label: "Address",
-  },
-  {
-    id: "origin",
-    label: "Shipment Origin",
-  },
-  {
-    id: "destination",
-    label: "Shipment Destination",
-  },
-  {
-    id: "shipmentType",
-    label: "Shipment Type",
-  },
-  {
-    id: "shipmentWeight",
-    label: "Shipment Weight or Volume",
-  },
-  {
-    id: "shipmentUnits",
-    label: "Shipment Units",
-  },
-  {
-    id: "pickUpDate",
-    label: "Pickup Date/Time",
-  },
-  {
-    id: "deliveryDate",
-    label: "Delivery Date/Time",
-  },
-  {
-    id: "bidAmount",
-    label: "Bid Amount",
-  },
-];
-
-export const carrier_columns: readonly ICarrierDashboardColumn[] = [
   {
     id: "carrierName",
     label: "Carrier Name",
@@ -132,8 +85,55 @@ export const carrier_columns: readonly ICarrierDashboardColumn[] = [
     label: "Shipment Weight or Volume",
   },
   {
-    id: "shipmentUnits",
-    label: "Shipment Units",
+    id: "pickUpDate",
+    label: "Pickup Date/Time",
+  },
+  {
+    id: "deliveryDate",
+    label: "Delivery Date/Time",
+  },
+  {
+    id: "bidAmount",
+    label: "Bid Amount",
+  },
+];
+
+export const carrier_columns: readonly ICarrierDashboardColumn[] = [
+  {
+    id: "invoice",
+    label: "Invoice No.",
+  },
+  {
+    id: "shipperName",
+    label: "Shipper Name",
+  },
+  {
+    id: "email",
+    label: "Email",
+  },
+  {
+    id: "phone",
+    label: "Phone",
+  },
+  {
+    id: "address",
+    label: "Address",
+  },
+  {
+    id: "origin",
+    label: "Shipment Origin",
+  },
+  {
+    id: "destination",
+    label: "Shipment Destination",
+  },
+  {
+    id: "shipmentType",
+    label: "Shipment Type",
+  },
+  {
+    id: "shipmentWeight",
+    label: "Shipment Weight or Volume",
   },
   {
     id: "pickUpDate",

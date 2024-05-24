@@ -4,45 +4,34 @@ import HomePage from "./views/HomePage";
 import Navbar from "./components/layout/navbar";
 import LoginPage from "./views/LoginPage";
 import SignupPage from "./views/SignupPage";
-import Dashboard from "./views/Dashboard";
 import Footer from "./components/layout/footer";
 import LoadPostingPage from "./views/LoadPostingPage";
-import Lottie from "lottie-react";
-import truckAnimation from "./components/ui/truckAnimation.json";
 import BidPortalPage from "./views/BidPortalPage";
 import ShipperDashboard from "./views/ShipperDashboard";
 import CarrierDashboard from "./views/CarrierDashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store/store";
+import PageLoader from "./components/common/PageLoader";
+import AdminDashboard from "./views/AdminDashboard";
 
 function App() {
-  const { appRole, loggedIn } = useSelector(
+  const { appRole, loggedIn, loading } = useSelector(
     (state: RootState) => state.appState
   );
+
   return (
     <>
-      <Navbar />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Lottie
-          animationData={truckAnimation}
-          style={{ width: "50%", height: "50%" }}
-        />
-      </div>
-
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          {(loggedIn && appRole === "Carrier") && (
+        <Navbar />
+        {loading ? (
+          <PageLoader />
+        ) : (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/dashboard" element={<AdminDashboard />} />
+            {(loggedIn && appRole === "Carrier") && (
             <>
               <Route path="/bidportal" element={<BidPortalPage />} />
               <Route path="/carrierdash" element={<CarrierDashboard />} />
@@ -54,9 +43,10 @@ function App() {
               <Route path="/shipperdash" element={<ShipperDashboard />} />
             </>
            )} 
-        </Routes>
+          </Routes>
+        )}
       </BrowserRouter>
-      <Footer />
+      {!loading && <Footer />}
     </>
   );
 }
