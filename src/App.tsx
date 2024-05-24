@@ -4,7 +4,6 @@ import HomePage from "./views/HomePage";
 import Navbar from "./components/layout/navbar";
 import LoginPage from "./views/LoginPage";
 import SignupPage from "./views/SignupPage";
-import Dashboard from "./views/Dashboard";
 import Footer from "./components/layout/footer";
 import LoadPostingPage from "./views/LoadPostingPage";
 import BidPortalPage from "./views/BidPortalPage";
@@ -13,6 +12,7 @@ import CarrierDashboard from "./views/CarrierDashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store/store";
 import PageLoader from "./components/common/PageLoader";
+import AdminDashboard from "./views/AdminDashboard";
 
 function App() {
   const loading = useSelector((state: RootState) => state.appState.loading);
@@ -28,7 +28,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="/loadposting" element={<LoadPostingPage />} />
             <Route path="/bidportal" element={<BidPortalPage />} />
             <Route path="/shipperdash" element={<ShipperDashboard />} />
