@@ -57,6 +57,7 @@ export interface IBidPortal {
 export interface IShipperDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
+  invoice: string;
   carrierName: string;
   email: string;
   phone: string;
@@ -65,6 +66,7 @@ export interface IShipperDashboard
 
 export interface IShipperDashboardColumn {
   id:
+    | "invoice"
     | "carrierName"
     | "email"
     | "phone"
@@ -82,6 +84,7 @@ export interface IShipperDashboardColumn {
 export interface ICarrierDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
+  invoice: string;
   shipperName: string;
   email: string;
   phone: string;
@@ -90,6 +93,7 @@ export interface ICarrierDashboard
 
 export interface ICarrierDashboardColumn {
   id:
+    | "invoice"
     | "shipperName"
     | "email"
     | "phone"

@@ -12,6 +12,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
 
   return (
     <StyledTableRow onClick={handleRowClick}>
+      <StyledTableCell>{s.invoice}</StyledTableCell>
       <StyledTableCell>{s.shipperName}</StyledTableCell>
       <StyledTableCell>{s.email}</StyledTableCell>
       <StyledTableCell>{s.phone}</StyledTableCell>

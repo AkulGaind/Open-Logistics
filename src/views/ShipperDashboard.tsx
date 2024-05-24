@@ -1,5 +1,7 @@
+import { Search } from "@mui/icons-material";
 import {
   Box,
+  InputAdornment,
   Table,
   TableBody,
   TableCell,
@@ -8,18 +10,21 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from "@mui/material";
-import myColors from "../themes/colors";
-import { IShipperDashboardColumn } from "../interfaces/interfaces";
-import { shipper_columns } from "../utility/constants";
-import ShipperDashboardRow from "../components/shipperDashboard/ShipperDashboardRow";
-import { useState } from "react";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
+import { useState } from "react";
+import ShipperDashboardRow from "../components/shipperDashboard/ShipperDashboardRow";
+import { IShipperDashboardColumn } from "../interfaces/interfaces";
+import myColors from "../themes/colors";
+import { shipper_columns } from "../utility/constants";
+import { ScrollbarStyles } from "../components/common/styled";
 
 const ShipperDashboard = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -32,7 +37,13 @@ const ShipperDashboard = () => {
     setPage(0);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+    setPage(0);
+  };
+
   const rowData = {
+    invoice: "123",
     carrierName: "John Doe",
     email: "john.doe@email.com",
     phone: "9999999999",
@@ -46,9 +57,18 @@ const ShipperDashboard = () => {
     bidAmount: "10 Crore",
   };
 
-  const rows = Array.from({ length: 20 }, (_, index) => (
-    <ShipperDashboardRow key={index} {...rowData} />
-  ));
+  const rows = Array.from({ length: 20 }, (_, index) => ({
+    id: index,
+    ...rowData,
+  }));
+
+  const filteredRows = rows.filter((row) =>
+    Object.values(row).some(
+      (value) =>
+        typeof value === "string" &&
+        value.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   return (
     <Box padding={8}>
@@ -64,10 +84,32 @@ const ShipperDashboard = () => {
       >
         Shipper Dashboard
       </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <TextField
+          label="Search"
+          variant="outlined"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search fontSize="small" />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ width: "auto" }}
+        />
+      </Box>
       <TableContainer
         sx={{
           border: "1px solid",
           borderColor: myColors.backgroundGreyV2,
+          ...ScrollbarStyles,
         }}
       >
         <Table>
@@ -79,13 +121,17 @@ const ShipperDashboard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            {filteredRows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <ShipperDashboardRow key={row.id} {...row} />
+              ))}
           </TableBody>
           <TableFooter>
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[]}
-                count={rows.length}
+                count={filteredRows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

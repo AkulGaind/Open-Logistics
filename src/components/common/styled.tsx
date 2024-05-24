@@ -57,7 +57,7 @@ const StyledCard = ({ title, buttonText }: StyledCardProps) => {
   );
 };
 
-const labelController = ({ label, placeholder }: LabelControllerProps) => {
+const LabelController = ({ label, placeholder }: LabelControllerProps) => {
   const {
     register,
     formState: { errors },
@@ -84,11 +84,31 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 const StyledTableCell = styled(TableCell)(() => ({
-  maxWidth: 150,
+  minWidth: 75,
   wordWrap: "inherit",
   whiteSpace: "wrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
 }));
 
-export { labelController, StyledCard, StyledTableRow, StyledTableCell };
+const ScrollbarStyles = {
+  "&::-webkit-scrollbar": {
+    width: "5px",
+    height: "5px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: myColors.yellow.main,
+    borderRadius: "10px",
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: myColors.backgroundGreyV2,
+  },
+};
+
+export {
+  LabelController,
+  StyledCard,
+  StyledTableRow,
+  StyledTableCell,
+  ScrollbarStyles,
+};

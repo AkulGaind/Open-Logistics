@@ -39,7 +39,9 @@ const Navbar = () => {
             <Button
               variant="contained"
               onClick={
-                appRole === "Shipper"
+                appRole === "Admin"
+                  ? () => navigate("/")
+                  : appRole === "Shipper"
                   ? () => navigate("/loadposting")
                   : () => navigate("/bidportal")
               }
