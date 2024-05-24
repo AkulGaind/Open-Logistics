@@ -13,13 +13,26 @@ import {
 import myColors from "../themes/colors";
 import { ICarrierDashboardColumn } from "../interfaces/interfaces";
 import { carrier_columns } from "../utility/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import CarrierDashboardRow from "../components/carrierDashboard/CarrierDashboardRow";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store/store";
+import { useLazyShipperDetailsQuery } from "../redux/slices/serviceSlice";
 
 const CarrierDashboard = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [fetchShipperDetails] = useLazyShipperDetailsQuery();
+  const { userId } = useSelector((state: RootState) => state.appState);
+
+  useEffect(() => {
+    const getShipperDetails = async () => {
+      const data = await fetchShipperDetails(userId).unwrap();
+      console.log(data);
+    };
+    getShipperDetails();
+  }, []);
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);

@@ -1,5 +1,11 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import { ISignUp } from "../interfaces/interfaces";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
+import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
+import LocalPostOfficeTwoToneIcon from "@mui/icons-material/LocalPostOfficeTwoTone";
+import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
+import PhoneTwoToneIcon from "@mui/icons-material/PhoneTwoTone";
 import {
   Button,
   FormControl,
@@ -14,27 +20,26 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useShipperDetailsMutation, useSignUpUserMutation } from "../redux/slices/serviceSlice";
-import { yupResolver } from "@hookform/resolvers/yup";
-import signUpSchema from "../validationSchemas/signUpSchema";
-import { setAppRole, setUserId } from "../redux/slices/appStateSlice";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ISignUp } from "../interfaces/interfaces";
+import {
+  setAppRole,
+  setLoggedIn,
+  setUserId,
+} from "../redux/slices/appStateSlice";
+import {
+  useSignUpUserMutation
+} from "../redux/slices/serviceSlice";
 import { APIResult } from "../utility/constants";
-import LocalPostOfficeTwoToneIcon from "@mui/icons-material/LocalPostOfficeTwoTone";
-import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
-import PhoneTwoToneIcon from "@mui/icons-material/PhoneTwoTone";
-import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
-import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
-import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
+import signUpSchema from "../validationSchemas/signUpSchema";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [role, setRole] = useState<string>("");
   const navigate = useNavigate();
   const [signUpUser] = useSignUpUserMutation();
-  const [getShipperDetails] = useShipperDetailsMutation();
   const dispatch = useDispatch();
   const defaultValues: ISignUp = {
     username: "",
@@ -65,13 +70,26 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
-    const { msg, userId } = await signUpUser(data).unwrap();
-    if (msg === APIResult.signUpSuccess) {
-      dispatch(setAppRole(data.role));
-      dispatch(setUserId(userId));
-      const data1 = await getShipperDetails({userId}).unwrap();
-      console.log(data1);
-      navigate("/dashboard");
+    try {
+      const { msg, userId } = await signUpUser(data).unwrap();
+      if (msg === APIResult.signUpSuccess) {
+        dispatch(setAppRole(data.role));
+        dispatch(setUserId(userId));
+        dispatch(setLoggedIn(true));
+        switch (data.role) {
+          case "Admin":
+            navigate("/admin");
+            break;
+          case "Shipper":
+            navigate("/shipperdash");
+            break;
+          case "Carrier":
+            navigate("/carrierdash");
+            break;
+        }
+      }
+    } catch (error) {
+      console.log("Error while signing in: ", error);
     }
   };
 

@@ -1,5 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import LocalPostOfficeTwoToneIcon from "@mui/icons-material/LocalPostOfficeTwoTone";
+import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
 import {
   Button,
   Grid,
@@ -13,19 +15,21 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ILogin } from "../interfaces/interfaces";
-import { setAppRole, setUserId } from "../redux/slices/appStateSlice";
-import { useLoginUserMutation, useShipperDetailsMutation } from "../redux/slices/serviceSlice";
-import loginSchema from "../validationSchemas/loginSchema";
+import {
+  setAppRole,
+  setLoggedIn,
+  setUserId,
+} from "../redux/slices/appStateSlice";
+import {
+  useLoginUserMutation
+} from "../redux/slices/serviceSlice";
 import { APIResult } from "../utility/constants";
-import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
-import LocalPostOfficeTwoToneIcon from '@mui/icons-material/LocalPostOfficeTwoTone';
-
+import loginSchema from "../validationSchemas/loginSchema";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
   const [loginUser] = useLoginUserMutation();
-  const [getShipperDetails] = useShipperDetailsMutation();
   const dispatch = useDispatch();
   const defaultValues: ILogin = {
     email: "",
@@ -49,23 +53,36 @@ const LoginPage = () => {
   };
 
   const formSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
-    const { msg, role, userId } = await loginUser(data).unwrap();
-    if (msg === APIResult.loginSuccess) {
-      dispatch(setAppRole(role!));
-      dispatch(setUserId(userId));
-      const data1 = await getShipperDetails({userId}).unwrap();
-      console.log(data1);
-      navigate("/dashboard");
+    try {
+      const { msg, roles, userId } = await loginUser(data).unwrap();
+      if (msg === APIResult.loginSuccess) {
+        dispatch(setAppRole(roles!));
+        dispatch(setUserId(userId));
+        dispatch(setLoggedIn(true));
+        switch (roles) {
+          case "Admin":
+            navigate("/admin");
+            break;
+          case "Shipper":
+            navigate("/loadposting");
+            break;
+          case "Carrier":
+            navigate("/carrierdash");
+            break;
+        }
+      }
+    } catch (error) {
+      console.log("Error while logging in: ", error);
     }
   };
 
   return (
     <Grid
-    container
-    gridTemplateColumns={"45% 45%"}
-    p={"3%"} 
-    gap={"3%"}
-    alignItems={"center"}
+      container
+      gridTemplateColumns={"45% 45%"}
+      p={"3%"}
+      gap={"3%"}
+      alignItems={"center"}
     >
       <img
         src={"src/assets/images/login.png"}
@@ -81,17 +98,17 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit(formSubmit)}>
             <Stack spacing={1.5} mb={2}>
               <TextField
-                id="email"  
+                id="email"
                 variant="outlined"
                 label="Email"
                 placeholder="john.doe@email.com"
                 helperText={errors.email?.message}
                 {...register("email", { required: true })}
                 InputProps={{
-                  startAdornment:(
+                  startAdornment: (
                     <InputAdornment position="start">
-                    <LocalPostOfficeTwoToneIcon  fontSize="small"/>
-                  </InputAdornment>
+                      <LocalPostOfficeTwoToneIcon fontSize="small" />
+                    </InputAdornment>
                   ),
                 }}
               />
@@ -105,10 +122,10 @@ const LoginPage = () => {
                 placeholder="************"
                 label="Password"
                 InputProps={{
-                  startAdornment:(
+                  startAdornment: (
                     <InputAdornment position="start">
-                    <LockTwoToneIcon  fontSize="small"/>
-                  </InputAdornment>
+                      <LockTwoToneIcon fontSize="small" />
+                    </InputAdornment>
                   ),
                   endAdornment: (
                     <InputAdornment position="end">

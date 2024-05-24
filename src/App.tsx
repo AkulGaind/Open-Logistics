@@ -12,8 +12,13 @@ import truckAnimation from "./components/ui/truckAnimation.json";
 import BidPortalPage from "./views/BidPortalPage";
 import ShipperDashboard from "./views/ShipperDashboard";
 import CarrierDashboard from "./views/CarrierDashboard";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store/store";
 
 function App() {
+  const { appRole, loggedIn } = useSelector(
+    (state: RootState) => state.appState
+  );
   return (
     <>
       <Navbar />
@@ -37,10 +42,18 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/loadposting" element={<LoadPostingPage />} />
-          <Route path="/bidportal" element={<BidPortalPage />} />
-          <Route path="/shipperdash" element={<ShipperDashboard />} />
-          <Route path="/carrierdash" element={<CarrierDashboard />} />
+          {(loggedIn && appRole === "Carrier") && (
+            <>
+              <Route path="/bidportal" element={<BidPortalPage />} />
+              <Route path="/carrierdash" element={<CarrierDashboard />} />
+            </>
+          )}
+          {(loggedIn && appRole === "Shipper") && (
+            <>
+              <Route path="/loadposting" element={<LoadPostingPage />} />
+              <Route path="/shipperdash" element={<ShipperDashboard />} />
+            </>
+           )} 
         </Routes>
       </BrowserRouter>
       <Footer />

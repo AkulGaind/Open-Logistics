@@ -9,7 +9,6 @@ const loadPostingSchema = object().shape({
   shipmentWeight: string()
     .matches(/^\d+$/, "Shipment weight must be a number")
     .required(required),
-  shipmentUnits: string().required(required),
   pickUpDate: date().required(required),
   deliveryDate: date()
     .when("pickUpDate", (pickUpDate, schema) => {
