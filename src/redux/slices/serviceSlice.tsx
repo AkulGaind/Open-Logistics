@@ -137,10 +137,10 @@ export const appApi = createApi({
         } = data;
         const reqData = {
           userId: userId,
-          shipperName: shipperName,
-          shipperEmail: shipperEmail,
-          shipperPhone: shipperPhone,
-          shipperAddress: shipperAddress,
+          shipperName,
+          shipperEmail,
+          shipperPhone,
+          shipperAddress,
           origin,
           destination,
           shipmentType,
