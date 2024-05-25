@@ -1,11 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   IBidPortal,
+  ICarrierDashboard,
   IContactDetails,
   ILoadPosting,
   ILogin,
   IResponse,
-  ISignUp
+  IShipperDashboard,
+  ISignUp,
 } from "../../interfaces/interfaces";
 
 const backendUrl = "http://localhost:3000/api/";
@@ -80,12 +82,9 @@ export const appApi = createApi({
     }),
     loadPosting: builder.mutation<
       Pick<IResponse, "msg">,
-      {userId: string, data: ILoadPosting}
+      { userId: string; data: ILoadPosting }
     >({
-      query: ({
-        userId,
-        data
-      }) => {
+      query: ({ userId, data }) => {
         const {
           origin,
           destination,
@@ -93,7 +92,7 @@ export const appApi = createApi({
           shipmentWeight,
           pickUpDate,
           deliveryDate,
-          addDetails
+          addDetails,
         } = data;
         const reqData = {
           _id: userId,
@@ -133,7 +132,7 @@ export const appApi = createApi({
         };
       },
     }),
-    shipperDetails: builder.query<any, string>({
+    shipperDetails: builder.query<ICarrierDashboard[], string>({
       query: (userId) => ({
         url: "/dashboard/shipperDashboard",
         credentials: "include",
@@ -141,7 +140,7 @@ export const appApi = createApi({
         params: { _id: userId },
       }),
     }),
-    carrierDetails: builder.query<any, string>({
+    carrierDetails: builder.query<IShipperDashboard[], string>({
       query: (userId) => ({
         url: `/dashboard/carrierDashboard/_id=${userId}`,
         method: "GET",
