@@ -24,14 +24,13 @@ export interface ISignUp extends ILogin {
   username: string;
   phone: string;
   company: string;
-  role: "Admin" | "Shipper" | "Carrier" | string;
+  role: string;
 }
 
 export interface IResponse {
   msg: string;
-  token: string;
   userId: string;
-  role?: string;
+  roles?: string;
 }
 
 export interface IContactDetails {

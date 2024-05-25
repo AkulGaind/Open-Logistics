@@ -21,11 +21,18 @@ import { APIResult, shipment_type } from "../utility/constants";
 import loadPostingSchema from "../validationSchemas/loadPostingSchema";
 import DateTimeController from "../components/common/DateController";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store/store";
 
 const LoadPostingPage = () => {
   const navigate = useNavigate();
   const [loadPosting] = useLoadPostingMutation();
   const [selectedShipmentType, setSelectedShipmentType] = useState("");
+  const [selectedShipmentWeightUnits, setSelectedShipmentWeightUnits] =
+    useState("");
+    const { userId } = useSelector(
+      (state: RootState) => state.appState
+    );
 
   const defaultValues: ILoadPosting = {
     origin: "",
@@ -48,13 +55,29 @@ const LoadPostingPage = () => {
     formState: { errors },
   } = method;
 
+  const convertWeightToKg = (shipmentWeight: string) => {
+    if (selectedShipmentWeightUnits === "Tonnes") {
+      return (parseInt(shipmentWeight, 10) * 1000).toString();
+    } else if (selectedShipmentWeightUnits === "ft\u00B3") {
+      return (parseInt(shipmentWeight, 10) * 28).toString();
+    } else if (selectedShipmentWeightUnits === "m\u00B3") {
+      return (parseInt(shipmentWeight, 10) * 333).toString();
+    } else {
+      return shipmentWeight;
+    }
+  };
+
   const formSubmit: SubmitHandler<ILoadPosting> = async (
     data: ILoadPosting
   ) => {
-    console.log(data);
-    const { msg } = await loadPosting(data).unwrap();
-    if (msg === APIResult.loadPostingSuccess) {
-      navigate("/dashboard");
+    try {
+      data.shipmentWeight = convertWeightToKg(data.shipmentWeight);
+      const { msg } = await loadPosting({ userId, data }).unwrap();
+      if (msg === APIResult.loadPostingSuccess) {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.error("Error while load posting: ", err);
     }
   };
 
@@ -105,6 +128,7 @@ const LoadPostingPage = () => {
                     variant="standard"
                     id="shipmentType"
                     value={selectedShipmentType}
+                    {...register("shipmentType")}
                     onChange={(e) => setSelectedShipmentType(e.target.value)}
                     style={{ borderRadius: "10px" }}
                   >

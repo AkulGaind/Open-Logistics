@@ -5,7 +5,7 @@ import {
   ILoadPosting,
   ILogin,
   IResponse,
-  ISignUp,
+  ISignUp
 } from "../../interfaces/interfaces";
 
 const backendUrl = "http://localhost:3000/api/";
@@ -30,6 +30,7 @@ export const appApi = createApi({
         return {
           url: `auth/login`,
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -44,13 +45,14 @@ export const appApi = createApi({
           email: email,
           phone: phone,
           password: password,
-          companyName: company,
+          address: company,
           roles: role,
         };
 
         return {
           url: `auth/register`,
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -76,29 +78,38 @@ export const appApi = createApi({
         };
       },
     }),
-    loadPosting: builder.mutation<Pick<IResponse, "msg">, ILoadPosting>({
+    loadPosting: builder.mutation<
+      Pick<IResponse, "msg">,
+      {userId: string, data: ILoadPosting}
+    >({
       query: ({
-        origin,
-        destination,
-        shipmentType,
-        shipmentWeight,
-        pickUpDate,
-        deliveryDate,
-        addDetails,
+        userId,
+        data
       }) => {
+        const {
+          origin,
+          destination,
+          shipmentType,
+          shipmentWeight,
+          pickUpDate,
+          deliveryDate,
+          addDetails
+        } = data;
         const reqData = {
+          _id: userId,
           origin: origin,
           destination: destination,
           shipmentType: shipmentType,
-          shipmentWeight: shipmentWeight,
-          pickUpDate: pickUpDate,
-          deliveryDate: deliveryDate,
+          shipmentWeightVolume: shipmentWeight,
+          pickupDateTime: pickUpDate,
+          deliveryDateTime: deliveryDate,
           addDetails: addDetails,
         };
 
         return {
-          url: `form/loadPosting`,
+          url: `dashboard/postShipper`,
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -122,21 +133,21 @@ export const appApi = createApi({
         };
       },
     }),
-    shipperDetails: builder.mutation<any, { userId: string }>({
-      query: ({ userId }) => {
-        const reqData = {
-          userId: userId,
-        };
-
-        return {
-          url: `auth/shipper`,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: reqData,
-        };
-      },
+    shipperDetails: builder.query<any, string>({
+      query: (userId) => ({
+        url: "/dashboard/shipperDashboard",
+        credentials: "include",
+        method: "GET",
+        params: { _id: userId },
+      }),
+    }),
+    carrierDetails: builder.query<any, string>({
+      query: (userId) => ({
+        url: `/dashboard/carrierDashboard/_id=${userId}`,
+        method: "GET",
+        credentials: "include",
+        params: { _id: userId },
+      }),
     }),
   }),
 });
@@ -147,5 +158,6 @@ export const {
   useContactUsMutation,
   useLoadPostingMutation,
   useBidPortalMutation,
-  useShipperDetailsMutation,
+  useLazyCarrierDetailsQuery,
+  useLazyShipperDetailsQuery,
 } = appApi;
