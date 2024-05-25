@@ -49,9 +49,9 @@ const LoadPostingPage = () => {
     origin: "",
     destination: "",
     shipmentType: "",
-    shipmentWeight: "",
-    pickUpDate: new Date(),
-    deliveryDate: new Date(),
+    shipmentWeightVolume: "",
+    pickupDateTime: new Date(),
+    deliveryDateTime: new Date(),
     addDetails: "",
   };
   const method = useForm<ILoadPosting>({
@@ -93,7 +93,7 @@ const LoadPostingPage = () => {
   ) => {
     dispatch(setLoading(true));
     try {
-      data.shipmentWeight = convertWeightToKg(data.shipmentWeight);
+      data.shipmentWeightVolume = convertWeightToKg(data.shipmentWeightVolume);
       const { msg } = await loadPosting({ userId, data }).unwrap();
       if (msg === APIResult.loadPostingSuccess) {
         setSnackOpen(true);
@@ -176,7 +176,7 @@ const LoadPostingPage = () => {
                       </Select>
                     </FormControl>
                     <DateTimeController
-                      value={dayjs(defaultValues.pickUpDate)}
+                      value={dayjs(defaultValues.pickupDateTime)}
                       name="pickUpDate"
                       label="Preferred Pickup Date/Time"
                     />
@@ -230,8 +230,8 @@ const LoadPostingPage = () => {
                           },
                         }}
                         required
-                        helperText={errors.shipmentWeight?.message}
-                        {...register("shipmentWeight", { required: true })}
+                        helperText={errors.shipmentWeightVolume?.message}
+                        {...register("shipmentWeightVolume", { required: true })}
                         sx={{ height: 50 }}
                       />
                       <FormControl variant="standard" fullWidth>
@@ -260,7 +260,7 @@ const LoadPostingPage = () => {
                       </FormControl>
                     </Stack>
                     <DateTimeController
-                      value={dayjs(defaultValues.deliveryDate)}
+                      value={dayjs(defaultValues.deliveryDateTime)}
                       name="deliveryDate"
                       label="Preferred Delivery Date/Time"
                     />

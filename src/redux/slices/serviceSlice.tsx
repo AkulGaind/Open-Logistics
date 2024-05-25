@@ -89,9 +89,9 @@ export const appApi = createApi({
           origin,
           destination,
           shipmentType,
-          shipmentWeight,
-          pickUpDate,
-          deliveryDate,
+          shipmentWeightVolume,
+          pickupDateTime,
+          deliveryDateTime,
           addDetails,
         } = data;
         const reqData = {
@@ -99,9 +99,9 @@ export const appApi = createApi({
           origin: origin,
           destination: destination,
           shipmentType: shipmentType,
-          shipmentWeightVolume: shipmentWeight,
-          pickupDateTime: pickUpDate,
-          deliveryDateTime: deliveryDate,
+          shipmentWeightVolume: shipmentWeightVolume,
+          pickupDateTime: pickupDateTime,
+          deliveryDateTime: deliveryDateTime,
           addDetails: addDetails,
         };
 
@@ -130,9 +130,9 @@ export const appApi = createApi({
           origin,
           destination,
           shipmentType,
-          shipmentWeight,
-          pickUpDate,
-          deliveryDate,
+          shipmentWeightVolume,
+          pickupDateTime,
+          deliveryDateTime,
           addDetails,
         } = data;
         const reqData = {
@@ -145,9 +145,9 @@ export const appApi = createApi({
           origin,
           destination,
           shipmentType,
-          shipmentWeight,
-          pickUpDate,
-          deliveryDate,
+          shipmentWeightVolume,
+          pickupDateTime,
+          deliveryDateTime,
           addDetails,
           bidAmount: bidAmount,
         };

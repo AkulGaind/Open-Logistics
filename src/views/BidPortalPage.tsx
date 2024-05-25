@@ -41,9 +41,9 @@ const BidPortalPage = () => {
     origin: "",
     destination: "",
     shipmentType: "",
-    shipmentWeight: "",
-    pickUpDate: new Date(),
-    deliveryDate: new Date(),
+    shipmentWeightVolume: "",
+    pickupDateTime: new Date(),
+    deliveryDateTime: new Date(),
     addDetails: "",
   };
   const method = useForm<IBidPortal>({

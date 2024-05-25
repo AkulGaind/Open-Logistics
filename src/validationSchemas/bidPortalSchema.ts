@@ -21,11 +21,11 @@ const bidPortalSchema = object().shape({
   origin: string().required(required),
   destination: string().required(required),
   shipmentType: string().required(required),
-  shipmentWeight: string()
+  shipmentWeightVolume: string()
     .matches(/^\d+$/, "Shipment weight must be a number")
     .required(required),
-  pickUpDate: date().required(required),
-  deliveryDate: date()
+  pickupDateTime: date().required(required),
+  deliveryDateTime: date()
     .when("pickUpDate", (pickUpDate, schema) => {
       return schema.min(
         pickUpDate,
