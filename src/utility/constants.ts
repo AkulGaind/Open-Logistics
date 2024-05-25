@@ -7,8 +7,8 @@ export enum APIResult {
   loginSuccess = "Login Successful",
   signUpSuccess = "User registered successfully",
   contactUsSuccess = "Message sent successfully",
-  loadPostingSuccess = "Load Posting done successfully",
-  bidPortalSuccess = "Bid placed successfully",
+  loadPostingSuccess = "Shipment details added successfully",
+  bidPortalSuccess = "carrierBidData added successfully",
 }
 
 export const shipment_type: readonly {

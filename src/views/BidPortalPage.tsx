@@ -27,13 +27,24 @@ const BidPortalPage = () => {
   const navigate = useNavigate();
   const [bidPortal] = useBidPortalMutation();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: RootState) => state.appState);
+  const { userId, loading } = useSelector((state: RootState) => state.appState);
   const [snackOpen, setSnackOpen] = useState(false);
   const [text, setText] = useState("");
   const [status, setStatus] = useState<AlertColor>("success");
 
   const defaultValues: IBidPortal = {
+    shipperName: "",
+    shipperEmail: "",
+    shipperPhone: "",
+    shipperAddress: "",
     bidAmount: "",
+    origin: "",
+    destination: "",
+    shipmentType: "",
+    shipmentWeight: "",
+    pickUpDate: new Date(),
+    deliveryDate: new Date(),
+    addDetails: "",
   };
   const method = useForm<IBidPortal>({
     mode: "onChange",
@@ -61,12 +72,12 @@ const BidPortalPage = () => {
     dispatch(setLoading(true));
     try {
       console.log(data);
-      const { msg } = await bidPortal(data).unwrap();
+      const { msg } = await bidPortal({ userId, data }).unwrap();
       if (msg === APIResult.bidPortalSuccess) {
         setSnackOpen(true);
         setText("Bid Placed Successfully!");
         setStatus("success");
-        navigate("/dashboard");
+        navigate("/carrierdashboard");
       }
     } catch (error) {
       console.log("Failed to fetch bid portal data:", error);

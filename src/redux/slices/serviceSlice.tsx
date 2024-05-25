@@ -95,7 +95,7 @@ export const appApi = createApi({
           addDetails,
         } = data;
         const reqData = {
-          _id: userId,
+          shipperId: userId,
           origin: origin,
           destination: destination,
           shipmentType: shipmentType,
@@ -106,7 +106,7 @@ export const appApi = createApi({
         };
 
         return {
-          url: `dashboard/postShipper`,
+          url: `shipment/loadPosting`,
           method: "POST",
           credentials: "include",
           headers: {
@@ -116,15 +116,45 @@ export const appApi = createApi({
         };
       },
     }),
-    bidPortal: builder.mutation<Pick<IResponse, "msg">, IBidPortal>({
-      query: ({ bidAmount }) => {
+    bidPortal: builder.mutation<
+      Pick<IResponse, "msg">,
+      { userId: string; data: IBidPortal }
+    >({
+      query: ({ userId, data }) => {
+        const {
+          shipperName,
+          shipperEmail,
+          shipperPhone,
+          shipperAddress,
+          bidAmount,
+          origin,
+          destination,
+          shipmentType,
+          shipmentWeight,
+          pickUpDate,
+          deliveryDate,
+          addDetails,
+        } = data;
         const reqData = {
+          userId: userId,
+          shipperName: shipperName,
+          shipperEmail: shipperEmail,
+          shipperPhone: shipperPhone,
+          shipperAddress: shipperAddress,
+          origin,
+          destination,
+          shipmentType,
+          shipmentWeight,
+          pickUpDate,
+          deliveryDate,
+          addDetails,
           bidAmount: bidAmount,
         };
 
         return {
-          url: `form/bidPortal`,
+          url: `shipment/bidPortal`,
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -132,20 +162,18 @@ export const appApi = createApi({
         };
       },
     }),
-    shipperDetails: builder.query<ICarrierDashboard[], string>({
-      query: (userId) => ({
-        url: "/dashboard/shipperDashboard",
+    shipperDetails: builder.query<IResponse<ICarrierDashboard>, string>({
+      query: () => ({
+        url: "/shipment/dashboard",
         credentials: "include",
         method: "GET",
-        params: { _id: userId },
       }),
     }),
-    carrierDetails: builder.query<IShipperDashboard[], string>({
-      query: (userId) => ({
-        url: `/dashboard/carrierDashboard/_id=${userId}`,
+    carrierDetails: builder.query<IResponse<IShipperDashboard>, string>({
+      query: () => ({
+        url: `/shipment/dashboard`,
         method: "GET",
         credentials: "include",
-        params: { _id: userId },
       }),
     }),
   }),
