@@ -20,9 +20,9 @@ const signUpSchema = object()
       .required(required)
       .length(10, valid)
       .matches(/^[6-9]{1}?[0-9]{9}$/, valid),
-    company: string()
+    address: string()
       .required(required)
-      .max(20, "Company cannot be more than 20 characters"),
+      .max(20, "Address cannot be more than 20 characters"),
     role: string().required(required),
   })
   .required();

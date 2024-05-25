@@ -41,13 +41,13 @@ export const appApi = createApi({
       },
     }),
     signUpUser: builder.mutation<IResponse, ISignUp>({
-      query: ({ username, email, phone, password, company, role }) => {
+      query: ({ username, email, phone, password, address, role }) => {
         const reqData = {
           username: username,
           email: email,
           phone: phone,
           password: password,
-          address: company,
+          address: address,
           roles: role,
         };
 
