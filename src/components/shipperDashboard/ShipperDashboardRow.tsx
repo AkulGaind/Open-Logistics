@@ -2,33 +2,42 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { IShipperDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
 import { IconButton } from "@mui/material";
+import { Download } from "@mui/icons-material";
 
 const ShipperDashboardRow = (s: IShipperDashboard) => {
+  const renderCellContent = (content: string) => {
+    return content ? content : "N/A";
+  };
+
   return (
     <StyledTableRow>
-      <StyledTableCell>{s.invoice}</StyledTableCell>
-      <StyledTableCell>{s.carrierName}</StyledTableCell>
-      <StyledTableCell>{s.carrierEmail}</StyledTableCell>
-      <StyledTableCell>{s.carrierPhone}</StyledTableCell>
-      <StyledTableCell>{s.carrierAddress}</StyledTableCell>
-      <StyledTableCell>{s.origin}</StyledTableCell>
-      <StyledTableCell>{s.destination}</StyledTableCell>
-      <StyledTableCell>{s.shipmentType}</StyledTableCell>
-      <StyledTableCell>{s.shipmentWeightVolume}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.invoice)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.carrierName)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.carrierEmail)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.carrierPhone)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.carrierAddress)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.origin)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.destination)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.shipmentType)}</StyledTableCell>
       <StyledTableCell>
-        {new Date(s.pickupDateTime).toLocaleDateString()}
+        {renderCellContent(s.shipmentWeightVolume)}
       </StyledTableCell>
       <StyledTableCell>
-        {new Date(s.deliveryDateTime).toLocaleDateString()}
+        {renderCellContent(new Date(s.pickupDateTime).toLocaleDateString())}
       </StyledTableCell>
-      <StyledTableCell>{s.bidAmount}</StyledTableCell>
+      <StyledTableCell>
+        {renderCellContent(new Date(s.deliveryDateTime).toLocaleDateString())}
+      </StyledTableCell>
+      <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
+        <IconButton size="small" onClick={() => console.log("Payment Portal")}>
+          <AttachMoneyIcon fontSize="small" />
+        </IconButton>
         <IconButton
           size="small"
-          // onClick={(event) => handleEdit(event)}
-          sx={{ p: 0 }}
+          onClick={() => console.log("Download Invoice")}
         >
-          <AttachMoneyIcon fontSize="small" />
+          <Download fontSize="small" />
         </IconButton>
       </StyledTableCell>
     </StyledTableRow>

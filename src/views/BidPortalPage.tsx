@@ -75,6 +75,7 @@ const BidPortalPage = () => {
   const formSubmit: SubmitHandler<{ bidAmount: string }> = async (data: {
     bidAmount: string;
   }) => {
+    dispatch(setLoading(true));
     try {
       const biddingDetails: IBidPortal = {
         shipperName: shipperName,
@@ -92,7 +93,6 @@ const BidPortalPage = () => {
       };
       const { msg } = await bidPortal({ userId, biddingDetails, shipperId }).unwrap();
       if (msg === APIResult.bidPortalSuccess) {
-        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("Bid Placed Successfully!");
         setStatus("success");
@@ -101,12 +101,11 @@ const BidPortalPage = () => {
         }, 5000);
       }
     } catch (error) {
+      dispatch(setLoading(false));
       console.log("Failed to fetch bid portal data:", error);
       setSnackOpen(true);
       setText("Error while fetching bid portal data. Please try again.");
       setStatus("error");
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 

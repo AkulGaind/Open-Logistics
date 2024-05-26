@@ -90,10 +90,10 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
+    dispatch(setLoading(true));
     try {
       const { msg, userId } = await signUpUser(data).unwrap();
       if (msg === APIResult.signUpSuccess) {
-        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("User Registered Successfully!");
         setStatus("success");
@@ -115,12 +115,11 @@ const SignupPage = () => {
         }, 5000);
       }
     } catch (error) {
+      dispatch(setLoading(false));
       console.log("Error while signing in:", error);
       setSnackOpen(true);
       setText("Error while signing in. Please try again.");
       setStatus("error");
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 
