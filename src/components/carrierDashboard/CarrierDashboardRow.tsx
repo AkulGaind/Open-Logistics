@@ -22,7 +22,6 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
       deliveryDateTime: s.deliveryDateTime,
       addDetails: s.addDetails,
     };
-    console.log(bidDetails)
     navigate("/bidportal", { state: bidDetails });
   };
 

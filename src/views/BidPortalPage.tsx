@@ -97,7 +97,7 @@ const BidPortalPage = () => {
         setText("Bid Placed Successfully!");
         setStatus("success");
         setTimeout(() => {
-          navigate("/carrierdashboard");
+          navigate("/carrierdash");
         }, 5000);
       }
     } catch (error) {
