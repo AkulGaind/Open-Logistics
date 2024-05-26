@@ -2,7 +2,11 @@ import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { RootState } from "../../redux/store/store";
-import { setAppRole, setLoggedIn, setUserId } from "../../redux/slices/appStateSlice";
+import {
+  setAppRole,
+  setLoggedIn,
+  setUserId,
+} from "../../redux/slices/appStateSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -17,7 +21,7 @@ const Navbar = () => {
     dispatch(setUserId(""));
     dispatch(setAppRole(""));
     navigate("/");
-  }
+  };
 
   return (
     <AppBar
@@ -37,32 +41,33 @@ const Navbar = () => {
         </a>
         <Box sx={{ flexGrow: 1 }} />
         {!loggedIn ? (
-          <>
+          <Box sx={{ display: "flex", gap: 2 }}>
             <Button
-              variant="text"
+              variant="contained"
               onClick={() => navigate("/login")}
               sx={{ pr: 0 }}
             >
               Login
             </Button>
-            <Button variant="text" onClick={() => navigate("/signup")}>
+            <Button variant="contained" onClick={() => navigate("/signup")}>
               Sign Up
             </Button>
-          </>
+          </Box>
         ) : (
           <>
             {location.pathname === "/" && (
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Button variant="contained" onClick={handleLogout}>
-                  Logout
-                </Button>
-              </Box>
+              <Button variant="contained" onClick={handleLogout}>
+                Logout
+              </Button>
             )}
             {appRole === "Shipper" &&
               (location.pathname === "/loadposting" ||
                 location.pathname === "/shipperdash") && (
                 <>
-                  <Button variant="text" onClick={() => navigate("/loadposting")}>
+                  <Button
+                    variant="text"
+                    onClick={() => navigate("/loadposting")}
+                  >
                     Home
                   </Button>
                   <Button
