@@ -1,13 +1,18 @@
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { RootState } from "../../redux/store/store";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { appRole, loggedIn } = useSelector(
     (state: RootState) => state.appState
   );
+
+  const handleLogout = () => {
+    navigate("/");
+  };
 
   return (
     <AppBar
@@ -27,43 +32,63 @@ const Navbar = () => {
         </a>
         <Box sx={{ flexGrow: 1 }} />
         {!loggedIn ? (
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Button variant="contained" onClick={() => navigate("/login")}>
+          <>
+            <Button
+              variant="text"
+              onClick={() => navigate("/login")}
+              sx={{ pr: 0 }}
+            >
               Login
             </Button>
-            <Button variant="contained" onClick={() => navigate("/signup")}>
+            <Button variant="text" onClick={() => navigate("/signup")}>
               Sign Up
             </Button>
-          </Box>
+          </>
         ) : (
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Button
-              variant="contained"
-              onClick={
-                appRole === "Admin"
-                  ? () => navigate("/")
-                  : appRole === "Shipper"
-                  ? () => navigate("/loadposting")
-                  : () => navigate("/bidportal")
-              }
-            >
-              Home
-            </Button>
-            {appRole === "Shipper" && (
-              <Button
-                variant="contained"
-                onClick={() => navigate("/shipperdash")}
-              >
-                Dashboard
-              </Button>
+          <>
+            {location.pathname === "/" && (
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Button variant="contained" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </Box>
             )}
-            <Button variant="contained" onClick={() => navigate("/")}>
-              Logout
-            </Button>
-          </Box>
+            {appRole === "Shipper" &&
+              (location.pathname === "/loadposting" ||
+                location.pathname === "/shipperdash") && (
+                <>
+                  <Button variant="text" onClick={() => navigate("/")}>
+                    Home
+                  </Button>
+                  <Button
+                    variant="text"
+                    onClick={() => navigate("/shipperdash")}
+                    sx={{ pr: 6 }}
+                  >
+                    Dashboard
+                  </Button>
+                  <Button variant="contained" onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </>
+              )}
+            {appRole === "Carrier" &&
+              (location.pathname === "/bidportal" ||
+                location.pathname === "/carrierdash") && (
+                <>
+                  <Button variant="text" onClick={() => navigate("/")}>
+                    Home
+                  </Button>
+                  <Button variant="contained" onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </>
+              )}
+          </>
         )}
       </Toolbar>
     </AppBar>
   );
 };
+
 export default Navbar;

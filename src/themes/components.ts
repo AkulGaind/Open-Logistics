@@ -1,9 +1,19 @@
+import typography from "./typography";
+
 const components = {
   MuiButton: {
+    defaultProps: {
+      disableRipple: true, // Disable ripple effect for all buttons
+    },
     styleOverrides: {
       root: {
+        fontSize: typography.h6?.fontSize,
+        fontWeight: typography.h6?.fontWeight,
+        lineHeight: typography.h6?.lineHeight,
+        letterSpacing: typography.h6?.letterSpacing,
         color: "white", // Default text color
         width: "120px", // Fixed width
+        padding: "10px",
         "&:hover": {
           color: "white", // Text color on hover
         },
@@ -17,13 +27,11 @@ const components = {
           color: "white", // Text color on hover
         },
       },
-      outlined: {
-        border: "2px solid black", // Border for the outlined variant
-        "&.MuiButton-containedPrimary": {
-          color: "white", // Text color for outlined primary button
-          borderColor: "black", // Border color for outlined primary button
+      text: {
+        "&.MuiButton-textPrimary": {
+          color: "black", // Text color for text primary button
           "&:hover": {
-            color: "white",
+            color: "black",
           },
         },
       },

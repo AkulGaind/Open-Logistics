@@ -91,11 +91,11 @@ const LoadPostingPage = () => {
   const formSubmit: SubmitHandler<ILoadPosting> = async (
     data: ILoadPosting
   ) => {
+    dispatch(setLoading(true));
     try {
       data.shipmentWeightVolume = convertWeightToKg(data.shipmentWeightVolume);
       const { msg } = await loadPosting({ userId, data }).unwrap();
       if (msg === APIResult.loadPostingSuccess) {
-        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("Load Posting Done Successfully!");
         setStatus("success");
@@ -104,12 +104,11 @@ const LoadPostingPage = () => {
         }, 5000);
       }
     } catch (error) {
+      dispatch(setLoading(false));
       console.error("Error while load posting:", error);
       setSnackOpen(true);
       setText("Error while load posting. Please try again.");
       setStatus("error");
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 
