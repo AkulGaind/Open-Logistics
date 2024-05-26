@@ -62,7 +62,7 @@ const Navbar = () => {
               (location.pathname === "/loadposting" ||
                 location.pathname === "/shipperdash") && (
                 <>
-                  <Button variant="text" onClick={() => navigate("/")}>
+                  <Button variant="text" onClick={() => navigate("/loadposting")}>
                     Home
                   </Button>
                   <Button
