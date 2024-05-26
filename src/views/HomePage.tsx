@@ -137,11 +137,7 @@ const HomePage = () => {
                   justifyContent="center"
                   sx={{ marginLeft: 2 }}
                 >
-                  <Lottie
-                    animationData={homePageAnimation}
-                    // height={500}
-                    // width={500}
-                  />
+                  <Lottie animationData={homePageAnimation} />
                 </Grid>
               </Grid>
             </Stack>
