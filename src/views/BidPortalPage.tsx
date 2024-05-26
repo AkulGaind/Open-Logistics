@@ -91,7 +91,11 @@ const BidPortalPage = () => {
         deliveryDateTime: deliveryDateTime,
         addDetails: addDetails,
       };
-      const { msg } = await bidPortal({ userId, biddingDetails, shipperId }).unwrap();
+      const { msg } = await bidPortal({
+        userId,
+        biddingDetails,
+        shipperId,
+      }).unwrap();
       if (msg === APIResult.bidPortalSuccess) {
         setSnackOpen(true);
         setText("Bid Placed Successfully!");

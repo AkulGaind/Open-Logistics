@@ -12,4 +12,4 @@ const loginSchema = object()
   })
   .required();
 
-  export default loginSchema;
+export default loginSchema;
