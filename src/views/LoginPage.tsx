@@ -71,27 +71,29 @@ const LoginPage = () => {
   };
 
   const formSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
-    dispatch(setLoading(true));
     try {
       const { msg, roles, userId } = await loginUser(data).unwrap();
       if (msg === APIResult.loginSuccess) {
+        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("Login Done Successfully!");
         setStatus("success");
         dispatch(setAppRole(roles!));
         dispatch(setUserId(userId!));
         dispatch(setLoggedIn(true));
-        switch (roles) {
-          case "Admin":
-            navigate("/admin");
-            break;
-          case "Shipper":
-            navigate("/loadposting");
-            break;
-          case "Carrier":
-            navigate("/carrierdash");
-            break;
-        }
+        setTimeout(() => {
+          switch (roles) {
+            case "Admin":
+              navigate("/admin");
+              break;
+            case "Shipper":
+              navigate("/loadposting");
+              break;
+            case "Carrier":
+              navigate("/carrierdash");
+              break;
+          }
+        }, 5000);
       }
     } catch (error) {
       console.log("Error while logging in:", error);

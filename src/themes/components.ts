@@ -3,10 +3,11 @@ const components = {
     styleOverrides: {
       root: {
         color: "white", // Default text color
-        width: "100px", // Fixed width
+        width: "120px", // Fixed width
         "&:hover": {
           color: "white", // Text color on hover
         },
+        textTransform: "none",
       },
       contained: {
         backgroundColor: "black", // Background color for contained button

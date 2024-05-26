@@ -5,8 +5,9 @@ import { RootState } from "../../redux/store/store";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const appRole = useSelector((state: RootState) => state.appState.appRole);
-  const loggedIn = useSelector((state: RootState) => state.appState.loggedIn);
+  const { appRole, loggedIn } = useSelector(
+    (state: RootState) => state.appState
+  );
 
   return (
     <AppBar
@@ -56,10 +57,7 @@ const Navbar = () => {
                 Dashboard
               </Button>
             )}
-            <Button
-              variant="contained"
-              onClick={() => navigate("/carrierdash")}
-            >
+            <Button variant="contained" onClick={() => navigate("/")}>
               Logout
             </Button>
           </Box>

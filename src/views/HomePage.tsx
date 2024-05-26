@@ -9,21 +9,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Lottie from "lottie-react";
+import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Typewriter, { TypewriterClass } from "typewriter-effect";
-import backgroundImage from "../assets/images/truck.png";
+import Typewriter from "typewriter-effect";
+import PageLoader from "../components/common/PageLoader";
+import CustomSnackBar from "../components/common/Snackbar";
+import homePageAnimation from "../components/ui/homePageAnimation.json";
 import { IContactDetails } from "../interfaces/interfaces";
+import { setLoading } from "../redux/slices/appStateSlice";
 import { useContactUsMutation } from "../redux/slices/serviceSlice";
+import { RootState } from "../redux/store/store";
 import myColors from "../themes/colors";
 import { APIResult } from "../utility/constants";
 import contactDetailsSchema from "../validationSchemas/contactDetailsSchema";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store/store";
-import { setLoading } from "../redux/slices/appStateSlice";
-import PageLoader from "../components/common/PageLoader";
-import { useState } from "react";
-import CustomSnackBar from "../components/common/Snackbar";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -64,15 +65,17 @@ const HomePage = () => {
   const formSubmit: SubmitHandler<IContactDetails> = async (
     data: IContactDetails
   ) => {
-    dispatch(setLoading(true));
     try {
       console.log(data);
       const { msg } = await contactUs(data).unwrap();
       if (msg === APIResult.contactUsSuccess) {
+        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("Message Sent Successfully!");
         setStatus("success");
-        navigate("/dashboard");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 5000);
       }
     } catch (error) {
       console.log("Error while contacting:", error);
@@ -89,51 +92,64 @@ const HomePage = () => {
       {loading ? (
         <PageLoader />
       ) : (
-        <Box pt={5} pl={10} pr={10} pb={10}>
-          <div
-            className="imageContainer"
-            style={{
-              backgroundImage: `url(${backgroundImage})`,
-              height: "80vh",
-              display: "flex",
-              position: "relative",
-              objectFit: "contain",
-            }}
-          >
-            <div>
-              <Typography
-                sx={{
-                  color: myColors.textBlack,
-                  maxWidth: "580px",
-                  paddingTop: "50px",
-                }}
-                variant="h2"
-                fontSize={"45px"}
-                fontWeight={600}
+        <Box padding={8}>
+          <Box>
+            <Stack
+              alignItems="center"
+              direction="row"
+              sx={{ height: "550px", overflow: "hidden" }}
+            >
+              <Grid
+                container
+                justifyContent="space-between"
+                wrap="nowrap"
+                alignItems="center"
               >
-                <Typewriter
-                  onInit={(typewriter: TypewriterClass) => {
-                    typewriter
-                      .changeDelay(50)
-                      .typeString(
-                        "Bridge the gap between shippers and carriers with connectivity"
-                      )
-                      .pauseFor(1200)
-                      .changeDeleteSpeed(30)
-                      .deleteChars(12)
-                      .typeString("seamless connectivity")
-                      .start();
-                  }}
-                />
-              </Typography>
-            </div>
-          </div>
-          <Box paddingBottom={10}>
+                <Grid item xs={6} sx={{ marginRight: 2 }}>
+                  <Typography
+                    sx={{
+                      color: myColors.textBlack,
+                    }}
+                    variant="h2"
+                    fontSize="45px"
+                    fontWeight={600}
+                  >
+                    <Typewriter
+                      onInit={(typewriter) => {
+                        typewriter
+                          .changeDelay(50)
+                          .typeString(
+                            "Bridge the gap between shippers and carriers with connectivity"
+                          )
+                          .pauseFor(1200)
+                          .changeDeleteSpeed(30)
+                          .deleteChars(12)
+                          .typeString("seamless connectivity")
+                          .start();
+                      }}
+                    />
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  container
+                  justifyContent="center"
+                  sx={{ marginLeft: 2 }}
+                >
+                  <Lottie
+                    animationData={homePageAnimation}
+                    // height={500}
+                    // width={500}
+                  />
+                </Grid>
+              </Grid>
+            </Stack>
+          </Box>
+          <Box>
             <Typography
               sx={{
                 color: myColors.yellow.main,
-                maxWidth: "580px",
-                paddingBottom: "30px",
               }}
               variant="h2"
               fontSize={"45px"}
@@ -178,11 +194,10 @@ const HomePage = () => {
               ></img>
             </Stack>
           </Box>
-          <Box paddingBottom={10}>
+          <Box>
             <Typography
               sx={{
                 color: myColors.yellow.main,
-                maxWidth: "580px",
               }}
               variant="h2"
               fontSize={"45px"}

@@ -91,15 +91,17 @@ const LoadPostingPage = () => {
   const formSubmit: SubmitHandler<ILoadPosting> = async (
     data: ILoadPosting
   ) => {
-    dispatch(setLoading(true));
     try {
       data.shipmentWeightVolume = convertWeightToKg(data.shipmentWeightVolume);
       const { msg } = await loadPosting({ userId, data }).unwrap();
       if (msg === APIResult.loadPostingSuccess) {
+        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("Load Posting Done Successfully!");
         setStatus("success");
-        navigate("/shipperdash");
+        setTimeout(() => {
+          navigate("/shipperdash");
+        }, 5000);
       }
     } catch (error) {
       console.error("Error while load posting:", error);
@@ -231,7 +233,9 @@ const LoadPostingPage = () => {
                         }}
                         required
                         helperText={errors.shipmentWeightVolume?.message}
-                        {...register("shipmentWeightVolume", { required: true })}
+                        {...register("shipmentWeightVolume", {
+                          required: true,
+                        })}
                         sx={{ height: 50 }}
                       />
                       <FormControl variant="standard" fullWidth>

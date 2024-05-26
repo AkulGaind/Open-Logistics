@@ -40,9 +40,9 @@ const CarrierDashboard = () => {
 
   useEffect(() => {
     const getShipperDetails = async () => {
-      // dispatch(setLoading(true));
       try {
         const { data } = await fetchShipperDetails(userId).unwrap();
+        dispatch(setLoading(true));
         setRowData(data!);
         console.log(data);
       } catch (error) {

@@ -11,11 +11,10 @@ import ShipperDashboard from "./views/ShipperDashboard";
 import CarrierDashboard from "./views/CarrierDashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store/store";
-import PageLoader from "./components/common/PageLoader";
 import AdminDashboard from "./views/AdminDashboard";
 
 function App() {
-  const { appRole, loggedIn, loading } = useSelector(
+  const { appRole, loggedIn } = useSelector(
     (state: RootState) => state.appState
   );
 
@@ -23,30 +22,26 @@ function App() {
     <>
       <BrowserRouter>
         <Navbar />
-        {loading ? (
-          <PageLoader />
-        ) : (
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/dashboard" element={<AdminDashboard />} />
-            {(loggedIn && appRole === "Carrier") && (
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
+          {loggedIn && appRole === "Carrier" && (
             <>
               <Route path="/bidportal" element={<BidPortalPage />} />
               <Route path="/carrierdash" element={<CarrierDashboard />} />
             </>
           )}
-          {(loggedIn && appRole === "Shipper") && (
+          {loggedIn && appRole === "Shipper" && (
             <>
               <Route path="/loadposting" element={<LoadPostingPage />} />
               <Route path="/shipperdash" element={<ShipperDashboard />} />
             </>
-           )} 
-          </Routes>
-        )}
+          )}
+        </Routes>
       </BrowserRouter>
-      {!loading && <Footer />}
+      {!loggedIn && !appRole && <Footer />}
     </>
   );
 }
