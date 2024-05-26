@@ -118,9 +118,9 @@ export const appApi = createApi({
     }),
     bidPortal: builder.mutation<
       Pick<IResponse, "msg">,
-      { userId: string; data: IBidPortal; shipperId: string }
+      { userId: string; biddingDetails: IBidPortal; shipperId: string }
     >({
-      query: ({ userId, data, shipperId }) => {
+      query: ({ userId, biddingDetails, shipperId }) => {
         const {
           shipperName,
           shipperEmail,
@@ -134,7 +134,7 @@ export const appApi = createApi({
           pickupDateTime,
           deliveryDateTime,
           addDetails,
-        } = data;
+        } = biddingDetails;
         const reqData = {
           userId,
           shipperId,

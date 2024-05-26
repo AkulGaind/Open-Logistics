@@ -1,18 +1,23 @@
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { RootState } from "../../redux/store/store";
+import { setAppRole, setLoggedIn, setUserId } from "../../redux/slices/appStateSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const { appRole, loggedIn } = useSelector(
     (state: RootState) => state.appState
   );
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    dispatch(setLoggedIn(false));
+    dispatch(setUserId(""));
+    dispatch(setAppRole(""));
     navigate("/");
-  };
+  }
 
   return (
     <AppBar

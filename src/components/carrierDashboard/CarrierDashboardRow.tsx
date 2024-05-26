@@ -8,7 +8,22 @@ import { Download } from "@mui/icons-material";
 const CarrierDashboardRow = (s: ICarrierDashboard) => {
   const navigate = useNavigate();
   const handleRowClick = () => {
-    navigate("/bidportal");
+    const bidDetails = {
+      shipperId: s.shipperId,
+      shipperName: s.shipperName,
+      shipperEmail: s.shipperEmail,
+      shipperPhone: s.shipperPhone,
+      shipperAddress: s.shipperAddress,
+      origin: s.origin,
+      destination: s.destination,
+      shipmentType: s.shipmentType,
+      shipmentWeightVolume: s.shipmentWeightVolume,
+      pickupDateTime: s.pickupDateTime,
+      deliveryDateTime: s.deliveryDateTime,
+      addDetails: s.addDetails,
+    };
+    console.log(bidDetails)
+    navigate("/bidportal", { state: bidDetails });
   };
 
   const renderCellContent = (content: string) => {
