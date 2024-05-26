@@ -60,10 +60,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
         <IconButton size="small" onClick={() => console.log("Payment Portal")}>
           <AttachMoneyIcon fontSize="small" />
         </IconButton>
-        <IconButton
-          size="small"
-          onClick={downloadInvoice}
-        >
+        <IconButton size="small" onClick={downloadInvoice}>
           <Download fontSize="small" />
         </IconButton>
       </StyledTableCell>
