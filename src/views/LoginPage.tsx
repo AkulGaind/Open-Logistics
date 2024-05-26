@@ -87,7 +87,7 @@ const LoginPage = () => {
               navigate("/admin");
               break;
             case "Shipper":
-              navigate("/loadposting");
+              navigate("/shipperdash");
               break;
             case "Carrier":
               navigate("/carrierdash");

@@ -8,18 +8,18 @@ const ShipperDashboardRow = (s: IShipperDashboard) => {
     <StyledTableRow>
       <StyledTableCell>{s.invoice}</StyledTableCell>
       <StyledTableCell>{s.carrierName}</StyledTableCell>
-      <StyledTableCell>{s.email}</StyledTableCell>
-      <StyledTableCell>{s.phone}</StyledTableCell>
-      <StyledTableCell>{s.address}</StyledTableCell>
+      <StyledTableCell>{s.carrierEmail}</StyledTableCell>
+      <StyledTableCell>{s.carrierPhone}</StyledTableCell>
+      <StyledTableCell>{s.carrierAddress}</StyledTableCell>
       <StyledTableCell>{s.origin}</StyledTableCell>
       <StyledTableCell>{s.destination}</StyledTableCell>
       <StyledTableCell>{s.shipmentType}</StyledTableCell>
       <StyledTableCell>{s.shipmentWeightVolume}</StyledTableCell>
       <StyledTableCell>
-        {s.pickupDateTime.toLocaleDateString("en-GB")}
+        {new Date(s.pickupDateTime).toLocaleDateString()}
       </StyledTableCell>
       <StyledTableCell>
-        {s.deliveryDateTime.toLocaleDateString("en-GB")}
+        {new Date(s.deliveryDateTime).toLocaleDateString()}
       </StyledTableCell>
       <StyledTableCell>{s.bidAmount}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>

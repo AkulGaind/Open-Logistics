@@ -27,7 +27,7 @@ export interface ISignUp extends ILogin {
   role: string;
 }
 
-export interface IResponse<T=any> {
+export interface IResponse<T = any> {
   msg: string;
   userId?: string;
   roles?: string;
@@ -59,13 +59,13 @@ export interface IBidPortal extends ILoadPosting {
 }
 
 export interface IShipperDashboard
-  extends IBidPortal,
-    Omit<ILoadPosting, "addDetails"> {
+  extends Omit<ILoadPosting, "addDetails">,
+    Pick<IBidPortal, "bidAmount"> {
   invoice: string;
   carrierName: string;
-  email: string;
-  phone: string;
-  address: string;
+  carrierEmail: string;
+  carrierPhone: string;
+  carrierAddress: string;
 }
 
 export interface IShipperDashboardColumn {

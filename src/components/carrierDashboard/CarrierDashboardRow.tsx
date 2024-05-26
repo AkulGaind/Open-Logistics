@@ -14,18 +14,18 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
     <StyledTableRow onClick={handleRowClick}>
       <StyledTableCell>{s.invoice}</StyledTableCell>
       <StyledTableCell>{s.shipperName}</StyledTableCell>
-      <StyledTableCell>{s.email}</StyledTableCell>
-      <StyledTableCell>{s.phone}</StyledTableCell>
-      <StyledTableCell>{s.address}</StyledTableCell>
+      <StyledTableCell>{s.shipperEmail}</StyledTableCell>
+      <StyledTableCell>{s.shipperPhone}</StyledTableCell>
+      <StyledTableCell>{s.shipperAddress}</StyledTableCell>
       <StyledTableCell>{s.origin}</StyledTableCell>
       <StyledTableCell>{s.destination}</StyledTableCell>
       <StyledTableCell>{s.shipmentType}</StyledTableCell>
       <StyledTableCell>{s.shipmentWeightVolume}</StyledTableCell>
       <StyledTableCell>
-        {s.pickupDateTime.toLocaleDateString("en-GB")}
+        {new Date(s.pickupDateTime).toLocaleDateString()}
       </StyledTableCell>
       <StyledTableCell>
-        {s.deliveryDateTime.toLocaleDateString("en-GB")}
+        {new Date(s.deliveryDateTime).toLocaleDateString()}
       </StyledTableCell>
       <StyledTableCell>{s.bidAmount}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
