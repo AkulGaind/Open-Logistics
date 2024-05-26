@@ -79,7 +79,7 @@ const LoginPage = () => {
         setText("Login Done Successfully!");
         setStatus("success");
         dispatch(setAppRole(roles!));
-        dispatch(setUserId(userId));
+        dispatch(setUserId(userId!));
         dispatch(setLoggedIn(true));
         switch (roles) {
           case "Admin":

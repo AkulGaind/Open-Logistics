@@ -20,12 +20,12 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
       <StyledTableCell>{s.origin}</StyledTableCell>
       <StyledTableCell>{s.destination}</StyledTableCell>
       <StyledTableCell>{s.shipmentType}</StyledTableCell>
-      <StyledTableCell>{s.shipmentWeight}</StyledTableCell>
+      <StyledTableCell>{s.shipmentWeightVolume}</StyledTableCell>
       <StyledTableCell>
-        {s.pickUpDate.toLocaleDateString("en-GB")}
+        {s.pickupDateTime.toLocaleDateString("en-GB")}
       </StyledTableCell>
       <StyledTableCell>
-        {s.deliveryDate.toLocaleDateString("en-GB")}
+        {s.deliveryDateTime.toLocaleDateString("en-GB")}
       </StyledTableCell>
       <StyledTableCell>{s.bidAmount}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>

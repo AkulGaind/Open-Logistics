@@ -19,7 +19,11 @@ import { useNavigate } from "react-router-dom";
 import { ILoadPosting } from "../interfaces/interfaces";
 import { useLoadPostingMutation } from "../redux/slices/serviceSlice";
 import myColors from "../themes/colors";
-import { APIResult, shipment_type } from "../utility/constants";
+import {
+  APIResult,
+  shipment_type,
+  shipment_weight_units,
+} from "../utility/constants";
 import loadPostingSchema from "../validationSchemas/loadPostingSchema";
 import DateTimeController from "../components/common/DateController";
 import { useState } from "react";
@@ -45,9 +49,9 @@ const LoadPostingPage = () => {
     origin: "",
     destination: "",
     shipmentType: "",
-    shipmentWeight: "",
-    pickUpDate: new Date(),
-    deliveryDate: new Date(),
+    shipmentWeightVolume: "",
+    pickupDateTime: new Date(),
+    deliveryDateTime: new Date(),
     addDetails: "",
   };
   const method = useForm<ILoadPosting>({
@@ -89,13 +93,13 @@ const LoadPostingPage = () => {
   ) => {
     dispatch(setLoading(true));
     try {
-      data.shipmentWeight = convertWeightToKg(data.shipmentWeight);
+      data.shipmentWeightVolume = convertWeightToKg(data.shipmentWeightVolume);
       const { msg } = await loadPosting({ userId, data }).unwrap();
       if (msg === APIResult.loadPostingSuccess) {
         setSnackOpen(true);
         setText("Load Posting Done Successfully!");
         setStatus("success");
-        navigate("/dashboard");
+        navigate("/shipperdash");
       }
     } catch (error) {
       console.error("Error while load posting:", error);
@@ -172,7 +176,7 @@ const LoadPostingPage = () => {
                       </Select>
                     </FormControl>
                     <DateTimeController
-                      value={dayjs(defaultValues.pickUpDate)}
+                      value={dayjs(defaultValues.pickupDateTime)}
                       name="pickUpDate"
                       label="Preferred Pickup Date/Time"
                     />
@@ -226,13 +230,37 @@ const LoadPostingPage = () => {
                           },
                         }}
                         required
-                        helperText={errors.shipmentWeight?.message}
-                        {...register("shipmentWeight", { required: true })}
+                        helperText={errors.shipmentWeightVolume?.message}
+                        {...register("shipmentWeightVolume", { required: true })}
                         sx={{ height: 50 }}
                       />
+                      <FormControl variant="standard" fullWidth>
+                        <InputLabel id="shipmentWeight" required>
+                          Shipment Units
+                        </InputLabel>
+                        <Select
+                          labelId="shipmentUnits"
+                          label="Shipment Units"
+                          variant="standard"
+                          id="shipmentUnits"
+                          value={selectedShipmentWeightUnits}
+                          onChange={(e) =>
+                            setSelectedShipmentWeightUnits(e.target.value)
+                          }
+                          style={{
+                            borderRadius: "10px",
+                          }}
+                        >
+                          {shipment_weight_units.map((c) => (
+                            <MenuItem key={c.key} value={c.key}>
+                              {c.value}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </Stack>
                     <DateTimeController
-                      value={dayjs(defaultValues.deliveryDate)}
+                      value={dayjs(defaultValues.deliveryDateTime)}
                       name="deliveryDate"
                       label="Preferred Delivery Date/Time"
                     />

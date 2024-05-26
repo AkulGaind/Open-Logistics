@@ -56,7 +56,7 @@ const SignupPage = () => {
     email: "",
     password: "",
     phone: "",
-    company: "",
+    address: "",
     role: "",
   };
   const method = useForm<ISignUp>({
@@ -98,7 +98,7 @@ const SignupPage = () => {
         setText("User Registered Successfully!");
         setStatus("success");
         dispatch(setAppRole(data.role));
-        dispatch(setUserId(userId));
+        dispatch(setUserId(userId!));
         dispatch(setLoggedIn(true));
         switch (data.role) {
           case "Admin":
@@ -180,9 +180,9 @@ const SignupPage = () => {
                     <TextField
                       id="company"
                       placeholder="XYZ International"
-                      label="Company"
-                      helperText={errors.company?.message}
-                      {...register("company", { required: true })}
+                      label="Address"
+                      helperText={errors.address?.message}
+                      {...register("address", { required: true })}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">

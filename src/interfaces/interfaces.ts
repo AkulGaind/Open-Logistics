@@ -1,6 +1,6 @@
 export interface AppState {
   loggedIn: boolean;
-  appRole: "Admin" | "Shipper" | "Carrier" | string;
+  appRole: string;
   userId: string;
   loading: boolean;
 }
@@ -23,14 +23,15 @@ export interface ILogin {
 export interface ISignUp extends ILogin {
   username: string;
   phone: string;
-  company: string;
+  address: string;
   role: string;
 }
 
-export interface IResponse {
+export interface IResponse<T=any> {
   msg: string;
-  userId: string;
+  userId?: string;
   roles?: string;
+  data?: T[];
 }
 
 export interface IContactDetails {
@@ -43,13 +44,17 @@ export interface ILoadPosting {
   origin: string;
   destination: string;
   shipmentType: string;
-  shipmentWeight: string;
-  pickUpDate: Date;
-  deliveryDate: Date;
+  shipmentWeightVolume: string;
+  pickupDateTime: Date;
+  deliveryDateTime: Date;
   addDetails: string;
 }
 
-export interface IBidPortal {
+export interface IBidPortal extends ILoadPosting {
+  shipperName: string;
+  shipperEmail: string;
+  shipperPhone: string;
+  shipperAddress: string;
   bidAmount: string;
 }
 
