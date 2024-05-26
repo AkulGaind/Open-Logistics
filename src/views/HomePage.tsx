@@ -65,11 +65,11 @@ const HomePage = () => {
   const formSubmit: SubmitHandler<IContactDetails> = async (
     data: IContactDetails
   ) => {
+    dispatch(setLoading(true));
     try {
       console.log(data);
       const { msg } = await contactUs(data).unwrap();
       if (msg === APIResult.contactUsSuccess) {
-        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("Message Sent Successfully!");
         setStatus("success");
@@ -78,12 +78,11 @@ const HomePage = () => {
         }, 5000);
       }
     } catch (error) {
+      dispatch(setLoading(false));
       console.log("Error while contacting:", error);
       setSnackOpen(true);
       setText("Error while contacting. Please try again.");
       setStatus("error");
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 

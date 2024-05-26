@@ -71,10 +71,10 @@ const LoginPage = () => {
   };
 
   const formSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
+    dispatch(setLoading(true));
     try {
       const { msg, roles, userId } = await loginUser(data).unwrap();
       if (msg === APIResult.loginSuccess) {
-        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("Login Done Successfully!");
         setStatus("success");
@@ -96,12 +96,11 @@ const LoginPage = () => {
         }, 5000);
       }
     } catch (error) {
+      dispatch(setLoading(false));
       console.log("Error while logging in:", error);
       setSnackOpen(true);
       setText("Error while logging in. Please try again.");
       setStatus("error");
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 
