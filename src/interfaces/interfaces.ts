@@ -93,6 +93,8 @@ export interface ICarrierDashboard
   email: string;
   phone: string;
   address: string;
+  addDetails: string;
+  shipperId: string
 }
 
 export interface ICarrierDashboardColumn {

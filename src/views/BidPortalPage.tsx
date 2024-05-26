@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Alert,
   AlertColor,
@@ -8,45 +9,48 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import myColors from "../themes/colors";
-import { IBidPortal } from "../interfaces/interfaces";
-import bidPortalSchema from "../validationSchemas/bidPortalSchema";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useBidPortalMutation } from "../redux/slices/serviceSlice";
-import { APIResult } from "../utility/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../redux/slices/appStateSlice";
-import PageLoader from "../components/common/PageLoader";
-import { RootState } from "../redux/store/store";
 import { useState } from "react";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import PageLoader from "../components/common/PageLoader";
 import CustomSnackBar from "../components/common/Snackbar";
+import { IBidPortal } from "../interfaces/interfaces";
+import { setLoading } from "../redux/slices/appStateSlice";
+import { useBidPortalMutation } from "../redux/slices/serviceSlice";
+import { RootState } from "../redux/store/store";
+import myColors from "../themes/colors";
+import { APIResult } from "../utility/constants";
+import bidPortalSchema from "../validationSchemas/bidPortalSchema";
 
 const BidPortalPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [bidPortal] = useBidPortalMutation();
   const dispatch = useDispatch();
   const { userId, loading } = useSelector((state: RootState) => state.appState);
   const [snackOpen, setSnackOpen] = useState(false);
   const [text, setText] = useState("");
   const [status, setStatus] = useState<AlertColor>("success");
+  const {
+    shipperId,
+    shipperName,
+    shipperEmail,
+    shipperPhone,
+    shipperAddress,
+    origin,
+    destination,
+    shipmentType,
+    shipmentWeightVolume,
+    pickupDateTime,
+    deliveryDateTime,
+    addDetails,
+  } = location.state;
 
-  const defaultValues: IBidPortal = {
-    shipperName: "",
-    shipperEmail: "",
-    shipperPhone: "",
-    shipperAddress: "",
+  const defaultValues: { bidAmount: string } = {
     bidAmount: "",
-    origin: "",
-    destination: "",
-    shipmentType: "",
-    shipmentWeightVolume: "",
-    pickupDateTime: new Date(),
-    deliveryDateTime: new Date(),
-    addDetails: "",
   };
-  const method = useForm<IBidPortal>({
+  const method = useForm<{ bidAmount: string }>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: defaultValues,
@@ -68,11 +72,25 @@ const BidPortalPage = () => {
     setSnackOpen(false);
   };
 
-  const formSubmit: SubmitHandler<IBidPortal> = async (data: IBidPortal) => {
+  const formSubmit: SubmitHandler<{ bidAmount: string }> = async (data: {
+    bidAmount: string;
+  }) => {
     try {
-      console.log(data);
-      const shipperId = "ShipperId";
-      const { msg } = await bidPortal({ userId, data, shipperId }).unwrap();
+      const biddingDetails: IBidPortal = {
+        shipperName: shipperName,
+        shipperEmail: shipperEmail,
+        shipperPhone: shipperPhone,
+        shipperAddress: shipperAddress,
+        bidAmount: data.bidAmount,
+        origin: origin,
+        destination: destination,
+        shipmentType: shipmentType,
+        shipmentWeightVolume: shipmentWeightVolume,
+        pickupDateTime: pickupDateTime,
+        deliveryDateTime: deliveryDateTime,
+        addDetails: addDetails,
+      };
+      const { msg } = await bidPortal({ userId, biddingDetails, shipperId }).unwrap();
       if (msg === APIResult.bidPortalSuccess) {
         dispatch(setLoading(true));
         setSnackOpen(true);
@@ -127,7 +145,7 @@ const BidPortalPage = () => {
                     <label>Shipper Name</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={shipperName}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -139,7 +157,7 @@ const BidPortalPage = () => {
                     <label>Shipper Address</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={shipperAddress}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -151,7 +169,7 @@ const BidPortalPage = () => {
                     <label>Shipper Contact Number</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={shipperPhone}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -176,7 +194,7 @@ const BidPortalPage = () => {
                     <label>Origin</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={origin}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -188,7 +206,7 @@ const BidPortalPage = () => {
                     <label>Destination</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={destination}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -200,7 +218,7 @@ const BidPortalPage = () => {
                     <label>Shipment Type</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={shipmentType}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -214,7 +232,7 @@ const BidPortalPage = () => {
                         <label>Shipment Weight or Volume</label>
                         <TextField
                           fullWidth
-                          value={"xxxxxxxxxx"}
+                          value={shipmentWeightVolume}
                           variant="standard"
                           InputProps={{
                             disableUnderline: true,
@@ -226,7 +244,7 @@ const BidPortalPage = () => {
                         <label>Shipment Units</label>
                         <TextField
                           fullWidth
-                          value={"xxxxxxxxxx"}
+                          value={"Kg"}
                           variant="standard"
                           InputProps={{
                             disableUnderline: true,
@@ -240,7 +258,7 @@ const BidPortalPage = () => {
                     <label>Preferred Pickup Date/Time</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={new Date(pickupDateTime).toLocaleDateString()}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -252,7 +270,7 @@ const BidPortalPage = () => {
                     <label>Preferred Delivery Date/Time</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={new Date(deliveryDateTime).toLocaleDateString()}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
