@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { ICarrierDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
 import { Download } from "@mui/icons-material";
+import { useInvoiceMutation } from "../../redux/slices/serviceSlice";
 
 const CarrierDashboardRow = (s: ICarrierDashboard) => {
   const navigate = useNavigate();
+  const [getInvoice] = useInvoiceMutation();
   const handleRowClick = () => {
     const bidDetails = {
       shipperId: s.shipperId,
@@ -23,6 +25,11 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
       addDetails: s.addDetails,
     };
     navigate("/bidportal", { state: bidDetails });
+  };
+
+  const downloadInvoice = async () => {
+    const data = getInvoice("");
+    console.log(data);
   };
 
   const renderCellContent = (content: string) => {
@@ -55,7 +62,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
         </IconButton>
         <IconButton
           size="small"
-          onClick={() => console.log("Download Invoice")}
+          onClick={downloadInvoice}
         >
           <Download fontSize="small" />
         </IconButton>

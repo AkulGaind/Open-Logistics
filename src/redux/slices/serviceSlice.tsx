@@ -166,8 +166,8 @@ export const appApi = createApi({
     shipperDetails: builder.query<IResponse<ICarrierDashboard>, string>({
       query: () => ({
         url: "/shipment/dashboard",
-        credentials: "include",
         method: "GET",
+        credentials: "include",
       }),
     }),
     carrierDetails: builder.query<IResponse<IShipperDashboard>, string>({
@@ -176,6 +176,18 @@ export const appApi = createApi({
         method: "GET",
         credentials: "include",
       }),
+    }),
+    invoice: builder.mutation({
+      query: () => {
+        return {
+          url: `shipment/download`,
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+      },
     }),
   }),
 });
@@ -188,4 +200,5 @@ export const {
   useBidPortalMutation,
   useLazyCarrierDetailsQuery,
   useLazyShipperDetailsQuery,
+  useInvoiceMutation,
 } = appApi;
