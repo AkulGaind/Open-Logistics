@@ -1,4 +1,4 @@
-import DownloadIcon from "@mui/icons-material/Download";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ICarrierDashboard } from "../../interfaces/interfaces";
@@ -34,7 +34,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
           // onClick={(event) => handleEdit(event)}
           sx={{ p: 0 }}
         >
-          <DownloadIcon fontSize="small" />
+          <AttachMoneyIcon fontSize="small" />
         </IconButton>
       </StyledTableCell>
     </StyledTableRow>

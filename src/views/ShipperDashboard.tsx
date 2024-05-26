@@ -40,9 +40,9 @@ const ShipperDashboard = () => {
 
   useEffect(() => {
     const getCarrierDetails = async () => {
-      dispatch(setLoading(true));
       try {
         const { data } = await fetchCarrierDetails(userId).unwrap();
+        dispatch(setLoading(true));
         setRowData(data!);
         console.log(data);
       } catch (error) {
@@ -130,6 +130,7 @@ const ShipperDashboard = () => {
                   {shipper_columns.map((column: IShipperDashboardColumn) => (
                     <TableCell key={column.id}>{column.label}</TableCell>
                   ))}
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

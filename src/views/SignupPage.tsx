@@ -90,27 +90,29 @@ const SignupPage = () => {
   };
 
   const formSubmit: SubmitHandler<ISignUp> = async (data: ISignUp) => {
-    dispatch(setLoading(true));
     try {
       const { msg, userId } = await signUpUser(data).unwrap();
       if (msg === APIResult.signUpSuccess) {
+        dispatch(setLoading(true));
         setSnackOpen(true);
         setText("User Registered Successfully!");
         setStatus("success");
         dispatch(setAppRole(data.role));
         dispatch(setUserId(userId!));
         dispatch(setLoggedIn(true));
-        switch (data.role) {
-          case "Admin":
-            navigate("/admin");
-            break;
-          case "Shipper":
-            navigate("/shipperdash");
-            break;
-          case "Carrier":
-            navigate("/carrierdash");
-            break;
-        }
+        setTimeout(() => {
+          switch (data.role) {
+            case "Admin":
+              navigate("/admin");
+              break;
+            case "Shipper":
+              navigate("/shipperdash");
+              break;
+            case "Carrier":
+              navigate("/carrierdash");
+              break;
+          }
+        }, 5000);
       }
     } catch (error) {
       console.log("Error while signing in:", error);
