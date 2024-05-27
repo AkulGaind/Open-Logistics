@@ -1,8 +1,7 @@
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { Download } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import { IShipperDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
-import { IconButton } from "@mui/material";
-import { Download } from "@mui/icons-material";
 
 const ShipperDashboardRow = (s: IShipperDashboard) => {
   const renderCellContent = (content: string) => {
@@ -30,9 +29,6 @@ const ShipperDashboardRow = (s: IShipperDashboard) => {
       </StyledTableCell>
       <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
-        <IconButton size="small" onClick={() => console.log("Payment Portal")}>
-          <AttachMoneyIcon fontSize="small" />
-        </IconButton>
         <IconButton
           size="small"
           onClick={() => console.log("Download Invoice")}
