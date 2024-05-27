@@ -12,7 +12,7 @@ import {
 } from "../../interfaces/interfaces";
 import { getJwtValue } from "../../utility/utils";
 
-const backendUrl = "http://localhost:3000/api/";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 if (!backendUrl) {
   throw new Error("You need to provide REACT_APP_BACKEND_URL env variable");
 }
