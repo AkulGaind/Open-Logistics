@@ -84,7 +84,7 @@ const LoginPage = () => {
         setTimeout(() => {
           switch (roles) {
             case "Admin":
-              navigate("/admin");
+              navigate("/admindash");
               break;
             case "Shipper":
               navigate("/shipperdash");

@@ -103,7 +103,7 @@ const SignupPage = () => {
         setTimeout(() => {
           switch (data.role) {
             case "Admin":
-              navigate("/admin");
+              navigate("/admindash");
               break;
             case "Shipper":
               navigate("/shipperdash");

@@ -7,7 +7,10 @@ const loadPostingSchema = object().shape({
   destination: string().required(required),
   shipmentType: string().required(required),
   shipmentWeightVolume: string()
-    .matches(/^\d+$/, "Shipment weight must be a number")
+    .matches(
+      /^[1-9]\d*$/,
+      "Shipment weight must be a number and cannot be zero"
+    )
     .required(required),
   pickupDateTime: date().required(required),
   deliveryDateTime: date()

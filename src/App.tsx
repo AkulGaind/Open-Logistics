@@ -45,7 +45,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         {loggedIn && appRole === "Admin" && (
-          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/admindash" element={<AdminDashboard />} />
         )}
         {loggedIn && appRole === "Carrier" && (
           <>

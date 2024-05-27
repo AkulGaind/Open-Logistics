@@ -137,7 +137,7 @@ const ShipperDashboard = () => {
                 {filteredRows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
-                    <ShipperDashboardRow key={row.invoice} {...row} />
+                    <ShipperDashboardRow key={row._id} {...row} />
                   ))}
               </TableBody>
               <TableFooter>
