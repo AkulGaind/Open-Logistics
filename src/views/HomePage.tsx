@@ -12,14 +12,12 @@ import {
 import Lottie from "lottie-react";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Typewriter from "typewriter-effect";
 import PageLoader from "../components/common/PageLoader";
 import CustomSnackBar from "../components/common/Snackbar";
 import homePageAnimation from "../components/ui/homePageAnimation.json";
 import { IContactDetails } from "../interfaces/interfaces";
-import { setLoading } from "../redux/slices/appStateSlice";
 import { useContactUsMutation } from "../redux/slices/serviceSlice";
 import { RootState } from "../redux/store/store";
 import myColors from "../themes/colors";
@@ -27,10 +25,8 @@ import { APIResult } from "../utility/constants";
 import contactDetailsSchema from "../validationSchemas/contactDetailsSchema";
 
 const HomePage = () => {
-  const navigate = useNavigate();
   const [contactUs] = useContactUsMutation();
   const { loading } = useSelector((state: RootState) => state.appState);
-  const dispatch = useDispatch();
   const [snackOpen, setSnackOpen] = useState(false);
   const [text, setText] = useState("");
   const [status, setStatus] = useState<AlertColor>("success");
@@ -50,6 +46,7 @@ const HomePage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = method;
 
   const handleSnackClose = (
@@ -65,7 +62,6 @@ const HomePage = () => {
   const formSubmit: SubmitHandler<IContactDetails> = async (
     data: IContactDetails
   ) => {
-    dispatch(setLoading(true));
     try {
       console.log(data);
       const { msg } = await contactUs(data).unwrap();
@@ -73,12 +69,9 @@ const HomePage = () => {
         setSnackOpen(true);
         setText("Message Sent Successfully!");
         setStatus("success");
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 5000);
+        reset();
       }
     } catch (error) {
-      dispatch(setLoading(false));
       console.log("Error while contacting:", error);
       setSnackOpen(true);
       setText("Error while contacting. Please try again.");

@@ -1,6 +1,6 @@
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ICarrierDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
 import { Download } from "@mui/icons-material";
@@ -8,6 +8,7 @@ import { useInvoiceMutation } from "../../redux/slices/serviceSlice";
 
 const CarrierDashboardRow = (s: ICarrierDashboard) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [getInvoice] = useInvoiceMutation();
   const handleRowClick = () => {
     const bidDetails = {
@@ -36,8 +37,10 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
     return content ? content : "N/A";
   };
 
+  const isCarrierDashboard = location.pathname === "/carrierdash";
+
   return (
-    <StyledTableRow onClick={handleRowClick}>
+    <StyledTableRow onClick={isCarrierDashboard ? handleRowClick : undefined}>
       <StyledTableCell>{renderCellContent(s.invoice)}</StyledTableCell>
       <StyledTableCell>{renderCellContent(s.shipperName)}</StyledTableCell>
       <StyledTableCell>{renderCellContent(s.shipperEmail)}</StyledTableCell>
