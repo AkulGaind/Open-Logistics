@@ -19,7 +19,7 @@ const CustomSnackBar: React.FC<CustomSnackBarProps> = ({
   ...props
 }) => {
   return (
-    <Snackbar {...props} autoHideDuration={2000}>
+    <Snackbar {...props} autoHideDuration={3000}>
       <Alert severity={status} sx={{ width: "100%" }}>
         {text}
       </Alert>
