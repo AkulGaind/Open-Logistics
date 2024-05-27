@@ -115,3 +115,12 @@ export interface ICarrierDashboardColumn {
     | "bidAmount";
   label: string;
 }
+
+export interface IPayment {
+  shipperName: string;
+  shipmentType: string;
+  shipmentWeightVolume: string;
+  pickupDateTime: Date;
+  deliveryDateTime: Date;
+  bidAmount: string;
+}

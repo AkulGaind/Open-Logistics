@@ -4,12 +4,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ICarrierDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
 import { Download } from "@mui/icons-material";
-import { useInvoiceMutation } from "../../redux/slices/serviceSlice";
+import {
+  useInvoiceMutation,
+  usePaymentIdMutation,
+} from "../../redux/slices/serviceSlice";
+import { loadStripe } from "@stripe/stripe-js";
 
 const CarrierDashboardRow = (s: ICarrierDashboard) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [getInvoice] = useInvoiceMutation();
+  const [getPaymentId] = usePaymentIdMutation();
   const handleRowClick = () => {
     const bidDetails = {
       shipperId: s.shipperId,
@@ -29,8 +34,28 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
   };
 
   const downloadInvoice = async () => {
-    const data = getInvoice("");
+    const data = await getInvoice("").unwrap();
     console.log(data);
+  };
+
+  const paymentPortal = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51PKPR6SHCu8v3ihuYVOC2d2FyxdsluogM9ValbloYKSLtFPbnPr0tar14UGLBFQmYNfQweyBh2J4Bv2sdCjPvrYi00ay8lqCIR"
+    );
+    const session = await getPaymentId({
+      shipperName: s.shipperName,
+      shipmentType: s.shipmentType,
+      shipmentWeightVolume: s.shipmentWeightVolume,
+      pickupDateTime: new Date(s.pickupDateTime),
+      deliveryDateTime: new Date(s.deliveryDateTime),
+      bidAmount: s.bidAmount,
+    }).unwrap();
+    const result = stripe?.redirectToCheckout({
+      sessionId: session.sessionId,
+    });
+    if ((await result!).error) {
+      console.log("Error in stripe: ", (await result!).error);
+    }
   };
 
   const renderCellContent = (content: string) => {
@@ -60,7 +85,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
       </StyledTableCell>
       <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
-        <IconButton size="small" onClick={() => console.log("Payment Portal")}>
+        <IconButton size="small" onClick={paymentPortal}>
           <AttachMoneyIcon fontSize="small" />
         </IconButton>
         <IconButton size="small" onClick={downloadInvoice}>
