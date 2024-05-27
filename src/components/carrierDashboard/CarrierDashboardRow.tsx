@@ -1,5 +1,5 @@
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import { IconButton } from "@mui/material";
+import PaymentIcon from '@mui/icons-material/Payment';
+import { IconButton, Tooltip } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ICarrierDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
@@ -89,16 +89,22 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
       </StyledTableCell>
       <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
-        <IconButton
+        <Tooltip title="Proceed to Payment"><IconButton
           size="small"
           onClick={paymentPortal}
           disabled={s.bidAmount ? false : true}
+          sx={{ color:"#1976d2" }}
         >
-          <AttachMoneyIcon fontSize="small" />
+          <PaymentIcon fontSize="small" />
         </IconButton>
-        <IconButton size="small" onClick={downloadInvoice}>
+        </Tooltip>
+        
+        <Tooltip title="Download Invoice">
+          <IconButton size="small" onClick={downloadInvoice}  sx={{ color:"lightgreen" }}>
           <Download fontSize="small" />
         </IconButton>
+        </Tooltip>
+    
       </StyledTableCell>
     </StyledTableRow>
   );
