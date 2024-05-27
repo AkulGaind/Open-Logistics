@@ -26,7 +26,7 @@ import { ScrollbarStyles } from "../components/common/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import { useLazyShipperDetailsQuery } from "../redux/slices/serviceSlice";
-import { setLoading } from "../redux/slices/appStateSlice";
+import { setAppRole, setLoading, setLoggedIn, setUserId } from "../redux/slices/appStateSlice";
 import PageLoader from "../components/common/PageLoader";
 
 const CarrierDashboard = () => {
@@ -44,13 +44,18 @@ const CarrierDashboard = () => {
         const { data } = await fetchShipperDetails(userId).unwrap();
         dispatch(setLoading(true));
         setRowData(data!);
-        console.log(data);
       } catch (error) {
         console.log("Failed to fetch shipper details:", error);
       } finally {
         dispatch(setLoading(false));
       }
     };
+    if(!userId) {
+      const id = localStorage.getItem('jwt');
+      dispatch(setUserId(id!));
+      dispatch(setLoggedIn(true));
+      dispatch(setAppRole("Carrier"));
+    }
     getShipperDetails();
   }, []);
 
