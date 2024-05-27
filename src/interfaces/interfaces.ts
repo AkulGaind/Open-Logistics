@@ -94,7 +94,7 @@ export interface ICarrierDashboard
   phone: string;
   address: string;
   addDetails: string;
-  shipperId: string
+  shipperId: string;
 }
 
 export interface ICarrierDashboardColumn {
@@ -112,4 +112,13 @@ export interface ICarrierDashboardColumn {
     | "deliveryDate"
     | "bidAmount";
   label: string;
+}
+
+export interface IPayment {
+  shipperName: string;
+  shipmentType: string;
+  shipmentWeightVolume: string;
+  pickupDateTime: Date;
+  deliveryDateTime: Date;
+  bidAmount: string;
 }

@@ -5,6 +5,7 @@ import {
   IContactDetails,
   ILoadPosting,
   ILogin,
+  IPayment,
   IResponse,
   IShipperDashboard,
   ISignUp,
@@ -189,6 +190,34 @@ export const appApi = createApi({
         };
       },
     }),
+    paymentId: builder.mutation<{ sessionId: string }, IPayment>({
+      query: ({
+        shipperName,
+        shipmentWeightVolume,
+        shipmentType,
+        pickupDateTime,
+        deliveryDateTime,
+        bidAmount,
+      }) => {
+        const reqData = {
+          shipperName,
+          shipmentWeightVolume,
+          shipmentType,
+          pickupDateTime,
+          deliveryDateTime,
+          bidAmount,
+        };
+        return {
+          url: `shipment/payment`,
+          method: "POST",
+          // credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: reqData,
+        };
+      },
+    }),
   }),
 });
 
@@ -201,4 +230,5 @@ export const {
   useLazyCarrierDetailsQuery,
   useLazyShipperDetailsQuery,
   useInvoiceMutation,
+  usePaymentIdMutation,
 } = appApi;
