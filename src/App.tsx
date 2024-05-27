@@ -38,18 +38,11 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Scroll to the top when the component mounts
     window.scrollTo(0, 0);
-
-    // Scroll to the top before unloading the page (refreshing)
     const onBeforeUnload = () => {
       window.scrollTo(0, 0);
     };
-
-    // Attach the event listener
     window.onbeforeunload = onBeforeUnload;
-
-    // Clean up by removing the event listener when the component unmounts
     return () => {
       window.onbeforeunload = null;
     };

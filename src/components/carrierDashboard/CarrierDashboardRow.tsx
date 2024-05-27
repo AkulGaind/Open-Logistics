@@ -18,9 +18,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
   const location = useLocation();
   const [getInvoice] = useInvoiceMutation();
   const [getPaymentId] = usePaymentIdMutation();
-  const { userId } = useSelector(
-    (state: RootState) => state.appState
-  );
+  const { userId } = useSelector((state: RootState) => state.appState);
   const handleRowClick = () => {
     const bidDetails = {
       shipperId: s.shipperId,
@@ -45,9 +43,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
   };
 
   const paymentPortal = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51PKPR6SHCu8v3ihuYVOC2d2FyxdsluogM9ValbloYKSLtFPbnPr0tar14UGLBFQmYNfQweyBh2J4Bv2sdCjPvrYi00ay8lqCIR"
-    );
+    const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
     const session = await getPaymentId({
       shipperName: s.shipperName,
       shipmentType: s.shipmentType,
@@ -59,8 +55,8 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
     const result = stripe?.redirectToCheckout({
       sessionId: session.sessionId,
     });
-    localStorage.setItem('jwt', getJwtValue()!);
-    localStorage.setItem('userId', userId);
+    localStorage.setItem("jwt", getJwtValue()!);
+    localStorage.setItem("userId", userId);
     if ((await result!).error) {
       console.log("Error in stripe: ", (await result!).error);
     }
@@ -93,7 +89,11 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
       </StyledTableCell>
       <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
-        <IconButton size="small" onClick={paymentPortal} disabled={s.bidAmount ? false : true}>
+        <IconButton
+          size="small"
+          onClick={paymentPortal}
+          disabled={s.bidAmount ? false : true}
+        >
           <AttachMoneyIcon fontSize="small" />
         </IconButton>
         <IconButton size="small" onClick={downloadInvoice}>
