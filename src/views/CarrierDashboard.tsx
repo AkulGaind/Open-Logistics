@@ -1,3 +1,4 @@
+import { Search } from "@mui/icons-material";
 import {
   Box,
   InputAdornment,
@@ -12,22 +13,21 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import myColors from "../themes/colors";
+import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CarrierDashboardRow from "../components/carrierDashboard/CarrierDashboardRow";
+import PageLoader from "../components/common/PageLoader";
+import { ScrollbarStyles } from "../components/common/styled";
 import {
   ICarrierDashboard,
   ICarrierDashboardColumn,
 } from "../interfaces/interfaces";
-import { carrier_columns } from "../utility/constants";
-import { useEffect, useState } from "react";
-import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
-import CarrierDashboardRow from "../components/carrierDashboard/CarrierDashboardRow";
-import { Search } from "@mui/icons-material";
-import { ScrollbarStyles } from "../components/common/styled";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store/store";
+import { setLoading } from "../redux/slices/appStateSlice";
 import { useLazyShipperDetailsQuery } from "../redux/slices/serviceSlice";
-import { setAppRole, setLoading, setLoggedIn, setUserId } from "../redux/slices/appStateSlice";
-import PageLoader from "../components/common/PageLoader";
+import { RootState } from "../redux/store/store";
+import myColors from "../themes/colors";
+import { carrier_columns } from "../utility/constants";
 
 const CarrierDashboard = () => {
   const [page, setPage] = useState(0);
@@ -50,12 +50,6 @@ const CarrierDashboard = () => {
         dispatch(setLoading(false));
       }
     };
-    if(!userId) {
-      const id = localStorage.getItem('jwt');
-      dispatch(setUserId(id!));
-      dispatch(setLoggedIn(true));
-      dispatch(setAppRole("Carrier"));
-    }
     getShipperDetails();
   }, []);
 
