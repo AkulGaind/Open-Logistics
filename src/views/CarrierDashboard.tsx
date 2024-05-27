@@ -138,7 +138,7 @@ const CarrierDashboard = () => {
                 {filteredRows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
-                    <CarrierDashboardRow key={row.invoice} {...row} />
+                    <CarrierDashboardRow key={row._id} {...row} />
                   ))}
               </TableBody>
               <TableFooter>

@@ -61,6 +61,7 @@ export interface IBidPortal extends ILoadPosting {
 export interface IShipperDashboard
   extends Omit<ILoadPosting, "addDetails">,
     Pick<IBidPortal, "bidAmount"> {
+  _id: string;
   invoice: string;
   carrierName: string;
   carrierEmail: string;
@@ -88,13 +89,14 @@ export interface IShipperDashboardColumn {
 export interface ICarrierDashboard
   extends IBidPortal,
     Omit<ILoadPosting, "addDetails"> {
+  _id: string;
   invoice: string;
   shipperName: string;
   email: string;
   phone: string;
   address: string;
   addDetails: string;
-  shipperId: string
+  shipperId: string;
 }
 
 export interface ICarrierDashboardColumn {
