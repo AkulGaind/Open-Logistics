@@ -1,4 +1,6 @@
-import { useSelector } from "react-redux";
+import { Alert, AlertColor } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter,
   Route,
@@ -6,8 +8,14 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import CustomSnackBar from "./components/common/Snackbar";
 import Footer from "./components/layout/footer";
 import Navbar from "./components/layout/navbar";
+import {
+  setAppRole,
+  setLoggedIn,
+  setUserId,
+} from "./redux/slices/appStateSlice";
 import { RootState } from "./redux/store/store";
 import AdminDashboard from "./views/AdminDashboard";
 import BidPortalPage from "./views/BidPortalPage";
@@ -17,9 +25,6 @@ import LoadPostingPage from "./views/LoadPostingPage";
 import LoginPage from "./views/LoginPage";
 import ShipperDashboard from "./views/ShipperDashboard";
 import SignupPage from "./views/SignupPage";
-import { useEffect, useState } from "react";
-import { AlertColor, Alert } from "@mui/material";
-import CustomSnackBar from "./components/common/Snackbar";
 
 const App = () => {
   const { appRole, loggedIn } = useSelector(
@@ -30,6 +35,7 @@ const App = () => {
   const [snackOpen, setSnackOpen] = useState(false);
   const [text, setText] = useState("");
   const [status, setStatus] = useState<AlertColor>("success");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,20 +59,29 @@ const App = () => {
     setSnackOpen(false);
   };
 
+  const setCredentials = () => {
+    const id = localStorage.getItem("jwt");
+    dispatch(setUserId(id!));
+    dispatch(setLoggedIn(true));
+    dispatch(setAppRole("Carrier"));
+  };
+
   useEffect(() => {
     const url = window.location.href;
     if (url.includes("/success")) {
+      setCredentials();
       setSnackOpen(true);
       setText("Payment Done Successfully!");
       setStatus("success");
       navigate("/carrierdash");
     } else if (url.includes("/cancel")) {
+      setCredentials();
       setSnackOpen(true);
       setText("Payment Cancelled Midway!");
       setStatus("info");
       navigate("/carrierdash");
     }
-  }, [navigate]);
+  }, []);
 
   return (
     <>
