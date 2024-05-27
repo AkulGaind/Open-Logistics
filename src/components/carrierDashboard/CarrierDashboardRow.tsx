@@ -9,12 +9,18 @@ import {
   usePaymentIdMutation,
 } from "../../redux/slices/serviceSlice";
 import { loadStripe } from "@stripe/stripe-js";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import { getJwtValue } from "../../utility/utils";
 
 const CarrierDashboardRow = (s: ICarrierDashboard) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [getInvoice] = useInvoiceMutation();
   const [getPaymentId] = usePaymentIdMutation();
+  const { userId } = useSelector(
+    (state: RootState) => state.appState
+  );
   const handleRowClick = () => {
     const bidDetails = {
       shipperId: s.shipperId,
@@ -53,6 +59,8 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
     const result = stripe?.redirectToCheckout({
       sessionId: session.sessionId,
     });
+    localStorage.setItem('jwt', getJwtValue()!);
+    localStorage.setItem('userId', userId);
     if ((await result!).error) {
       console.log("Error in stripe: ", (await result!).error);
     }
@@ -85,7 +93,7 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
       </StyledTableCell>
       <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
-        <IconButton size="small" onClick={paymentPortal}>
+        <IconButton size="small" onClick={paymentPortal} disabled={s.bidAmount ? false : true}>
           <AttachMoneyIcon fontSize="small" />
         </IconButton>
         <IconButton size="small" onClick={downloadInvoice}>

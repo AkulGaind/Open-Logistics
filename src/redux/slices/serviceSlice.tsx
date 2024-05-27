@@ -10,6 +10,7 @@ import {
   IShipperDashboard,
   ISignUp,
 } from "../../interfaces/interfaces";
+import { getJwtValue } from "../../utility/utils";
 
 const backendUrl = "http://localhost:3000/api/";
 if (!backendUrl) {
@@ -105,14 +106,16 @@ export const appApi = createApi({
           deliveryDateTime: deliveryDateTime,
           addDetails: addDetails,
         };
+        const headers = {
+          Authorization: `Bearer ${getJwtValue()}`,
+          "Content-Type": "application/json",
+        };
 
         return {
           url: `shipment/loadPosting`,
           method: "POST",
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: headers,
           body: reqData,
         };
       },
@@ -152,41 +155,59 @@ export const appApi = createApi({
           addDetails,
           bidAmount: bidAmount,
         };
+        const headers = {
+          Authorization: `Bearer ${getJwtValue()}`,
+          "Content-Type": "application/json",
+        };
 
         return {
           url: `shipment/bidPortal`,
           method: "POST",
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: headers,
           body: reqData,
         };
       },
     }),
     shipperDetails: builder.query<IResponse<ICarrierDashboard>, string>({
-      query: () => ({
-        url: "/shipment/dashboard",
-        method: "GET",
-        credentials: "include",
-      }),
+      query: () => {
+        const headers = {
+          Authorization: `Bearer ${getJwtValue()}`,
+          "Content-Type": "application/json",
+        };
+        return {
+          url: "/shipment/dashboard",
+          method: "GET",
+          credentials: "include",
+          headers: headers,
+        };
+      },
     }),
     carrierDetails: builder.query<IResponse<IShipperDashboard>, string>({
-      query: () => ({
-        url: `/shipment/dashboard`,
-        method: "GET",
-        credentials: "include",
-      }),
+      query: () => {
+        const headers = {
+          Authorization: `Bearer ${getJwtValue()}`,
+          "Content-Type": "application/json",
+        };
+        return {
+          url: "/shipment/dashboard",
+          method: "GET",
+          credentials: "include",
+          headers: headers,
+        };
+      },
     }),
     invoice: builder.mutation({
       query: () => {
+        const headers = {
+          Authorization: `Bearer ${getJwtValue()}`,
+          "Content-Type": "application/json",
+        };
         return {
           url: `shipment/download`,
           method: "POST",
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: headers,
         };
       },
     }),
@@ -207,13 +228,15 @@ export const appApi = createApi({
           deliveryDateTime,
           bidAmount,
         };
+        const headers = {
+          Authorization: `Bearer ${getJwtValue()}`,
+          "Content-Type": "application/json",
+        };
         return {
           url: `shipment/payment`,
           method: "POST",
-          // credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          credentials: "include",
+          headers: headers,
           body: reqData,
         };
       },
