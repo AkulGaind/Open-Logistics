@@ -1,5 +1,11 @@
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Footer from "./components/layout/footer";
 import Navbar from "./components/layout/navbar";
 import { RootState } from "./redux/store/store";
@@ -11,13 +17,20 @@ import LoadPostingPage from "./views/LoadPostingPage";
 import LoginPage from "./views/LoginPage";
 import ShipperDashboard from "./views/ShipperDashboard";
 import SignupPage from "./views/SignupPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { AlertColor, Alert } from "@mui/material";
+import CustomSnackBar from "./components/common/Snackbar";
 
 const App = () => {
   const { appRole, loggedIn } = useSelector(
     (state: RootState) => state.appState
   );
   const location = useLocation();
+  const navigate = useNavigate();
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [status, setStatus] = useState<AlertColor>("success");
+
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo(0, 0);
@@ -36,6 +49,31 @@ const App = () => {
     };
   }, [location.pathname]);
   const noFooterPaths = ["/login", "/signup"];
+
+  const handleSnackClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackOpen(false);
+  };
+
+  useEffect(() => {
+    const url = window.location.href;
+    if (url.includes("/success")) {
+      setSnackOpen(true);
+      setText("Payment Done Successfully!");
+      setStatus("success");
+      navigate("/carrierdash");
+    } else if (url.includes("/cancel")) {
+      setSnackOpen(true);
+      setText("Payment Cancelled Midway!");
+      setStatus("info");
+      navigate("/carrierdash");
+    }
+  }, [navigate]);
 
   return (
     <>
@@ -61,6 +99,14 @@ const App = () => {
         )}
       </Routes>
       {!noFooterPaths.includes(location.pathname) && <Footer />}
+      <CustomSnackBar
+        open={snackOpen}
+        text={text}
+        status={status}
+        onClose={handleSnackClose}
+      >
+        <Alert onClose={handleSnackClose}></Alert>
+      </CustomSnackBar>
     </>
   );
 };
