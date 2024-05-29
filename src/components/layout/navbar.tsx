@@ -69,7 +69,7 @@ const Navbar = () => {
                     variant="text"
                     onClick={() => navigate("/loadposting")}
                   >
-                    Home
+                    Load Posting
                   </Button>
                   <Button
                     variant="text"
@@ -88,7 +88,7 @@ const Navbar = () => {
                 location.pathname === "/carrierdash") && (
                 <>
                   <Button variant="text" onClick={() => navigate("/carrierdash")}>
-                    Home
+                    Dashboard
                   </Button>
                   <Button variant="contained" onClick={handleLogout}>
                     Logout
