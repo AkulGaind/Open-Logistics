@@ -1,7 +1,7 @@
-import PaymentIcon from '@mui/icons-material/Payment';
+import PaymentIcon from "@mui/icons-material/Payment";
 import { IconButton, Tooltip } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ICarrierDashboard } from "../../interfaces/interfaces";
+import { IBidPortal, ICarrierDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
 import { Download } from "@mui/icons-material";
 import {
@@ -13,44 +13,72 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { getJwtValue } from "../../utility/utils";
 
-const CarrierDashboardRow = (s: ICarrierDashboard) => {
+const CarrierDashboardRow = ({
+  shipperId,
+  shipperName,
+  shipperEmail,
+  shipperPhone,
+  shipperAddress,
+  origin,
+  destination,
+  shipmentType,
+  shipmentWeightVolume,
+  pickupDateTime,
+  deliveryDateTime,
+  addDetails,
+  bidAmount,
+}: ICarrierDashboard) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [getInvoice] = useInvoiceMutation();
   const [getPaymentId] = usePaymentIdMutation();
   const { userId } = useSelector((state: RootState) => state.appState);
+  const invoiceId = Math.floor(1000 + Math.random() * 9000).toString();
+  const bidDetails: Omit<IBidPortal, "bidAmount"> &
+    Pick<ICarrierDashboard, "shipperId"> = {
+    shipperId,
+    shipperName,
+    shipperEmail,
+    shipperPhone,
+    shipperAddress,
+    origin,
+    destination,
+    shipmentType,
+    shipmentWeightVolume,
+    pickupDateTime,
+    deliveryDateTime,
+    addDetails,
+  };
   const handleRowClick = () => {
-    const bidDetails = {
-      shipperId: s.shipperId,
-      shipperName: s.shipperName,
-      shipperEmail: s.shipperEmail,
-      shipperPhone: s.shipperPhone,
-      shipperAddress: s.shipperAddress,
-      origin: s.origin,
-      destination: s.destination,
-      shipmentType: s.shipmentType,
-      shipmentWeightVolume: s.shipmentWeightVolume,
-      pickupDateTime: s.pickupDateTime,
-      deliveryDateTime: s.deliveryDateTime,
-      addDetails: s.addDetails,
-    };
     navigate("/bidportal", { state: bidDetails });
   };
 
   const downloadInvoice = async () => {
-    const data = await getInvoice("").unwrap();
-    console.log(data);
+    const { shipperId, addDetails, ...bidDetailsWithoutSpecs } = bidDetails;
+    const invoiceDetails: Omit<IBidPortal, "addDetails"> & { carrierId: string } & { invoiceId: string } = {
+      ...bidDetailsWithoutSpecs,
+      bidAmount,
+      invoiceId,
+      carrierId: userId,
+    };
+    const pdf = await getInvoice(invoiceDetails).unwrap();
+    const link = document.createElement("a");
+    link.href = pdf;
+    link.download = `${invoiceId}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const paymentPortal = async () => {
     const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
     const session = await getPaymentId({
-      shipperName: s.shipperName,
-      shipmentType: s.shipmentType,
-      shipmentWeightVolume: s.shipmentWeightVolume,
-      pickupDateTime: new Date(s.pickupDateTime),
-      deliveryDateTime: new Date(s.deliveryDateTime),
-      bidAmount: s.bidAmount,
+      shipperName: shipperName,
+      shipmentType: shipmentType,
+      shipmentWeightVolume: shipmentWeightVolume,
+      pickupDateTime: new Date(pickupDateTime),
+      deliveryDateTime: new Date(deliveryDateTime),
+      bidAmount: bidAmount,
     }).unwrap();
     const result = stripe?.redirectToCheckout({
       sessionId: session.sessionId,
@@ -70,41 +98,46 @@ const CarrierDashboardRow = (s: ICarrierDashboard) => {
 
   return (
     <StyledTableRow onClick={isCarrierDashboard ? handleRowClick : undefined}>
-      <StyledTableCell>{renderCellContent(s.invoice)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.shipperName)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.shipperEmail)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.shipperPhone)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.shipperAddress)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.origin)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.destination)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.shipmentType)}</StyledTableCell>
+      <StyledTableCell>{invoiceId}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(shipperName)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(shipperEmail)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(shipperPhone)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(shipperAddress)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(origin)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(destination)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(shipmentType)}</StyledTableCell>
       <StyledTableCell>
-        {renderCellContent(s.shipmentWeightVolume)}
+        {renderCellContent(shipmentWeightVolume)}
       </StyledTableCell>
       <StyledTableCell>
-        {renderCellContent(new Date(s.pickupDateTime).toLocaleDateString())}
+        {renderCellContent(new Date(pickupDateTime).toLocaleDateString())}
       </StyledTableCell>
       <StyledTableCell>
-        {renderCellContent(new Date(s.deliveryDateTime).toLocaleDateString())}
+        {renderCellContent(new Date(deliveryDateTime).toLocaleDateString())}
       </StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
-        <Tooltip title="Proceed to Payment"><IconButton
-          size="small"
-          onClick={paymentPortal}
-          disabled={s.bidAmount ? false : true}
-          sx={{ color:"#1976d2" }}
-        >
-          <PaymentIcon fontSize="small" />
-        </IconButton>
+        <Tooltip title="Proceed to Payment">
+          <IconButton
+            size="small"
+            onClick={paymentPortal}
+            disabled={!bidAmount}
+            sx={{ color: "#1976d2" }}
+          >
+            <PaymentIcon fontSize="small" />
+          </IconButton>
         </Tooltip>
-        
+
         <Tooltip title="Download Invoice">
-          <IconButton size="small" onClick={downloadInvoice}  sx={{ color:"lightgreen" }}>
-          <Download fontSize="small" />
-        </IconButton>
+          <IconButton
+            size="small"
+            onClick={downloadInvoice}
+            sx={{ color: "lightgreen" }}
+            disabled={!bidAmount}
+          >
+            <Download fontSize="small" />
+          </IconButton>
         </Tooltip>
-    
       </StyledTableCell>
     </StyledTableRow>
   );
