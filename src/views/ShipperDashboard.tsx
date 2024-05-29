@@ -44,7 +44,6 @@ const ShipperDashboard = () => {
         const { data } = await fetchCarrierDetails(userId).unwrap();
         dispatch(setLoading(true));
         setRowData(data!);
-        console.log(data);
       } catch (error) {
         console.error("Failed to fetch carrier details:", error);
       } finally {
