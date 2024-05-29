@@ -153,7 +153,7 @@ export const appApi = createApi({
           pickupDateTime,
           deliveryDateTime,
           addDetails,
-          bidAmount: bidAmount,
+          bidAmount,
         };
         const headers = {
           Authorization: `Bearer ${getJwtValue()}`,
@@ -197,8 +197,42 @@ export const appApi = createApi({
         };
       },
     }),
-    invoice: builder.mutation({
-      query: () => {
+    invoice: builder.mutation<
+      string,
+      Omit<IBidPortal, "addDetails"> & { carrierId: string } & {
+        invoiceId: string;
+      }
+    >({
+      query: ({
+        carrierId,
+        shipperName,
+        shipperEmail,
+        shipperPhone,
+        shipperAddress,
+        origin,
+        destination,
+        shipmentType,
+        shipmentWeightVolume,
+        pickupDateTime,
+        deliveryDateTime,
+        bidAmount,
+        invoiceId,
+      }) => {
+        const reqData = {
+          carrierId,
+          shipperName,
+          shipperEmail,
+          shipperPhone,
+          shipperAddress,
+          origin,
+          destination,
+          shipmentType,
+          shipmentWeightVolume,
+          pickupDateTime: new Date(pickupDateTime).toLocaleDateString(),
+          deliveryDateTime: new Date(deliveryDateTime).toLocaleDateString(),
+          bidAmount,
+          invoiceId,
+        };
         const headers = {
           Authorization: `Bearer ${getJwtValue()}`,
           "Content-Type": "application/json",
@@ -208,6 +242,10 @@ export const appApi = createApi({
           method: "POST",
           credentials: "include",
           headers: headers,
+          body: reqData,
+          responseHandler: async (response) =>
+            window.URL.createObjectURL(await response.blob()),
+          cache: "no-cache",
         };
       },
     }),

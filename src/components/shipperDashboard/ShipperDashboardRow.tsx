@@ -3,31 +3,44 @@ import { IconButton } from "@mui/material";
 import { IShipperDashboard } from "../../interfaces/interfaces";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
 
-const ShipperDashboardRow = (s: IShipperDashboard) => {
+const ShipperDashboardRow = ({
+  carrierName,
+  carrierEmail,
+  carrierPhone,
+  carrierAddress,
+  origin,
+  destination,
+  shipmentType,
+  shipmentWeightVolume,
+  pickupDateTime,
+  deliveryDateTime,
+  bidAmount,
+}: IShipperDashboard) => {
+  const invoiceId = Math.floor(1000 + Math.random() * 9000).toString();
   const renderCellContent = (content: string) => {
     return content ? content : "N/A";
   };
 
   return (
     <StyledTableRow>
-      <StyledTableCell>{renderCellContent(s.invoice)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.carrierName)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.carrierEmail)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.carrierPhone)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.carrierAddress)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.origin)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.destination)}</StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.shipmentType)}</StyledTableCell>
+      <StyledTableCell>{invoiceId}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(carrierName)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(carrierEmail)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(carrierPhone)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(carrierAddress)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(origin)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(destination)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(shipmentType)}</StyledTableCell>
       <StyledTableCell>
-        {renderCellContent(s.shipmentWeightVolume)}
+        {renderCellContent(shipmentWeightVolume)}
       </StyledTableCell>
       <StyledTableCell>
-        {renderCellContent(new Date(s.pickupDateTime).toLocaleDateString())}
+        {renderCellContent(new Date(pickupDateTime).toLocaleDateString())}
       </StyledTableCell>
       <StyledTableCell>
-        {renderCellContent(new Date(s.deliveryDateTime).toLocaleDateString())}
+        {renderCellContent(new Date(deliveryDateTime).toLocaleDateString())}
       </StyledTableCell>
-      <StyledTableCell>{renderCellContent(s.bidAmount)}</StyledTableCell>
+      <StyledTableCell>{renderCellContent(bidAmount)}</StyledTableCell>
       <StyledTableCell onClick={(e) => e.stopPropagation()}>
         <IconButton
           size="small"

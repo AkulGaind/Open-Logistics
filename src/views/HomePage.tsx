@@ -63,7 +63,6 @@ const HomePage = () => {
     data: IContactDetails
   ) => {
     try {
-      console.log(data);
       const { msg } = await contactUs(data).unwrap();
       if (msg === APIResult.contactUsSuccess) {
         setSnackOpen(true);

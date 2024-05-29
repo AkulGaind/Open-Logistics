@@ -60,7 +60,7 @@ const App = () => {
   };
 
   const setCredentials = () => {
-    const id = localStorage.getItem("jwt");
+    const id = localStorage.getItem("userId");
     dispatch(setUserId(id!));
     dispatch(setLoggedIn(true));
     dispatch(setAppRole("Carrier"));
