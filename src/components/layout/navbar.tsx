@@ -87,7 +87,7 @@ const Navbar = () => {
               (location.pathname === "/bidportal" ||
                 location.pathname === "/carrierdash") && (
                 <>
-                  <Button variant="text" onClick={() => navigate("/")}>
+                  <Button variant="text" onClick={() => navigate("/carrierdash")}>
                     Home
                   </Button>
                   <Button variant="contained" onClick={handleLogout}>

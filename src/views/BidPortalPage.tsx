@@ -72,6 +72,20 @@ const BidPortalPage = () => {
     setSnackOpen(false);
   };
 
+  function getMinBidPrice() {
+    if (shipmentWeightVolume < 1000) {
+      return 2000;
+    } else if (shipmentWeightVolume >= 1000 && shipmentWeightVolume < 10000) {
+      return 5000;
+    } else if (shipmentWeightVolume >= 10000 && shipmentWeightVolume < 25000) {
+      return 9000;
+    } else if (shipmentWeightVolume >= 25000 && shipmentWeightVolume < 50000) {
+      return 15000;
+    } else if (shipmentWeightVolume >= 50000) {
+      return 20000;
+    }
+  }
+
   const formSubmit: SubmitHandler<{ bidAmount: string }> = async (data: {
     bidAmount: string;
   }) => {
@@ -298,7 +312,7 @@ const BidPortalPage = () => {
                     <label>Minimum Bid</label>
                     <TextField
                       fullWidth
-                      value={"xxxxxxxxxx"}
+                      value={getMinBidPrice()}
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
