@@ -155,21 +155,13 @@ const HomePage = () => {
                   </span>
                   , your ultimate solution for streamlined logistics management.
                   Our platform simplifies the intricate process of connecting
-                  brokers, shippers, and carriers seamlessly.
+                  shippers and carriers seamlessly.
                 </Typography>
                 <Typography>
-                  Empowering brokers, our software enables efficient searching,
-                  inviting, and managing of up to five shippers, ensuring
-                  personalized attention to each client. Once verified, shippers
-                  gain access to a comprehensive profile setup, facilitating
-                  smooth product shipments or logistics services utilization.
+                Empowering shippers, our software offers hassle-free load submissions, effortlessly connecting them with reliable carriers, truck owners, or dispatchers. With a comprehensive profile setup, shippers can facilitate smooth product shipments or logistics services utilization.
                 </Typography>
                 <Typography>
-                  For shippers, our platform offers hassle-free load
-                  submissions, effortlessly connecting them with reliable
-                  carriers, truck owners, or dispatchers. Brokers take charge of
-                  all shipping requirements, liaising with dispatchers to ensure
-                  prompt and efficient transportation services.
+                For carriers, our platform provides efficient searching and bidding processes, ensuring access to a wide range of shipping opportunities. By seamlessly connecting with shippers, carriers can optimize their operations and provide prompt and efficient transportation services.
                 </Typography>
               </Stack>
               <img
