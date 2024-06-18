@@ -60,7 +60,6 @@ const StyledCard = ({ title, buttonText }: StyledCardProps) => {
 const LabelController = ({ label, placeholder }: LabelControllerProps) => {
   const {
     register,
-    formState: { errors },
   } = useForm();
   return (
     <>
