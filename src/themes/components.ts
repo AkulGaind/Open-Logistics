@@ -1,6 +1,7 @@
 import typography from "./typography";
+import { Components, Theme } from '@mui/material/styles';
 
-const components = {
+const components: Components<Omit<Theme, 'components'>> = {
   MuiButton: {
     defaultProps: {
       disableRipple: true, // Disable ripple effect for all buttons
